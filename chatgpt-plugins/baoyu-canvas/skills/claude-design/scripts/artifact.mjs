@@ -1050,6 +1050,21 @@ function checkDesignSystems(value, tree, add) {
     if (!recorded.has(folder)) add(`${DESIGN_SYSTEMS_DIR}/${folder}/ has no record in designSystems; the editor offers a design system only when both are there`);
   }
 }
+var TITLE_CLEARANCE = 223;
+function checkTitleClearance(id, note, canvas, add) {
+  const firstPage = Array.isArray(canvas.pages) && isRecord2(canvas.pages[0]) ? canvas.pages[0].id : void 0;
+  const pageOf = (item) => item.page ?? firstPage;
+  const left = note.x;
+  const right = note.x + (isFiniteNumber(note.maxW) && note.maxW > 0 ? note.maxW : Math.max(1, note.text.length) * 72);
+  for (const [key, board] of Object.entries(canvas.boards)) {
+    if (!isRecord2(board) || !isFiniteNumber(board.x) || !isFiniteNumber(board.y) || !isFiniteNumber(board.w) || !isFiniteNumber(board.h)) continue;
+    if (pageOf(board) !== pageOf(note)) continue;
+    if (board.x >= right || board.x + board.w <= left) continue;
+    const gap = board.y - note.y;
+    if (gap >= TITLE_CLEARANCE || note.y >= board.y + board.h) continue;
+    add(`notes["${id}"] (title1) is ${Math.round(gap)} px above ${key}; put it at least ${TITLE_CLEARANCE} px above its row (y ≤ ${board.y - TITLE_CLEARANCE}), or zoomed out it runs into the artboard's name strip`);
+  }
+}
 function checkIndex(canvas, tree, issues) {
   const add = (message) => issues.push({ file: CANVAS_FILE, message });
   if (canvas.title !== void 0 && typeof canvas.title !== "string") add("title must be a string");
@@ -1136,6 +1151,7 @@ function checkIndex(canvas, tree, issues) {
           add(`notes["${id}"].kind must be "title1" (a title over several artboards), left out (a sticky), or one of the user's rect, oval, pen, line, arrow, image`);
         }
         if (note.page !== void 0 && (typeof note.page !== "string" || !pageIds.has(note.page))) add(`notes["${id}"].page must be the id of an entry in pages`);
+        if (note.kind === "title1") checkTitleClearance(id, note, canvas, add);
       }
     }
   }
