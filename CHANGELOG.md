@@ -4,6 +4,11 @@ English | [中文](./CHANGELOG.zh.md)
 
 All notable changes to `baoyu-design` are tracked in this file.
 
+## 2.12.3 - 2026-11-10
+
+### Fixes
+- **`claude-design`: `check` now catches a canvas title placed too close above its row.** An artboard's name strip keeps its size on screen while a title (`title1`) scales with the canvas, so a title 140 px above its row looked fine at 100% but covered the artboards' names once zoomed out below about 50%. `SKILL.md` already asked for at least 223 px. `check` now reports a title of 72 px or more that is closer than that to the artboards under it, or that sits over one: one issue per title, with the `y` to move it to. Text the user adds with the editor's text tool is left alone, wherever it is (contributed by @congee949, [#38](https://github.com/JimLiu/baoyu-design/pull/38)).
+
 ## 2.12.2 - 2026-11-09
 
 ### Features
