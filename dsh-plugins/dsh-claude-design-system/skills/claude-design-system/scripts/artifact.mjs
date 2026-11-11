@@ -2536,7 +2536,7 @@ async function runningServer(root, kind, probe) {
     return null;
   }
 }
-var DEFAULT_PORTS = { slides: 4710, design: 4720, "design-system": 4730, dashboard: 4740, docs: 4750, motion: 4760 };
+var DEFAULT_PORTS = { slides: 4710, design: 4720, "design-system": 4730, data: 4740, docs: 4750, motion: 4760 };
 var PORT_TRIES = 100;
 var NetworkBlocked = class extends Error {
   code = "NETWORK_BLOCKED";

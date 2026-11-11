@@ -1,5 +1,5 @@
 // dsh-claude-artifacts 2.13.0: built from baoyu-design.
-var define_SKILLS_default = [{ name: "claude-slides", plugin: "dsh-claude-slides", comments: true, published: true }, { name: "claude-design", plugin: "dsh-claude-design", comments: true, published: true }, { name: "claude-design-system", plugin: "dsh-claude-design-system", comments: true, published: true }, { name: "claude-dashboard", plugin: "dsh-claude-dashboard", comments: true, published: true }, { name: "claude-docs", plugin: "dsh-claude-docs", comments: true, commentsBy: "mention", requests: true, published: false }, { name: "claude-motion", plugin: "dsh-claude-motion", comments: true, requests: true, published: true }, { name: "claude-whiteboard", plugin: "dsh-claude-whiteboard", comments: true, published: true }];
+var define_SKILLS_default = [{ name: "claude-slides", plugin: "dsh-claude-slides", comments: true, published: true }, { name: "claude-design", plugin: "dsh-claude-design", comments: true, published: true }, { name: "claude-design-system", plugin: "dsh-claude-design-system", comments: true, published: true }, { name: "claude-data", plugin: "dsh-claude-data", comments: true, published: true }, { name: "claude-docs", plugin: "dsh-claude-docs", comments: true, commentsBy: "mention", requests: true, published: false }, { name: "claude-motion", plugin: "dsh-claude-motion", comments: true, requests: true, published: true }, { name: "claude-whiteboard", plugin: "dsh-claude-whiteboard", comments: true, published: true }];
 
 import { spawn as spawn2 } from "node:child_process";
 import { randomUUID } from "node:crypto";
@@ -44,7 +44,7 @@ var TITLES = {
   "claude-slides": ["project/deck.json", "title"],
   "claude-design": ["project/canvas.json", "title"],
   "claude-design-system": ["project/design-system.json", "title"],
-  "claude-dashboard": ["db/dash/meta.json", "title"],
+  "claude-data": ["db/dash/meta.json", "title"],
   "claude-docs": ["doc.json", "name"],
   "claude-motion": ["db/film/meta.json", "title"],
   "claude-whiteboard": ["db/board/meta.json", "title"]
@@ -56,7 +56,7 @@ var FOLDER = {
   "claude-slides": ["project"],
   "claude-design": ["project"],
   "claude-design-system": ["project"],
-  "claude-dashboard": ["db", "_blobs", "src"],
+  "claude-data": ["db", "_blobs", "src"],
   "claude-docs": ["doc.json", "tabs", "_blobs", ".sessions.json"],
   "claude-motion": ["db", "_blobs", "src"],
   "claude-whiteboard": ["db", "_blobs"]
@@ -95,10 +95,15 @@ function isRecord(value) {
   const r = value;
   return typeof r === "object" && r !== null && r.v === 1 && typeof r.root === "string" && typeof r.skill === "string" && typeof r.plugin === "string" && typeof r.sessionId === "string" && typeof r.title === "string" && typeof r.openedAt === "string";
 }
+var RENAMED = {
+  "claude-dashboard": "claude-data",
+  "dsh-claude-dashboard": "dsh-claude-data"
+};
 function readRecord(file) {
   try {
     const value = JSON.parse(readFileSync(file, "utf8"));
-    return isRecord(value) ? value : null;
+    if (!isRecord(value)) return null;
+    return { ...value, skill: RENAMED[value.skill] ?? value.skill, plugin: RENAMED[value.plugin] ?? value.plugin };
   } catch {
     return null;
   }
@@ -250,7 +255,7 @@ async function renameArtifact(node, script, record, title) {
   const { root, skill } = record;
   const at = TITLES[skill];
   if (at === void 0) throw new Error(`no title to change for ${skill}`);
-  if (skill === "claude-dashboard" || skill === "claude-motion" || skill === "claude-whiteboard") {
+  if (skill === "claude-data" || skill === "claude-motion" || skill === "claude-whiteboard") {
     const path = at[0].replace(/^db\//, "").replace(/\.json$/, "");
     await runScript(node, script, ["write-db", root, "-"], JSON.stringify([{ op: "update", path, data: { [at[1]]: title } }]));
     return;

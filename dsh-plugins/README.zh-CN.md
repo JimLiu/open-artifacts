@@ -9,7 +9,7 @@
 | [Claude 幻灯片](dsh-claude-slides/)<br>`/claude-slides` | [`dsh-claude-slides`](https://www.npmjs.com/package/dsh-claude-slides) | Agent 把可编辑的幻灯片写成本地文件，并在本地幻灯片编辑器里打开，你可以放映、修改，导出 PDF、HTML 或 PowerPoint。 | Send to Agent |
 | [Claude 设计稿](dsh-claude-design/)<br>`/claude-design` | [`dsh-claude-design`](https://www.npmjs.com/package/dsh-claude-design) | Agent 把可编辑的设计画布（多个画板并排）写成本地文件，并在本地画布编辑器里打开，你可以改文字、调参数，也可以把评论发给 Agent 修改。 | Send to Agent |
 | [Claude 设计系统](dsh-claude-design-system/)<br>`/claude-design-system` | [`dsh-claude-design-system`](https://www.npmjs.com/package/dsh-claude-design-system) | Agent 把设计系统（设计令牌、字体样式、组件、素材和品牌手册）写成本地文件，并在本地页面里打开，你可以浏览、修改，也可以把评论发给 Agent 修改。 | Send to Agent |
-| [Claude 数据看板](dsh-claude-dashboard/)<br>`/claude-dashboard` | [`dsh-claude-dashboard`](https://www.npmjs.com/package/dsh-claude-dashboard) | Agent 根据你的数据文件做出数据看板（图表、数字和表格），并在本地看板编辑器里打开，来源面板会显示每个数字是从哪里来的，你也可以把评论发给 Agent 修改。 | Send to Agent |
+| [Claude 数据看板](dsh-claude-data/)<br>`/claude-data` | [`dsh-claude-data`](https://www.npmjs.com/package/dsh-claude-data) | Agent 根据你的数据文件做出数据看板（图表、数字和表格），并在本地看板编辑器里打开，来源面板会显示每个数字是从哪里来的，你也可以把评论发给 Agent 修改。 | Send to Agent |
 | [Claude 动画](dsh-claude-motion/)<br>`/claude-motion` | [`dsh-claude-motion`](https://www.npmjs.com/package/dsh-claude-motion) | Agent 用代码一幕一幕地写出短动画（讲解视频、产品演示、片头等），在本地 Motion 播放器里播放。你可以看着它一点点成形，在某个时刻留评论，再导出 MP4 或 GIF。 | Send to Agent |
 | [Claude 白板](dsh-claude-whiteboard/)<br>`/claude-whiteboard` | [`dsh-claude-whiteboard`](https://www.npmjs.com/package/dsh-claude-whiteboard) | Agent 把示意图、流程、想法地图、计划和对比摆在一块白板上，在本地白板编辑器里打开。你可以拖动、画画、打字、留评论，再把评论发给 Agent。 | Send to Agent |
 
@@ -82,7 +82,7 @@ dsh plugin --profile web add dsh-claude-slides
          config:
            id: slides-dashboard
            name: Slides and dashboards
-           description: Only the claude-slides and claude-dashboard skills.
+           description: Only the claude-slides and claude-data skills.
            order: 10
            plugins:
              - id: persona
@@ -101,8 +101,8 @@ dsh plugin --profile web add dsh-claude-slides
                name: '@deepseek-ai/dsh-tool-skill'
              - id: claude-slides
                name: dsh-claude-slides
-             - id: claude-dashboard
-               name: dsh-claude-dashboard
+             - id: claude-data
+               name: dsh-claude-data
    ```
 
    预设里写了什么，它的会话就只有什么，所以这个例子列出了技能要用的工具：命令行、读写文件、加载技能。**设置** → **Agent 预设** 能看到内置预设的内容，预设加载失败时也会在那里说明原因。

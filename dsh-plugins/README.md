@@ -12,7 +12,7 @@ sidebar, next to the chat.
 | [Claude Slides](dsh-claude-slides/)<br>`/claude-slides` | [`dsh-claude-slides`](https://www.npmjs.com/package/dsh-claude-slides) | The agent writes editable slide decks as files and opens them in a local slide editor where you can present, edit, and export PDF, HTML, or PowerPoint. | Send to Agent |
 | [Claude Design](dsh-claude-design/)<br>`/claude-design` | [`dsh-claude-design`](https://www.npmjs.com/package/dsh-claude-design) | The agent writes editable design canvases (artboards side by side) as files and opens them in a local canvas editor where you can retype copy, adjust tweaks, and send comments to the agent. | Send to Agent |
 | [Claude Design System](dsh-claude-design-system/)<br>`/claude-design-system` | [`dsh-claude-design-system`](https://www.npmjs.com/package/dsh-claude-design-system) | The agent writes design systems (tokens, type, components, assets, a brand book) as files and opens them in a local page where you can browse and edit them, and send comments to the agent. | Send to Agent |
-| [Claude Dashboard](dsh-claude-dashboard/)<br>`/claude-dashboard` | [`dsh-claude-dashboard`](https://www.npmjs.com/package/dsh-claude-dashboard) | The agent builds data-backed dashboards (charts, numbers and tables over your data files) and opens them in a local dashboard editor whose Sources panel shows where every number comes from, and where you can send comments to the agent. | Send to Agent |
+| [Claude Data](dsh-claude-data/)<br>`/claude-data` | [`dsh-claude-data`](https://www.npmjs.com/package/dsh-claude-data) | The agent builds data-backed dashboards (charts, numbers and tables over your data files) and opens them in a local dashboard editor whose Sources panel shows where every number comes from, and where you can send comments to the agent. | Send to Agent |
 | [Claude Motion](dsh-claude-motion/)<br>`/claude-motion` | [`dsh-claude-motion`](https://www.npmjs.com/package/dsh-claude-motion) | The agent writes short animated films (explainers, product demos, title sequences) as code, scene by scene, and plays them in a local Motion player where you watch them fill in, comment on a moment, and export MP4 or GIF. | Send to Agent |
 | [Claude Whiteboard](dsh-claude-whiteboard/)<br>`/claude-whiteboard` | [`dsh-claude-whiteboard`](https://www.npmjs.com/package/dsh-claude-whiteboard) | The agent lays out diagrams, flows, maps of ideas, plans and comparisons on a whiteboard and opens it in a local board editor, where you move things, draw, type, comment and send comments to the agent. | Send to Agent |
 
@@ -112,7 +112,7 @@ To have a skill only in the sessions of one preset:
          config:
            id: slides-dashboard
            name: Slides and dashboards
-           description: Only the claude-slides and claude-dashboard skills.
+           description: Only the claude-slides and claude-data skills.
            order: 10
            plugins:
              - id: persona
@@ -131,8 +131,8 @@ To have a skill only in the sessions of one preset:
                name: '@deepseek-ai/dsh-tool-skill'
              - id: claude-slides
                name: dsh-claude-slides
-             - id: claude-dashboard
-               name: dsh-claude-dashboard
+             - id: claude-data
+               name: dsh-claude-data
    ```
 
    A preset holds everything its sessions get, so this one lists the tools the skills need: the shell, files, and loading

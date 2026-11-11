@@ -880,7 +880,7 @@ async function listen(server2, port, host) {
   const address = server2.address();
   return typeof address === "object" && address ? address.port : port;
 }
-var DEFAULT_PORTS = { slides: 4710, design: 4720, "design-system": 4730, dashboard: 4740, docs: 4750, motion: 4760 };
+var DEFAULT_PORTS = { slides: 4710, design: 4720, "design-system": 4730, data: 4740, docs: 4750, motion: 4760 };
 var PORT_TRIES = 100;
 var PortsTaken = class extends Error {
   code = "PORT_IN_USE";
@@ -3201,7 +3201,7 @@ var NOUNS = {
   slides: { en: "deck", zh: "\u6F14\u793A\u6587\u7A3F", zhThis: "\u8FD9\u4EFD\u6F14\u793A\u6587\u7A3F" },
   design: { en: "design", zh: "\u8BBE\u8BA1\u7A3F", zhThis: "\u8FD9\u4EFD\u8BBE\u8BA1\u7A3F" },
   "design-system": { en: "design system", zh: "\u8BBE\u8BA1\u7CFB\u7EDF", zhThis: "\u8FD9\u4E2A\u8BBE\u8BA1\u7CFB\u7EDF" },
-  dashboard: { en: "dashboard", zh: "\u4EEA\u8868\u76D8", zhThis: "\u8FD9\u4E2A\u4EEA\u8868\u76D8" },
+  data: { en: "dashboard", zh: "\u4EEA\u8868\u76D8", zhThis: "\u8FD9\u4E2A\u4EEA\u8868\u76D8" },
   motion: { en: "animation", zh: "\u52A8\u753B", zhThis: "\u8FD9\u4E2A\u52A8\u753B" }
 };
 var ShareError = class extends Error {

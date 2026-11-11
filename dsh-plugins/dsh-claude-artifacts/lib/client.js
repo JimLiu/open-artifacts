@@ -86,7 +86,7 @@ window.__ModuleLoader__.load({
 		    })()`
 		  },
 		  // The page, below the bar.
-		  "claude-dashboard": { width: 1280, height: 800, find: `document.querySelector('main')` },
+		  "claude-data": { width: 1280, height: 800, find: `document.querySelector('main')` },
 		  // The doc's frame, below the bars, at a width where the text fills it.
 		  "claude-docs": { width: 860, height: 700, find: `document.querySelector('iframe')` },
 		  // The film's first frame.
@@ -754,7 +754,7 @@ window.__ModuleLoader__.load({
 		  "type.claude-slides": "幻灯片",
 		  "type.claude-design": "设计",
 		  "type.claude-design-system": "设计系统",
-		  "type.claude-dashboard": "看板",
+		  "type.claude-data": "看板",
 		  "type.claude-docs": "文档",
 		  "type.claude-motion": "动画",
 		  "type.claude-whiteboard": "白板",
@@ -764,7 +764,7 @@ window.__ModuleLoader__.load({
 		  "prompt.claude-slides": "帮我做一份幻灯片，主题是：",
 		  "prompt.claude-design": "帮我设计：",
 		  "prompt.claude-design-system": "帮我做一套设计系统，品牌是：",
-		  "prompt.claude-dashboard": "帮我做一个数据看板，数据是：",
+		  "prompt.claude-data": "帮我做一个数据看板，数据是：",
 		  "prompt.claude-docs": "帮我写一份文档，内容是：",
 		  "prompt.claude-motion": "帮我做一段动画，内容是：",
 		  "prompt.claude-whiteboard": "帮我在白板上画出：",
@@ -831,7 +831,7 @@ window.__ModuleLoader__.load({
 		  "about.claude-slides": "做可以编辑的幻灯片，能直接演示，也能导出 PDF、HTML 或 PowerPoint。",
 		  "about.claude-design": "在一张画布上并排做几版设计稿，每一版都能直接改。",
 		  "about.claude-design-system": "做一套设计系统：颜色、字体、组件、素材，加一本品牌手册。",
-		  "about.claude-dashboard": "用你的数据文件做看板：图表、数字和表格，数据变了就跟着更新。",
+		  "about.claude-data": "用你的数据文件做看板：图表、数字和表格，数据变了就跟着更新。",
 		  "about.claude-docs": "写可以编辑、评论和分享的文档。",
 		  "about.claude-motion": "做短动画，导出 MP4 或 GIF。",
 		  "about.claude-whiteboard": "在白板上摆出示意图、流程和想法，可以拖动、画画、留评论。",
@@ -860,7 +860,7 @@ window.__ModuleLoader__.load({
 		  "type.claude-slides": "Slides",
 		  "type.claude-design": "Design",
 		  "type.claude-design-system": "Design system",
-		  "type.claude-dashboard": "Dashboard",
+		  "type.claude-data": "Dashboard",
 		  "type.claude-docs": "Docs",
 		  "type.claude-motion": "Motion",
 		  "type.claude-whiteboard": "Whiteboard",
@@ -870,7 +870,7 @@ window.__ModuleLoader__.load({
 		  "prompt.claude-slides": "Make me a slide deck about: ",
 		  "prompt.claude-design": "Design this for me: ",
 		  "prompt.claude-design-system": "Make me a design system for this brand: ",
-		  "prompt.claude-dashboard": "Make me a dashboard from this data: ",
+		  "prompt.claude-data": "Make me a dashboard from this data: ",
 		  "prompt.claude-docs": "Write me a doc about: ",
 		  "prompt.claude-motion": "Make me an animation about: ",
 		  "prompt.claude-whiteboard": "Lay this out on a whiteboard: ",
@@ -937,7 +937,7 @@ window.__ModuleLoader__.load({
 		  "about.claude-slides": "Editable slide decks you can present, or export as PDF, HTML or PowerPoint.",
 		  "about.claude-design": "Design canvases with versions side by side, each one editable.",
 		  "about.claude-design-system": "Design systems: colors, type, components, assets and a brand book.",
-		  "about.claude-dashboard": "Dashboards over your data files: charts, numbers and tables that follow the data.",
+		  "about.claude-data": "Dashboards over your data files: charts, numbers and tables that follow the data.",
 		  "about.claude-docs": "Docs you can edit, comment on and share.",
 		  "about.claude-motion": "Short animated films you can export as MP4 or GIF.",
 		  "about.claude-whiteboard": "Whiteboards of diagrams, flows and ideas you move, draw on and comment on.",
@@ -957,7 +957,7 @@ window.__ModuleLoader__.load({
 		  "install.start": "Start",
 		  "dialog.close": "Close"
 		};
-		var SKILLS = ["claude-docs", "claude-slides", "claude-design", "claude-dashboard", "claude-design-system", "claude-motion", "claude-whiteboard"];
+		var SKILLS = ["claude-docs", "claude-slides", "claude-design", "claude-data", "claude-design-system", "claude-motion", "claude-whiteboard"];
 		var isSkill = (s) => SKILLS.includes(s);
 		var creatable = (on) => SKILLS.filter((s) => on.includes(s));
 		var promptFor = (skill, t) => `/${skill} ${t(`prompt.${skill}`)}`;
@@ -1149,7 +1149,7 @@ window.__ModuleLoader__.load({
 		  "claude-slides": "#e8703a",
 		  "claude-design": "#7a5cf0",
 		  "claude-design-system": "#c79a1b",
-		  "claude-dashboard": "#e5484d",
+		  "claude-data": "#e5484d",
 		  "claude-docs": "#3f8ef0",
 		  "claude-motion": "#1fa971",
 		  "claude-whiteboard": "#d6409f"
@@ -1184,7 +1184,7 @@ window.__ModuleLoader__.load({
 		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "13.5", cy: "6.5", r: "3.25", ...p }),
 		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "10", cy: "13", r: "3.25", ...p })
 		        ] });
-		      case "claude-dashboard":
+		      case "claude-data":
 		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
 		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "2.75", y: "10", width: "4.5", height: "7.25", rx: "1", ...p }),
 		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "7.75", y: "2.75", width: "4.5", height: "14.5", rx: "1", ...p }),
@@ -1297,7 +1297,7 @@ window.__ModuleLoader__.load({
 		        ] }),
 		        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bda-specimen", children: "Aa" })
 		      ] });
-		    case "claude-dashboard":
+		    case "claude-data":
 		      return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bda-paper", children: [
 		        name,
 		        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bda-kpis", children: [
