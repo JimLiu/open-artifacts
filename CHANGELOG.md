@@ -4,6 +4,21 @@ English | [中文](./CHANGELOG.zh.md)
 
 All notable changes to `baoyu-design` are tracked in this file.
 
+## 2.14.0 - 2026-11-11
+
+### Features
+- **`claude-dashboard` is now `claude-data`.** claude.ai renamed the type to Data, and the skill, its DeepSeek Harness plugin (`dsh-claude-data`) and its ChatGPT and Codex plugin (**Baoyu Data**) follow. Call it as `/claude-data` (`$claude-data` in Codex). A dashboard made with `claude-dashboard` opens in `claude-data` as it is, with the same folder; its address is now `/data/<id>/` instead of `/dashboard/<id>/`. `dsh-claude-dashboard` and **Baoyu Dashboard** get no more updates: install `dsh-claude-data` (the **Artifacts** page offers it as a **Not installed** tile) or **Baoyu Data**, then remove the old one. On the Artifacts page, dashboards opened before the rename are listed with the new kind and still open, and comments sent from a dashboard reach the agent through `dsh-claude-data` (the copy of `dsh-claude-data` put on npm on its own before this release lacked both, because the Host plugin it came with did not know the new name).
+- **`claude-data` follows claude.ai's 2026-11-10 update.** A dashboard's toolbar now has a **Design** button. It shows the look in use and a new **Style** section: chart colors, page color, font, corners and text size. A change shows on the page at once and is kept with **Save**; **Reset all** goes back to the defaults. A dataset can be a text file (`format: "text"`), which the page turns into rows with a loader. `dash/meta` takes the page's language (`lang`). `check` also reports what the open page found when it checked itself (`pageCheck`: passed, failed with what went wrong, or still loading) beside the page's `runs`.
+- **`claude-design` follows claude.ai's 2026-11-10 update.** Pen, Line and Arrow have a **Drawing options** bar: four stroke weights, and solid, dashed or dotted lines. An artboard's export menu has **All artboards (.png)**, a zip with one PNG per artboard on the page. When the canvas's saved layout is damaged, the canvas turns read-only with a banner and an **Ask the agent to fix** button, and comes back on its own once the file is fixed. A new reference, `shaders.md`, is how the agent makes a shader artboard (WebGL, or anything that moves like light, water, smoke or liquid).
+
+### Fixes
+- `claude-design`: artboards ran React's development build (1.1 MB), which printed warnings such as `Invalid DOM property vector-effect` for drawn lines. They now run the production build (354 KB).
+- `claude-design`: when two tabs changed the same artboard and you chose **Keep both**, the copy was put 80 px right of the original, where it could cover another artboard. It now goes in the first free spot right of that row.
+- In every editor, Escape pressed while the keyboard is in the comments layer (on the comments button, say) now ends comment mode, as it does on the page.
+
+### Documentation
+- `claude-data`'s `SKILL.md` and reference follow the same update: what runs where (each reader's browser loads the datasets, and Sources shows where every number came from), what a page's code may write and when, and how `check` and `runs` report a page that went wrong.
+
 ## 2.13.0 - 2026-11-10
 
 ### Features

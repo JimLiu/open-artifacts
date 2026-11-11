@@ -4,6 +4,21 @@
 
 本文档记录 `baoyu-design` 的重要变更。
 
+## 2.14.0 - 2026-11-11
+
+### 新功能
+- **`claude-dashboard` 改名为 `claude-data`。** claude.ai 把这个类型改名为 Data，技能、它的 DeepSeek Harness 插件（`dsh-claude-data`）和 ChatGPT、Codex 插件（**Baoyu Data**）都跟着改名。调用名是 `/claude-data`（Codex 里是 `$claude-data`）。用 `claude-dashboard` 做的仪表盘，原样用 `claude-data` 打开，文件夹不变；地址从 `/dashboard/<id>/` 变成 `/data/<id>/`。`dsh-claude-dashboard` 和 **Baoyu Dashboard** 不再更新：装上 `dsh-claude-data`（**Artifacts** 页面上它是一个 **Not installed** 的卡片，点开就能装）或 **Baoyu Data**，再把旧的删掉。改名前打开过的仪表盘，在 Artifacts 页面上按新的类型列出，照样能打开；仪表盘上发出的评论经 `dsh-claude-data` 交给 Agent（这一版之前单独发到 npm 的 `dsh-claude-data` 这两样都不行，因为和它配套的 Host 插件还不认识新名字）。
+- **`claude-data` 跟上了 claude.ai 2026-11-10 的更新。** 仪表盘的工具栏多了一个 **Design** 按钮，里面是当前的外观和新的 **Style** 一段：图表配色、页面底色、字体、圆角和字号。改了页面马上显示，点 **Save** 保存；**Reset all** 回到默认。数据集可以是文本文件（`format: "text"`），由页面用 loader 拆成行。`dash/meta` 可以写页面的语言（`lang`）。`check` 还会报告打开着的页面自查的结果（`pageCheck`：通过、没通过和出了什么问题、还在加载），和页面的 `runs` 放在一起。
+- **`claude-design` 跟上了 claude.ai 2026-11-10 的更新。** 画笔、直线和箭头有了 **Drawing options** 条：四档粗细，实线、虚线或点线。画板的导出菜单里多了 **All artboards (.png)**，把这一页每块画板各导出一张 PNG，打成一个 zip。画布保存的布局文件坏了时，画布变成只读，顶上有横幅和 **Ask the agent to fix** 按钮，文件修好后自己恢复。新增 reference `shaders.md`，Agent 照它做着色器画板（WebGL，或者像光、水、烟、液体那样流动的效果）。
+
+### 修复
+- `claude-design`：画板里跑的是 React 的开发版（1.1 MB），画的线会报 `Invalid DOM property vector-effect` 这类警告。现在是生产版（354 KB）。
+- `claude-design`：两个标签页改了同一块画板、选 **Keep both** 时，副本放在原画板右边 80 px，可能压住那里的另一块画板。现在放在这一行右边第一个空位。
+- 所有编辑器：键盘在评论层里时（比如停在评论按钮上）按 Escape，现在会退出评论模式，和在页面上按一样。
+
+### 文档
+- `claude-data` 的 `SKILL.md` 和 reference 也跟着这次更新：什么在哪里运行（每个读者的浏览器加载数据集，Sources 说明每个数字从哪里来），页面的代码什么时候可以写入、能写什么，以及 `check` 和 `runs` 怎样报告出错的页面。
+
 ## 2.13.0 - 2026-11-10
 
 ### 新功能
