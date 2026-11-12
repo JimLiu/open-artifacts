@@ -1,4 +1,4 @@
-// dsh-claude-artifacts 2.15.0: built from baoyu-design.
+// dsh-claude-artifacts 2.15.1: built from baoyu-design.
 window.__ModuleLoader__.load({
 	id: "dsh-claude-artifacts",
 	factory: (require) => {
@@ -1188,10 +1188,10 @@ window.__ModuleLoader__.load({
 		.bda-flow{display:block;width:100%;height:auto;margin-top:4px}
 		.bda-flow rect{fill:color-mix(in srgb,var(--bda-tint) 18%,var(--dsw-alias-bg-base));stroke:var(--dsw-alias-border-l2);stroke-width:.5}
 		.bda-flow path{fill:none;stroke:var(--bda-tint);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
-		.bda-grid{display:block;width:100%;height:auto;margin-top:4px}
-		.bda-grid path{fill:none;stroke:var(--dsw-alias-border-l2);stroke-width:.75}
-		.bda-grid-head{fill:color-mix(in srgb,var(--bda-tint) 18%,var(--dsw-alias-bg-base))}
-		.bda-grid-pick{fill:none;stroke:var(--bda-tint);stroke-width:1.5}
+		.bda-cells{display:block;width:100%;height:auto;margin-top:4px}
+		.bda-cells path{fill:none;stroke:var(--dsw-alias-border-l2);stroke-width:.75}
+		.bda-cells-head{fill:color-mix(in srgb,var(--bda-tint) 18%,var(--dsw-alias-bg-base))}
+		.bda-cells-pick{fill:none;stroke:var(--bda-tint);stroke-width:1.5}
 		.bda-swatches{display:flex;gap:4px}
 		.bda-swatch{width:16px;height:16px;border-radius:50%;background:var(--bda-tint)}
 		.bda-swatch:nth-child(2){opacity:.7}.bda-swatch:nth-child(3){opacity:.45}.bda-swatch:nth-child(4){opacity:.25}
@@ -1479,9 +1479,9 @@ window.__ModuleLoader__.load({
 		    case "claude-sheets":
 		      return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bda-paper", children: [
 		        name,
-		        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("svg", { className: "bda-grid", viewBox: "0 0 120 48", "aria-hidden": "true", children: [
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { className: "bda-grid-head", x: ".5", y: ".5", width: "119", height: "9.5" }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { className: "bda-grid-pick", x: "40", y: "19.5", width: "40", height: "9.5" }),
+		        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("svg", { className: "bda-cells", viewBox: "0 0 120 48", "aria-hidden": "true", children: [
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { className: "bda-cells-head", x: ".5", y: ".5", width: "119", height: "9.5" }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { className: "bda-cells-pick", x: "40", y: "19.5", width: "40", height: "9.5" }),
 		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M.5 .5h119v47H.5ZM.5 10h119M.5 19.5h119M.5 29h119M.5 38.5h119M40 .5v47M80 .5v47" })
 		        ] })
 		      ] });

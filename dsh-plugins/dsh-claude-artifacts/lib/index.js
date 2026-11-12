@@ -1,4 +1,4 @@
-// dsh-claude-artifacts 2.15.0: built from baoyu-design.
+// dsh-claude-artifacts 2.15.1: built from baoyu-design.
 var define_SKILLS_default = [{ name: "claude-slides", plugin: "dsh-claude-slides", comments: true, published: true }, { name: "claude-design", plugin: "dsh-claude-design", comments: true, published: true }, { name: "claude-design-system", plugin: "dsh-claude-design-system", comments: true, published: true }, { name: "claude-data", plugin: "dsh-claude-data", comments: true, published: true }, { name: "claude-docs", plugin: "dsh-claude-docs", comments: true, commentsBy: "mention", requests: true, published: false }, { name: "claude-motion", plugin: "dsh-claude-motion", comments: true, requests: true, published: true }, { name: "claude-whiteboard", plugin: "dsh-claude-whiteboard", comments: true, published: true }, { name: "claude-sheets", plugin: "dsh-claude-sheets", comments: true, requests: true, published: false }];
 
 import { spawn as spawn2 } from "node:child_process";
@@ -376,13 +376,13 @@ function registerRoutes(routes, host, opened) {
     path: listPath,
     methods: ["GET"],
     requestBody: "buffered",
-    fetch: () => {
+    fetch: async () => {
       const known = /* @__PURE__ */ new Map();
       const openable = (skill) => {
         if (!known.has(skill)) known.set(skill, host.script(skill) !== null);
         return known.get(skill) === true;
       };
-      return Promise.resolve(json({ artifacts: listArtifacts(openable), ...host.places() }));
+      return json({ artifacts: listArtifacts(openable), ...await host.places() });
     }
   });
   routes.register({
@@ -1020,10 +1020,21 @@ function pluginFinder(ctx) {
     return null;
   };
 }
+async function installedCheck(manager, find) {
+  try {
+    const bundles = await manager?.listBundles();
+    if (bundles !== void 0) {
+      const names = new Set(bundles.filter((b) => b.installed === true).map((b) => b.name));
+      return (skill) => names.has(skill.plugin);
+    }
+  } catch {
+  }
+  return (skill) => find(skill) !== null;
+}
 function presetsNaming(presets, plugin) {
   return [...new Set((presets?.inspectCompositions?.() ?? []).filter((c) => c.modules.some((m) => m.moduleName === plugin)).map((c) => c.id))];
 }
-function skillPlaces(ctx, find) {
+function skillPlaces(ctx, installed) {
   const loader = ctx.get("loader");
   const presets = ctx.get("agentPresets");
   const rows = /* @__PURE__ */ new Set();
@@ -1034,7 +1045,7 @@ function skillPlaces(ctx, find) {
       plugin: skill.plugin,
       everywhere: rows.has(skill.plugin),
       presets: presetsNaming(presets, skill.plugin),
-      missing: skill.published && find(skill) === null
+      missing: skill.published && !installed(skill)
     })),
     ...typeof presets?.defaultId === "string" ? { defaultPreset: presets.defaultId } : {}
   };
@@ -1061,8 +1072,8 @@ function start(ctx, node) {
   const install = async (plugin) => {
     const skill = SKILLS.find((s) => s.plugin === plugin);
     if (skill === void 0 || !skill.published) return { error: `${plugin || "that"} is not a plugin baoyu-design publishes`, status: 404 };
-    if (find(skill) !== null) return { error: `${plugin} is installed already`, status: 409 };
     const service = manager();
+    if ((await installedCheck(service, find))(skill)) return { error: `${plugin} is installed already`, status: 409 };
     if (service === void 0) return { error: "this app has no plugin manager", status: 503 };
     try {
       return await installTarget(service, plugin, ownVersion()) ?? { error: `no registry has ${plugin}`, status: 502 };
@@ -1079,7 +1090,7 @@ function start(ctx, node) {
           const skill = SKILLS.find((s) => s.name === name2);
           return skill === void 0 ? null : find(skill)?.script ?? null;
         },
-        places: () => skillPlaces(ctx, find),
+        places: async () => skillPlaces(ctx, await installedCheck(manager(), find)),
         updates,
         installTarget: install
       },
