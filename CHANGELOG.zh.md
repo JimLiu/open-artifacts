@@ -4,6 +4,16 @@
 
 本文档记录 `baoyu-design` 的重要变更。
 
+## 2.14.1 - 2026-11-11
+
+### 新功能
+- **DeepSeek Harness：在另一台设备上打开你的作品。** Harness 跑在一台电脑上、你在另一台设备上用时（比如服务器上跑 `dsh web`，在笔记本或手机的浏览器里通过同一个局域网或 tailnet 打开），从 **Artifacts**（「作品」）打开，或者点评论卡片上的 **View thread**，拿到的是 `http://127.0.0.1:…`，只有那台电脑打得开。现在插件会给你手上这台设备一个它自己的链接，地址就是浏览器访问 Harness 用的那个，在新标签页里打开。通过它打开，你就是编辑器的主人，和在那台电脑上一样：能编辑，也有 **Send to Agent**。经过代理或用自己的域名访问时，把 `BAOYU_DESIGN_REMOTE_HOST` 设成其他设备访问那台电脑用的地址；设成 `off` 就关掉这个功能。每个编辑器的 `open` 都可以加 `--remote[=<host>]`，打出这个主人链接（`--remote=off` 关掉），`share <文件夹> --reset owner` 换一把钥匙。见[在另一台设备上用](https://github.com/JimLiu/baoyu-design/blob/main/dsh-plugins/README.zh-CN.md#在另一台设备上用)（@akaDeyve 提出，[#40](https://github.com/JimLiu/baoyu-design/issues/40)）。
+- **DeepSeek Harness：`dsh-claude-dashboard` 可以更新成 `dsh-claude-data`。** 「作品」页上这个类型叫 **数据**（Data），装着 `dsh-claude-dashboard` 的，会把换到新插件当作一项更新来提示，写作 `claude-dashboard → claude-data`：点 **Update**（更新）会先装上 `dsh-claude-data`（开关和旧插件一样），再卸载 `dsh-claude-dashboard`。预设里写了 `dsh-claude-dashboard` 的，旧插件会留着，页面上会说要改哪里。2.14.0 说 `dsh-claude-dashboard` 不再更新；现在改成它继续发不带技能的版本。2.13.0 或更早的「作品」页会把这个版本当作更新来提示，装上它就有了会提示换插件的新「作品」页，提示出来后再点一次 **Update**。
+
+### 修复
+- `claude-design-system`：通过 **Share**（分享）链接进来的访客加不了资源和字体，页面一直停在 **Adding …**。局域网上用明文 http 打开的页面没有浏览器自带的哈希功能，上传要用它。现在由页面自己算。
+- DeepSeek Harness：卸载正在提供「作品」页的那个插件后，这个页面一直是 404，要重启应用才好。现在另一个装着的插件会马上接手。
+
 ## 2.14.0 - 2026-11-11
 
 ### 新功能

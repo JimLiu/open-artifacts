@@ -1,6 +1,6 @@
 {
   "name": "dsh-claude-design-system",
-  "version": "2.14.0",
+  "version": "2.14.1",
   "description": "DeepSeek Harness plugin: the claude-design-system skill from baoyu-design. The agent writes design systems (tokens, type, components, assets) as files and opens them in a local design-system page.",
   "keywords": [
     "dsh",
@@ -24,6 +24,12 @@
   "icon": "./icon.svg",
   "baoyuDesign": {
     "releaseNotes": [
+      {
+        "version": "2.14.1",
+        "date": "2026-11-11",
+        "en": "### Features\n- **DeepSeek Harness: open your work from another device.** When Harness runs on one computer and you use it from another (`dsh web` on a server, opened in a browser on your laptop or phone over the same network or a tailnet), opening an item from **Artifacts**, or **View thread** on a comment card, gave a `http://127.0.0.1:…` link that only that computer can open. The plugin now gives the device you are on a link of its own, at the address your browser reaches Harness by, and opens it in a new tab. Through it you are the editor's owner, as on that computer: you edit, and **Send to Agent** is there. Behind a proxy or a domain of your own, set `BAOYU_DESIGN_REMOTE_HOST` to the address other devices reach that computer at; `off` turns this off. Every editor's `open` takes `--remote[=<host>]` to print that owner's link (`--remote=off` closes it), and `share <folder> --reset owner` replaces its key. See [Use it from another device](https://github.com/JimLiu/baoyu-design/blob/main/dsh-plugins/README.md#use-it-from-another-device) (requested by @akaDeyve, [#40](https://github.com/JimLiu/baoyu-design/issues/40)).\n- **DeepSeek Harness: `dsh-claude-dashboard` updates to `dsh-claude-data`.** The Artifacts page names the type **Data**, and offers an installed `dsh-claude-dashboard` as an update, `claude-dashboard → claude-data`: **Update** installs `dsh-claude-data`, switched on or off as the old one was, then uninstalls `dsh-claude-dashboard`. A preset that names `dsh-claude-dashboard` keeps it, and the page says what to change. 2.14.0 said `dsh-claude-dashboard` would get no more updates; instead it keeps getting releases with no skill in them. An Artifacts page from 2.13.0 or earlier offers that release as an update, and it brings the page that offers the move, so click **Update** once more when the move shows.\n\n### Fixes\n- `claude-design-system`: a guest on a **Share** link could not add an asset or a font. The page stayed at **Adding …**, because a page served over plain http on the network lacks the browser's hashing that the upload used. It now hashes the file itself.\n- DeepSeek Harness: uninstalling the plugin that was running the Artifacts page left the page at a 404 until the app restarted. Another installed plugin now takes it over at once.",
+        "zh": "### 新功能\n- **DeepSeek Harness：在另一台设备上打开你的作品。** Harness 跑在一台电脑上、你在另一台设备上用时（比如服务器上跑 `dsh web`，在笔记本或手机的浏览器里通过同一个局域网或 tailnet 打开），从 **Artifacts**（「作品」）打开，或者点评论卡片上的 **View thread**，拿到的是 `http://127.0.0.1:…`，只有那台电脑打得开。现在插件会给你手上这台设备一个它自己的链接，地址就是浏览器访问 Harness 用的那个，在新标签页里打开。通过它打开，你就是编辑器的主人，和在那台电脑上一样：能编辑，也有 **Send to Agent**。经过代理或用自己的域名访问时，把 `BAOYU_DESIGN_REMOTE_HOST` 设成其他设备访问那台电脑用的地址；设成 `off` 就关掉这个功能。每个编辑器的 `open` 都可以加 `--remote[=<host>]`，打出这个主人链接（`--remote=off` 关掉），`share <文件夹> --reset owner` 换一把钥匙。见[在另一台设备上用](https://github.com/JimLiu/baoyu-design/blob/main/dsh-plugins/README.zh-CN.md#在另一台设备上用)（@akaDeyve 提出，[#40](https://github.com/JimLiu/baoyu-design/issues/40)）。\n- **DeepSeek Harness：`dsh-claude-dashboard` 可以更新成 `dsh-claude-data`。** 「作品」页上这个类型叫 **数据**（Data），装着 `dsh-claude-dashboard` 的，会把换到新插件当作一项更新来提示，写作 `claude-dashboard → claude-data`：点 **Update**（更新）会先装上 `dsh-claude-data`（开关和旧插件一样），再卸载 `dsh-claude-dashboard`。预设里写了 `dsh-claude-dashboard` 的，旧插件会留着，页面上会说要改哪里。2.14.0 说 `dsh-claude-dashboard` 不再更新；现在改成它继续发不带技能的版本。2.13.0 或更早的「作品」页会把这个版本当作更新来提示，装上它就有了会提示换插件的新「作品」页，提示出来后再点一次 **Update**。\n\n### 修复\n- `claude-design-system`：通过 **Share**（分享）链接进来的访客加不了资源和字体，页面一直停在 **Adding …**。局域网上用明文 http 打开的页面没有浏览器自带的哈希功能，上传要用它。现在由页面自己算。\n- DeepSeek Harness：卸载正在提供「作品」页的那个插件后，这个页面一直是 404，要重启应用才好。现在另一个装着的插件会马上接手。"
+      },
       {
         "version": "2.14.0",
         "date": "2026-11-11",
@@ -65,12 +71,6 @@
         "date": "2026-11-05",
         "en": "### Features\n- **DeepSeek Harness: the Artifacts page offers the plugins you haven't installed.** Beside the tiles for the skills you have, each other baoyu-design plugin gets a dimmed tile marked **Not installed**. Click it to see what the plugin makes and install it from there, at the same version as the ones you have, usually without a restart. Once it's in, **Start** opens a session with the skill. In an app that can't install from the page, the tile points you to the Plugins page. A plugin you installed and switched off still gets no tile.\n\n### Fixes\n- With `--agent-hook`, a comment could reach the agent twice: a second send could start the hook again after the first run had finished but before the comment was marked sent.",
         "zh": "### 新功能\n- **DeepSeek Harness：「作品」页会列出你还没装的插件。** 已装技能的入口旁边，其他 baoyu-design 插件也各有一个入口，颜色淡一些，标着 **未安装**。点开会说明这个插件做什么，可以直接在这里安装，版本和你已装的一致，多数情况不用重启。装好后点 **新建** 就用这个技能开一个会话。应用不支持在页面里安装时，会引导你去插件页。装了但被你关掉的插件，仍然没有入口。\n\n### 修复\n- 用 `--agent-hook` 时，一条评论可能发给 agent 两次：第一次运行已经结束、评论还没标成已发送时，第二次发送会再启动一次 hook。"
-      },
-      {
-        "version": "2.11.0",
-        "date": "2026-11-05",
-        "en": "### Features\n- **DeepSeek Harness: a new version no longer pops up over the app.** The **Artifacts** row in the left sidebar gets an **Update** label instead (a dot on the icon, where a collapsed sidebar keeps its icons), and a panel at the top of the Artifacts page shows the versions, each plugin and what the release changes. **Update all** updates them together; **Update** on a plugin's line takes just that one. **Later** folds the panel to one line and removes the label until the next version.\n- While an update runs you can leave the Artifacts page: the label says **Updating**, **Failed** or **Restart**. **Try again** picks up where it stopped: the rest after **Update all**, that plugin after its own **Update**.\n- The **Update** button on a plugin's page now updates only that plugin, and a page that was open when its plugin was replaced comes back by itself.",
-        "zh": "### 新功能\n- **DeepSeek Harness：新版本不再弹出来打断你。** 左侧栏的 **Artifacts**（「作品」）这一行会多一个 **更新** 标签（侧栏收起后还留着图标的话，是图标上的小圆点），「作品」页顶部的面板写着版本、每个插件和这次改了什么。**全部更新** 一起更新；每个插件那一行的 **更新** 只更新它自己。**稍后** 把面板收成一行，标签也消失，等下一个版本再提示。\n- 更新时可以离开「作品」页：标签会显示 **更新中**、**更新失败** 或 **待重启**。**重试** 从停下的地方接着来：**全部更新** 失败就接着更新剩下的，单独更新失败就再试这一个。\n- 插件详情页的 **更新** 按钮现在只更新这一个插件；更新时开着的页面被替换后，会自己回来。"
       }
     ]
   },
@@ -96,7 +96,7 @@
     "dsh": ">=0.2.0-0"
   },
   "dependencies": {
-    "dsh-claude-artifacts": "^2.14.0"
+    "dsh-claude-artifacts": "^2.14.1"
   },
   "dsh": {
     "bundle": {

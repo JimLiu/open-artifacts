@@ -4,6 +4,16 @@ English | [中文](./CHANGELOG.zh.md)
 
 All notable changes to `baoyu-design` are tracked in this file.
 
+## 2.14.1 - 2026-11-11
+
+### Features
+- **DeepSeek Harness: open your work from another device.** When Harness runs on one computer and you use it from another (`dsh web` on a server, opened in a browser on your laptop or phone over the same network or a tailnet), opening an item from **Artifacts**, or **View thread** on a comment card, gave a `http://127.0.0.1:…` link that only that computer can open. The plugin now gives the device you are on a link of its own, at the address your browser reaches Harness by, and opens it in a new tab. Through it you are the editor's owner, as on that computer: you edit, and **Send to Agent** is there. Behind a proxy or a domain of your own, set `BAOYU_DESIGN_REMOTE_HOST` to the address other devices reach that computer at; `off` turns this off. Every editor's `open` takes `--remote[=<host>]` to print that owner's link (`--remote=off` closes it), and `share <folder> --reset owner` replaces its key. See [Use it from another device](https://github.com/JimLiu/baoyu-design/blob/main/dsh-plugins/README.md#use-it-from-another-device) (requested by @akaDeyve, [#40](https://github.com/JimLiu/baoyu-design/issues/40)).
+- **DeepSeek Harness: `dsh-claude-dashboard` updates to `dsh-claude-data`.** The Artifacts page names the type **Data**, and offers an installed `dsh-claude-dashboard` as an update, `claude-dashboard → claude-data`: **Update** installs `dsh-claude-data`, switched on or off as the old one was, then uninstalls `dsh-claude-dashboard`. A preset that names `dsh-claude-dashboard` keeps it, and the page says what to change. 2.14.0 said `dsh-claude-dashboard` would get no more updates; instead it keeps getting releases with no skill in them. An Artifacts page from 2.13.0 or earlier offers that release as an update, and it brings the page that offers the move, so click **Update** once more when the move shows.
+
+### Fixes
+- `claude-design-system`: a guest on a **Share** link could not add an asset or a font. The page stayed at **Adding …**, because a page served over plain http on the network lacks the browser's hashing that the upload used. It now hashes the file itself.
+- DeepSeek Harness: uninstalling the plugin that was running the Artifacts page left the page at a 404 until the app restarted. Another installed plugin now takes it over at once.
+
 ## 2.14.0 - 2026-11-11
 
 ### Features
