@@ -4,6 +4,12 @@ English | [中文](./CHANGELOG.zh.md)
 
 All notable changes to `baoyu-design` are tracked in this file.
 
+## 2.15.1 - 2026-11-12
+
+### Fixes
+- DeepSeek Harness: the **Artifacts** page showed one artifact to a row, each card as wide as the page. Since 2.14.1 a style meant for one card's drawing also applied to the whole list. The list is a grid of cards again.
+- DeepSeek Harness: a plugin that was added from a folder and later uninstalled got no tile under **Make something new**, and the page could not install it. Its files stay in the profile after the uninstall, and the page took them for a plugin that is installed and switched off. The page now goes by what the app's plugin manager counts as installed, so the plugin gets its **Not installed** tile and installs from there.
+
 ## 2.15.0 - 2026-11-11
 
 ### Features
