@@ -62,7 +62,7 @@ A deck is `project/deck.json` plus one HTML file per slide. In the editor you ca
 
 <img src="assets/screenshots/claude-design-canvas.webp" alt="A coffee subscription landing page and its mobile signup form side by side on the claude-design canvas" width="880">
 
-A canvas holds artboards side by side: `project/canvas.json` plus one `.dc.html` Design Component per artboard. Play an artboard as a working prototype, on the canvas or full screen; retype copy, adjust tweaks and leave notes; export the whole design as a standalone HTML page, a PDF or PNG images (1× or 2×, several artboards in a .zip); **HTML for Figma** saves the artboards as a page without frames, for Figma's Chrome extension to capture. *Above: the landing hero of a coffee subscription, with its mobile signup form beside it.*
+A canvas holds artboards side by side: `project/canvas.json` plus one `.dc.html` Design Component per artboard. Play an artboard as a working prototype, on the canvas or full screen; retype copy, adjust tweaks and leave notes; export the whole design as a standalone HTML page, a PDF or PNG images (1× or 2×, several artboards in a .zip); **HTML for Figma** saves the artboards as a page without frames, for Figma's Chrome extension to capture. Full window, an artboard lays out at a screen width you pick (phone, tablet or desktop sizes), and its Export saves the whole page at that width as a PNG. *Above: the landing hero of a coffee subscription, with its mobile signup form beside it.*
 
 ### `claude-design-system`: design systems
 

@@ -61,7 +61,7 @@ https://github.com/user-attachments/assets/db6c5d93-dc28-4170-8356-4dbe5725a57c
 
 <img src="assets/screenshots/claude-design-canvas.webp" alt="claude-design 画布上并排的咖啡订阅落地页和它的手机版注册表单" width="880">
 
-一块画布上并排放着多个画板：`project/canvas.json` 加上每个画板一个 `.dc.html` 设计组件。画板可以当成能交互的原型来播放，在画布上播或者全屏播；也可以改文案、调 tweaks、贴便签；整份设计能导出成独立的 HTML 页面、PDF 或 PNG 图片（1× 或 2×，多个画板打包成 .zip）；**HTML for Figma** 把画板存成一个没有框架的页面，给 Figma 的 Chrome 扩展捕捉用。*上图：一个咖啡订阅服务的落地页首屏，旁边是它的手机版注册表单。*
+一块画布上并排放着多个画板：`project/canvas.json` 加上每个画板一个 `.dc.html` 设计组件。画板可以当成能交互的原型来播放，在画布上播或者全屏播；也可以改文案、调 tweaks、贴便签；整份设计能导出成独立的 HTML 页面、PDF 或 PNG 图片（1× 或 2×，多个画板打包成 .zip）；**HTML for Figma** 把画板存成一个没有框架的页面，给 Figma 的 Chrome 扩展捕捉用。画板全窗口打开时，可以选一个屏幕宽度（手机、平板或桌面的尺寸）来排版，它的 Export 能把这个宽度下的整页存成 PNG。*上图：一个咖啡订阅服务的落地页首屏，旁边是它的手机版注册表单。*
 
 ### `claude-design-system`：设计系统
 
