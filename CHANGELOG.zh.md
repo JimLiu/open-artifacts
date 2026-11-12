@@ -4,6 +4,21 @@
 
 本文档记录 `baoyu-design` 的重要变更。
 
+## 2.15.0 - 2026-11-11
+
+### 新功能
+- **`claude-motion` 跟上了 claude.ai 2026-11-10 的更新。** 只有 `narration.js`、没有自己配音轨的影片，侧边栏 Tweaks 里多了 **Voiceover** 一节，时间轴下多了一条 voiceover 轨。改一行台词，点 **Record changes**，这处改动会作为一个请求发给 agent（`comments --wait` 在 `requests` 下打印它；没有 agent 在听时，给出文字让你复制）。有自己配音轨（`modules/voice.json`）的影片，保持原来的 **Script** 标签页和轨道。`write-db` 现在拒绝写页面自己记的手改记录（`modules/retyped.json`、`recolored.json`、`recut.json`、`refaced.json`、`retouched.json`、`fetched-fonts.json`），报 `PAGE_ONLY`。
+- **`claude-design-system` 跟上了 claude.ai 2026-11-10 的更新。** 页面一被隐藏（比如切到别的标签页）就立刻保存，不再等自动保存。关掉 toast 后焦点回到原来的位置，F6 也能走到 toast。
+- **`claude-slides` 跟上了 claude.ai 2026-11-10 的更新。** 读不出来的幻灯片，或标记可能被部分隐藏的幻灯片，会在幻灯片上和属性面板里说明，并带 **Ask the agent to fix**（没有对话在听时，复制一段提示词让你贴给 agent）。选中的 SVG 图片不能设成 Cover 或 Hug，属性面板会说明原因：重新打开演示稿时它会变样。放映时从页码条上开始的滑动不再翻页。`deck.json` 带着这个版本不认识的 `format` 时，只读打开，顶上提示它由更新版本的 Slides 保存，文件不会被改写。表格按行包一层，并带 table、row、cell 的 role，列对得齐，读屏软件也按表格来读。
+- **所有编辑器的评论按 Markdown 显示。** 评论或 agent 回复里的 Markdown（粗体、代码、列表、引用等）直接画出来，不再显示成原样字符；**All comments** 列表里每一行仍是平铺的文字。新评论卡在你输入时有焦点环。
+- **DeepSeek Harness：「作品」页的类型磁贴跟 claude.ai 的「Make something new」一行一致。** 每个类型一块磁贴：淡色底加粉笔涂鸦（深色模式下底色和线条互换），类型图标重画，Data、Whiteboard、Motion 带 Beta 角标。鼠标停在磁贴上，或者用 Tab 走到它，会出现一张卡片，写着类型名、它做什么、装没装，以及开始新建、安装或查看安装的按钮。Esc 关闭卡片，触屏不出卡片。
+
+### 修复
+- `claude-slides`：第三方许可说明补上了 pptxgenjs 源码文件头写明的 OfficeGen 署名。
+
+### 文档
+- `claude-motion` 的 `SKILL.md` 和 reference 也跟着这次更新。agent 收尾时给出影片的地址。循环播放、GIF、展厅屏幕这类影片，不要求配乐就不配。请求里既说了影片干什么用、又说了要什么样子，就不再弹问题表单。普通的影片从 Inter 和 Space Grotesk 起手。`by-hand.md` 讲了页面记录的手改台词和手改颜色。
+
 ## 2.14.1 - 2026-11-11
 
 ### 新功能

@@ -4,6 +4,21 @@ English | [中文](./CHANGELOG.zh.md)
 
 All notable changes to `baoyu-design` are tracked in this file.
 
+## 2.15.0 - 2026-11-11
+
+### Features
+- **`claude-motion` follows claude.ai's 2026-11-10 update.** A film that has a `narration.js` but no voice track of its own gets a **Voiceover** section under Tweaks in the side panel and a voiceover lane under the timeline. Change a line and click **Record changes**: the edit reaches the agent as a request (`comments --wait` prints it under `requests`; with no agent listening, the text is there to copy). A film with a voice track of its own (`modules/voice.json`) keeps its **Script** tab and lanes. `write-db` now refuses to write the records the page keeps of what you set by hand (`modules/retyped.json`, `recolored.json`, `recut.json`, `refaced.json`, `retouched.json`, `fetched-fonts.json`) and says `PAGE_ONLY`.
+- **`claude-design-system` follows claude.ai's 2026-11-10 update.** Edits are saved as soon as the page is hidden (you switch tabs, say) instead of waiting for the autosave. A toast you close hands the focus back to where it was, and F6 reaches it.
+- **`claude-slides` follows claude.ai's 2026-11-10 update.** A slide that can't be read, or whose markup may be partly hidden, says so on the slide and in the inspector, with **Ask the agent to fix** (with no conversation listening it copies a prompt to paste). A selected SVG image can't be set to Cover or Hug, and the inspector says why: it would change when the presentation reopens. While presenting, a swipe that starts on the page-number strip no longer turns the slide. A `deck.json` with a `format` this version doesn't know opens read-only, with a banner that it was saved by a newer version of Slides, and is not rewritten. Tables are saved with a wrapper for each row and with table, row and cell roles, so columns line up and screen readers read them as tables.
+- **Every editor draws Markdown in comments.** Markdown in a comment or an agent's reply (bold, code, lists, quotes and so on) is drawn, not shown as characters; the **All comments** list keeps each row to flat text. The new-comment card shows a focus ring while you type in it.
+- **DeepSeek Harness: the Artifacts page's type tiles follow claude.ai's "Make something new" row.** Each type is a tile with a pastel wash and a chalk doodle (dark mode swaps wash and ink), with redrawn type icons and a Beta badge on Data, Whiteboard and Motion. Rest the pointer on a tile, or Tab to it, and a card shows the type's name, what it makes and whether it is installed, with a button to start one, install it, or see the install. Escape closes the card; touch skips it.
+
+### Fixes
+- `claude-slides`: its third-party licenses notice now carries the OfficeGen attribution that pptxgenjs's source header names.
+
+### Documentation
+- `claude-motion`'s `SKILL.md` and reference follow the same update. The agent ends with the film's url. A film for a loop, a GIF or a lobby screen has no score unless one is asked for. A request that says both what the film is for and how it should look skips the questions form. Plain films start from Inter and Space Grotesk. `by-hand.md` covers the page's records of lines retyped and colors set by hand.
+
 ## 2.14.1 - 2026-11-11
 
 ### Features
