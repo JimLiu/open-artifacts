@@ -8449,6 +8449,8 @@ Usage:
   node scripts/artifact.mjs serve    <root> [--port n] [--lan]   the same server, in the foreground
                                      [--agent-hook "<command>"]  open/serve: run this for each comment sent to the agent
                                                                   (the comment as JSON on stdin); --lan: shared too
+                                     [--remote[=<host>]]         open: also open it to you on another device (<host>: how
+                                                                  that device reaches this computer); prints remoteUrl
   node scripts/artifact.mjs stop     <root>                      stop the background player
   node scripts/artifact.mjs share    <root>                      share on the local network; prints a link per role
                                      [--off] [--reset R] [--enable R] [--disable R]
@@ -8456,8 +8458,6 @@ Usage:
                                      [--role G=R,...]            give guest G (an id it prints) role R
                                                                   (link options only: shared or not stays as it was)
   node scripts/artifact.mjs comments <root> [--all]              the open comments people left in the player (--all:
-                                     [--remote[=<host>]]         open: also open it to you on another device (<host>: how
-                                                                  that device reaches this computer); prints remoteUrl
                                                                   resolved too)
   node scripts/artifact.mjs comments <root> --wait [--timeout s] wait for a comment sent to the agent from the open player, or a request from its buttons
   node scripts/artifact.mjs comment-reply <root> <id> <text|-> [--resolve]
