@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Claude 数据看板（已改名 Claude 数据）",
+    "description": "已改名为 dsh-claude-data。这个版本不带技能，只带来新版「作品」页，由它把你换到 Claude 数据：在插件页打开这个插件，或者打开左侧栏的「作品」，在 claude-dashboard → claude-data 上点 Update（更新）。",
+    "detail": "docs/DETAIL.zh.md"
+  }
+}

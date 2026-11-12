@@ -1,4 +1,4 @@
-// dsh-claude-artifacts 2.14.0: built from baoyu-design.
+// dsh-claude-artifacts 2.14.1: built from baoyu-design.
 window.__ModuleLoader__.load({
 	id: "dsh-claude-artifacts",
 	factory: (require) => {
@@ -59,6 +59,28 @@ window.__ModuleLoader__.load({
 		var updatesPath = `${base}.updates`;
 		var installPath = `${base}.install`;
 
+		function isLoopbackName(name) {
+		  const n = name.toLowerCase().replace(/^\[|\]$/g, "");
+		  return n === "localhost" || n.endsWith(".localhost") || /^127\.\d+\.\d+\.\d+$/.test(n) || n === "::1" || n === "0:0:0:0:0:0:0:1" || n === "::ffff:127.0.0.1";
+		}
+		function onAnotherDevice() {
+		  if (typeof location === "undefined" || !/^https?:$/.test(location.protocol)) return false;
+		  return !isLoopbackName(location.hostname);
+		}
+		function pendingWindow() {
+		  if (typeof window === "undefined") return null;
+		  const opened = window.open("about:blank", "_blank");
+		  if (!opened) return null;
+		  try {
+		    opened.opener = null;
+		  } catch {
+		  }
+		  return {
+		    go: (url) => opened.location.replace(url),
+		    close: () => opened.close()
+		  };
+		}
+
 		function desktopBrowser() {
 		  const carrier = globalThis.dshDesktop;
 		  return carrier?.protocolVersion === 1 ? carrier.browser : void 0;
@@ -103,6 +125,19 @@ window.__ModuleLoader__.load({
 		      const zoom = document.querySelector('[data-testid="mc-zoom"]')?.closest('[role="toolbar"]');
 		      const top = zoom ? zoom.getBoundingClientRect().bottom + 8 : r.top;
 		      return { x: r.left, y: top, width: r.width, height: tools.getBoundingClientRect().top - 8 - top };
+		    })()`
+		  },
+		  // The grid, below the formula bar and above the formatting toolbar, once the workbook has loaded.
+		  "claude-sheets": {
+		    width: 1280,
+		    height: 800,
+		    find: `(() => {
+		      const grid = document.querySelector('.sheet-grid');
+		      if (!grid || !document.querySelector('[role="tab"]') || !grid.querySelector('[role="gridcell"]')) return null;
+		      const r = grid.getBoundingClientRect();
+		      const tools = [...document.querySelectorAll('[role="toolbar"]')].map(t => t.getBoundingClientRect().top).filter(top => top > r.top + r.height / 2);
+		      const bottom = Math.min(r.bottom, ...tools.map(top => top - 8));
+		      return { x: r.left, y: r.top, width: r.width, height: bottom - r.top };
 		    })()`
 		  }
 		};
@@ -270,6 +305,17 @@ window.__ModuleLoader__.load({
 		  if (again.ok && again.value !== null) return { outcome: again.value, left: "kept" };
 		  return { outcome: { application: "failed", error: { diagnostic: answer.error.message ?? "the app did not answer" } }, left: "unknown" };
 		}
+		async function removeReplaced(manager, replaced) {
+		  if ((replaced.keptBy?.length ?? 0) > 0) return null;
+		  if (manager.removeBundle === void 0) return { outcome: { application: "failed", error: { diagnostic: "this app cannot remove a plugin from here" } }, left: "kept" };
+		  try {
+		    const answer = await manager.removeBundle(replaced.name);
+		    if (answer.ok) return { outcome: answer.value, left: "kept" };
+		    return { outcome: { application: "failed", error: { diagnostic: answer.error.message ?? "the app did not answer" } }, left: "unknown" };
+		  } catch (error) {
+		    return { outcome: { application: "failed", error: { diagnostic: error.message } }, left: "unknown" };
+		  }
+		}
 		async function run(manager, only) {
 		  set({ phase: "running", failure: null, step: null, only });
 		  const answer = await readUpdates();
@@ -279,25 +325,34 @@ window.__ModuleLoader__.load({
 		  set({ to: latestOf(plan) });
 		  for (const [index, plugin] of plan.entries()) {
 		    set({ step: { name: plugin.name, index: index + 1, total: plan.length } });
-		    let outcome;
-		    let left;
-		    try {
-		      ({ outcome, left } = await install(manager, plugin, `baoyu-design-update-${Date.now()}-${index}`));
-		    } catch (error) {
-		      outcome = { application: "failed", error: { diagnostic: error.message } };
-		      left = "unknown";
+		    let outcome = { application: "applied" };
+		    let left = "kept";
+		    if (plugin.spec !== "") {
+		      try {
+		        ({ outcome, left } = await install(manager, plugin, `baoyu-design-update-${Date.now()}-${index}`));
+		      } catch (error) {
+		        outcome = { application: "failed", error: { diagnostic: error.message } };
+		        left = "unknown";
+		      }
 		    }
 		    const already = outcome.application === "failed" && outcome.error?.code === "already-installed";
 		    if (failedOutcome(outcome) && !already) {
 		      set({ phase: "failed", step: null, failure: { plugin: plugin.name, message: reasonOf(outcome), left } });
 		      return void look();
 		    }
+		    let restart = outcome.application === "restart-required";
+		    const removed = plugin.replaces === void 0 ? null : await removeReplaced(manager, plugin.replaces);
 		    const now = hub().state;
 		    set({
 		      updates: now.updates.filter((u) => u.name !== plugin.name),
-		      updated: [...(now.updated ?? []).filter((u) => u.name !== plugin.name), plugin],
-		      restart: now.restart || outcome.application === "restart-required"
+		      updated: [...(now.updated ?? []).filter((u) => u.name !== plugin.name), plugin]
 		    });
+		    if (removed !== null && failedOutcome(removed.outcome)) {
+		      set({ phase: "failed", step: null, restart: now.restart || restart, failure: { plugin: plugin.replaces.name, message: reasonOf(removed.outcome), left: removed.left, removing: true } });
+		      return void look();
+		    }
+		    restart ||= removed?.outcome.application === "restart-required";
+		    set({ restart: hub().state.restart || restart });
 		  }
 		  set({ step: null });
 		  if (plan.length === 0) close();
@@ -337,8 +392,12 @@ window.__ModuleLoader__.load({
 		    }
 		    const already = outcome.application === "failed" && outcome.error?.code === "already-installed";
 		    if (failedOutcome(outcome) && !already) return set({ install: { plugin, phase: "failed", message: reasonOf(outcome) } });
-		    const restart = outcome.application === "restart-required";
-		    set({ install: { plugin, phase: "done", ...version ? { version } : {}, ...restart ? { restart } : {} }, restart: hub().state.restart || restart });
+		    let restart = outcome.application === "restart-required";
+		    const replaced = hub().state.updates.find((u) => u.name === plugin)?.replaces;
+		    const removed = replaced === void 0 ? null : await removeReplaced(manager, replaced);
+		    restart ||= removed?.outcome.application === "restart-required";
+		    const kept = replaced !== void 0 && (removed === null || failedOutcome(removed.outcome)) ? { kept: replaced.name } : {};
+		    set({ install: { plugin, phase: "done", ...version ? { version } : {}, ...restart ? { restart } : {}, ...kept }, restart: hub().state.restart || restart });
 		    void look();
 		  })();
 		}
@@ -392,7 +451,17 @@ window.__ModuleLoader__.load({
 		  "mark.running": "更新中",
 		  "mark.failed": "更新失败",
 		  "mark.restart": "待重启",
-		  "failed.tag": "更新失败，详情见「作品」页"
+		  "failed.tag": "更新失败，详情见「作品」页",
+		  "renamed.title": "{old} 已改名为 {plugin}",
+		  "renamed": "{old} 改名为 {plugin} 了：更新会装上 {plugin}，再卸载 {old}。",
+		  "renamed.remove": "{plugin} 已经装好，更新会卸载它替换掉的 {old}。",
+		  "renamed.kept": "{old} 改名为 {plugin} 了：更新会装上 {plugin}。预设 {presets} 里写着 {old}，所以先留着它：把那里改成 dsh-{plugin}，再到插件页卸载 {old}。",
+		  "row.renamed": "{old} → {plugin}",
+		  "row.remove": "待卸载 {old}",
+		  "failed.remove": "{plugin} 没有卸载",
+		  "failed.remove.how": "到插件页卸载它；提示正在使用的话，先退出 DSH 再重新打开。",
+		  "tag.renamed": "已改名为 {plugin}",
+		  "kept": "{old} 先留着：预设 {presets} 里写着它。把那里改成 dsh-{plugin}，再到插件页卸载 {old}。"
 		};
 		var en = {
 		  "available": "baoyu-design plugins {version} is available",
@@ -426,7 +495,17 @@ window.__ModuleLoader__.load({
 		  "mark.running": "Updating",
 		  "mark.failed": "Failed",
 		  "mark.restart": "Restart",
-		  "failed.tag": "Update failed: see Artifacts"
+		  "failed.tag": "Update failed: see Artifacts",
+		  "renamed.title": "{old} is now {plugin}",
+		  "renamed": "{old} is now {plugin}: Update installs {plugin}, then removes {old}.",
+		  "renamed.remove": "{plugin} is installed. Update removes {old}, which it replaces.",
+		  "renamed.kept": "{old} is now {plugin}: Update installs {plugin}. The preset {presets} names {old}, so it stays: name dsh-{plugin} there instead, then remove {old} on the Plugins page.",
+		  "row.renamed": "{old} → {plugin}",
+		  "row.remove": "Removes {old}",
+		  "failed.remove": "{plugin} was not removed",
+		  "failed.remove.how": "Remove it on the Plugins page. If it says it is in use, quit DSH and open it again first.",
+		  "tag.renamed": "Renamed to {plugin}",
+		  "kept": "{old} stays: the preset {presets} names it. Name dsh-{plugin} there instead, then remove {old} on the Plugins page."
 		};
 		var CSS = `
 		.bdu-panel{margin:-8px 0 24px;padding:14px 16px;border-radius:12px;background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary);font-size:13px;line-height:20px}
@@ -507,17 +586,24 @@ window.__ModuleLoader__.load({
 		  flush();
 		  return blocks;
 		}
+		function renamedText(t, update, replaces) {
+		  const words = { old: pluginTitle(replaces.name), plugin: pluginTitle(update.name) };
+		  if ((replaces.keptBy?.length ?? 0) > 0) return t("renamed.kept", { ...words, presets: replaces.keptBy.join(", ") });
+		  return t(update.spec === "" ? "renamed.remove" : "renamed", words);
+		}
 		function PluginRow({ plugin, done, state: { phase, step, failure, only }, offer: { t, start: startUpdate } }) {
 		  const running = phase === "running";
 		  const failed = phase === "failed" && failure?.plugin === plugin.name;
 		  const title = pluginTitle(plugin.name);
-		  let status = `${plugin.version} → ${plugin.latest}`;
+		  const { replaces } = plugin;
+		  const name = replaces === void 0 ? title : t("row.renamed", { old: pluginTitle(replaces.name), plugin: title });
+		  let status = plugin.spec === "" && replaces !== void 0 ? t("row.remove", { old: pluginTitle(replaces.name) }) : `${replaces?.version ?? plugin.version} → ${plugin.latest}`;
 		  if (done) status = t("row.done", { version: plugin.latest });
 		  else if (running && step?.name === plugin.name) status = t("row.running");
 		  else if (running && (only ?? null) === null) status = t("row.waiting");
 		  else if (failed) status = t("row.failed");
 		  return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { className: "bdu-plugin", "data-plugin": plugin.name, children: [
-		    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "bdu-plugin-name", children: title }),
+		    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "bdu-plugin-name", children: name }),
 		    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "bdu-plugin-status", ...failed ? { "data-failed": "" } : {}, children: status }),
 		    !done && !running && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_dsh_client_ui_primitives.Button, { variant: "outline", size: "sm", "aria-label": t("update.one", { plugin: title, version: plugin.latest }), onClick: () => startUpdate(plugin.name), children: t(failed ? "retry" : "update") })
 		  ] });
@@ -547,25 +633,31 @@ window.__ModuleLoader__.load({
 		  } else if (phase === "done") {
 		    const last = updates.length > 0 ? updated?.at(-1) : void 0;
 		    title = last ? t("done.one", { plugin: pluginTitle(last.name), version: last.latest }) : t("done", { version: to });
-		    text = t(restart ? "done.restart" : "done.session");
+		    const kept = updated?.find((u) => (u.replaces?.keptBy?.length ?? 0) > 0);
+		    const keptText = kept?.replaces === void 0 ? "" : ` ${t("kept", { old: pluginTitle(kept.replaces.name), plugin: pluginTitle(kept.name), presets: kept.replaces.keptBy.join(", ") })}`;
+		    text = `${t(restart ? "done.restart" : "done.session")}${keptText}`;
 		    actions = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
 		      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_dsh_client_ui_primitives.Button, { variant: "outline", size: "sm", onClick: close, children: t("close") }),
 		      updates.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_dsh_client_ui_primitives.Button, { variant: "primary", size: "sm", onClick: () => startUpdate(), children: t("update.all") })
 		    ] });
 		  } else if (phase === "failed" && failure) {
-		    title = t("failed", { plugin: pluginTitle(failure.plugin) });
+		    title = t(failure.removing ? "failed.remove" : "failed", { plugin: pluginTitle(failure.plugin) });
 		    const left = failure.left ?? "kept";
-		    text = `${failure.message} ${t(`failed.${left}`)}`;
+		    text = `${failure.message} ${t(failure.removing ? "failed.remove.how" : `failed.${left}`)}`;
 		    const retry = (only ?? null) === null ? updates.length > 0 : rows.length <= 1 && updates.some((u) => u.name === only);
 		    actions = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
 		      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_dsh_client_ui_primitives.Button, { variant: "outline", size: "sm", onClick: close, children: t("close") }),
 		      retry && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_dsh_client_ui_primitives.Button, { variant: "primary", size: "sm", onClick: () => startUpdate(only), children: t("retry") })
 		    ] });
 		  } else {
-		    title = t("available", { version: latest });
+		    const installs = updates.some((u) => u.spec !== "");
+		    const swap = updates.find((u) => u.replaces !== void 0);
+		    title = installs || swap?.replaces === void 0 ? t("available", { version: latest }) : t("renamed.title", { old: pluginTitle(swap.replaces.name), plugin: pluginTitle(swap.name) });
+		    const current = rows.length > 1 || swap !== void 0 ? "" : `${t("current", { plugin: pluginTitle(updates[0].name), version: updates[0].version })} `;
 		    text = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-		      rows.length > 1 ? "" : `${t("current", { plugin: pluginTitle(updates[0].name), version: updates[0].version })} `,
-		      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: base2, target: "_blank", rel: "noreferrer", children: t("changelog") })
+		      current,
+		      swap?.replaces !== void 0 && `${renamedText(t, swap, swap.replaces)} `,
+		      installs && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: base2, target: "_blank", rel: "noreferrer", children: t("changelog") })
 		    ] });
 		    actions = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
 		      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_dsh_client_ui_primitives.Button, { variant: "outline", size: "sm", onClick: later, children: t("later") }),
@@ -613,10 +705,11 @@ window.__ModuleLoader__.load({
 		  ] });
 		}
 		var Refresh = import_dsh_client_ui_primitives.IconRefreshOutlineRegular;
+		var pageUpdate = (updates, name) => name === void 0 ? void 0 : updates.find((u) => u.replaces?.name === name) ?? updates.find((u) => u.name === name && u.spec !== "" && !u.native);
 		function DetailAction({ subject, t, startUpdate }) {
 		  const { phase, updates } = useUpdates();
-		  const update = updates.find((u) => u.name === subject?.pkg?.name);
-		  if (subject?.kind !== "bundle" || update === void 0 || update.native) return null;
+		  const update = pageUpdate(updates, subject?.pkg?.name);
+		  if (subject?.kind !== "bundle" || update === void 0) return null;
 		  const running = phase === "running";
 		  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
 		    import_dsh_client_ui_primitives.Button,
@@ -636,8 +729,9 @@ window.__ModuleLoader__.load({
 		  const { phase, updates, failure } = useUpdates();
 		  if (subject?.kind !== "bundle") return null;
 		  if (phase === "failed" && failure?.plugin === subject.pkg?.name) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_dsh_client_ui_primitives.Tag, { tone: "neutral", children: t("failed.tag") });
-		  const update = updates.find((u) => u.name === subject.pkg?.name);
-		  if (update === void 0 || update.native) return null;
+		  const update = pageUpdate(updates, subject.pkg?.name);
+		  if (update === void 0) return null;
+		  if (update.replaces?.name === subject.pkg?.name) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_dsh_client_ui_primitives.Tag, { tone: "info", children: t("tag.renamed", { plugin: pluginTitle(update.name) }) });
 		  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_dsh_client_ui_primitives.Tag, { tone: "info", children: t("tag", { version: update.latest }) });
 		}
 		function pageUpdates(ctx) {
@@ -754,10 +848,11 @@ window.__ModuleLoader__.load({
 		  "type.claude-slides": "幻灯片",
 		  "type.claude-design": "设计",
 		  "type.claude-design-system": "设计系统",
-		  "type.claude-data": "看板",
+		  "type.claude-data": "数据",
 		  "type.claude-docs": "文档",
 		  "type.claude-motion": "动画",
 		  "type.claude-whiteboard": "白板",
+		  "type.claude-sheets": "表格",
 		  "create.heading": "新建",
 		  "create.new": "新建",
 		  "create.session": "新会话",
@@ -768,6 +863,7 @@ window.__ModuleLoader__.load({
 		  "prompt.claude-docs": "帮我写一份文档，内容是：",
 		  "prompt.claude-motion": "帮我做一段动画，内容是：",
 		  "prompt.claude-whiteboard": "帮我在白板上画出：",
+		  "prompt.claude-sheets": "帮我做一张表格，用来：",
 		  "view.list": "列表视图",
 		  "view.grid": "网格视图",
 		  "filter.button": "排序和筛选",
@@ -809,6 +905,7 @@ window.__ModuleLoader__.load({
 		  "delete.keeps": "这会把它从作品里移除。它的文件夹里还有别的文件，所以留在原处：{path}",
 		  "delete.confirm": "删除",
 		  "toast.copied": "链接已复制到剪贴板。",
+		  "toast.copyRemote": "编辑器的链接只在运行 Harness 的电脑上能打开，这里打开的那个是你本人的入口，不能给别人。要分享，在编辑器里点“分享”。",
 		  "toast.deleted": "已删除“{title}”。",
 		  "toast.removed": "已从作品里移除“{title}”，文件夹还在原处。",
 		  "toast.undo": "撤销",
@@ -821,6 +918,8 @@ window.__ModuleLoader__.load({
 		  "open.pluginOff": "没有安装 {plugin} 插件，打不开这个作品。",
 		  "open.failed": "打不开：{message}",
 		  "open.noSession": "原来的对话已不在，编辑器在新窗口里打开了。",
+		  "open.remoteOld": "{plugin} 插件的版本较旧，没法在另一台设备上打开这个作品：更新它后再试。",
+		  "open.blocked": "浏览器拦下了新窗口：允许这个网站弹出窗口后再试。",
 		  "action.failed": "没有做成：{message}",
 		  "tile.missing": "未安装",
 		  "tile.installing": "正在安装…",
@@ -835,6 +934,7 @@ window.__ModuleLoader__.load({
 		  "about.claude-docs": "写可以编辑、评论和分享的文档。",
 		  "about.claude-motion": "做短动画，导出 MP4 或 GIF。",
 		  "about.claude-whiteboard": "在白板上摆出示意图、流程和想法，可以拖动、画画、留评论。",
+		  "about.claude-sheets": "和 Agent 一起填的表格：公式、多个工作表、图表，可以给单元格留评论。",
 		  "install.title": "安装「{type}」插件？",
 		  "install.body": "点「安装」会装上 {plugin} 插件，装好后点这个入口就能新建。",
 		  "install.manual": "到「插件」页搜索 {plugin} 并安装，装好后点这个入口就能新建。",
@@ -849,6 +949,8 @@ window.__ModuleLoader__.load({
 		  "install.failed": "「{type}」没有装上",
 		  "install.retry": "重试",
 		  "install.start": "新建",
+		  "install.replaces": "它是 {old} 的新名字：装好后会卸载 {old}。",
+		  "install.kept": "{old} 还在，到「插件」页卸载它。",
 		  "dialog.close": "关闭"
 		};
 		var en2 = {
@@ -860,10 +962,11 @@ window.__ModuleLoader__.load({
 		  "type.claude-slides": "Slides",
 		  "type.claude-design": "Design",
 		  "type.claude-design-system": "Design system",
-		  "type.claude-data": "Dashboard",
+		  "type.claude-data": "Data",
 		  "type.claude-docs": "Docs",
 		  "type.claude-motion": "Motion",
 		  "type.claude-whiteboard": "Whiteboard",
+		  "type.claude-sheets": "Sheets",
 		  "create.heading": "Make something new",
 		  "create.new": "New",
 		  "create.session": "New session",
@@ -874,6 +977,7 @@ window.__ModuleLoader__.load({
 		  "prompt.claude-docs": "Write me a doc about: ",
 		  "prompt.claude-motion": "Make me an animation about: ",
 		  "prompt.claude-whiteboard": "Lay this out on a whiteboard: ",
+		  "prompt.claude-sheets": "Make me a spreadsheet for: ",
 		  "view.list": "List view",
 		  "view.grid": "Grid view",
 		  "filter.button": "Sort and filter",
@@ -915,6 +1019,7 @@ window.__ModuleLoader__.load({
 		  "delete.keeps": "This takes it off your artifacts. Its folder holds other files too, so it stays where it is: {path}",
 		  "delete.confirm": "Delete",
 		  "toast.copied": "Link copied to clipboard.",
+		  "toast.copyRemote": "An editor's link opens only on the computer that runs Harness, and the one opened here is your own way in, not for others. To share it, use Share in the editor.",
 		  "toast.deleted": "Deleted “{title}”.",
 		  "toast.removed": "Took “{title}” off your artifacts. Its folder stays where it is.",
 		  "toast.undo": "Undo",
@@ -927,6 +1032,8 @@ window.__ModuleLoader__.load({
 		  "open.pluginOff": "The {plugin} plugin is not installed, so this artifact cannot open.",
 		  "open.failed": "Could not open it: {message}",
 		  "open.noSession": "The conversation is gone, so the editor opened in a new window.",
+		  "open.remoteOld": "The {plugin} plugin is of an earlier release, which cannot open this artifact on another device: update it and try again.",
+		  "open.blocked": "The browser blocked the new window: allow pop-ups for this site and try again.",
 		  "action.failed": "That did not work: {message}",
 		  "tile.missing": "Not installed",
 		  "tile.installing": "Installing…",
@@ -941,6 +1048,7 @@ window.__ModuleLoader__.load({
 		  "about.claude-docs": "Docs you can edit, comment on and share.",
 		  "about.claude-motion": "Short animated films you can export as MP4 or GIF.",
 		  "about.claude-whiteboard": "Whiteboards of diagrams, flows and ideas you move, draw on and comment on.",
+		  "about.claude-sheets": "Spreadsheets you fill in with the agent: formulas, several sheets, charts and comments on cells.",
 		  "install.title": "Install the {type} plugin?",
 		  "install.body": "Install adds the {plugin} plugin. Then this tile starts one.",
 		  "install.manual": "Find {plugin} on the Plugins page and install it. Then this tile starts one.",
@@ -955,9 +1063,11 @@ window.__ModuleLoader__.load({
 		  "install.failed": "{type} did not install",
 		  "install.retry": "Try again",
 		  "install.start": "Start",
+		  "install.replaces": "It is the new name of {old}, which it then removes.",
+		  "install.kept": "{old} is still installed: remove it on the Plugins page.",
 		  "dialog.close": "Close"
 		};
-		var SKILLS = ["claude-docs", "claude-slides", "claude-design", "claude-data", "claude-design-system", "claude-motion", "claude-whiteboard"];
+		var SKILLS = ["claude-docs", "claude-slides", "claude-design", "claude-data", "claude-design-system", "claude-motion", "claude-whiteboard", "claude-sheets"];
 		var isSkill = (s) => SKILLS.includes(s);
 		var creatable = (on) => SKILLS.filter((s) => on.includes(s));
 		var promptFor = (skill, t) => `/${skill} ${t(`prompt.${skill}`)}`;
@@ -1055,6 +1165,10 @@ window.__ModuleLoader__.load({
 		.bda-flow{display:block;width:100%;height:auto;margin-top:4px}
 		.bda-flow rect{fill:color-mix(in srgb,var(--bda-tint) 18%,var(--dsw-alias-bg-base));stroke:var(--dsw-alias-border-l2);stroke-width:.5}
 		.bda-flow path{fill:none;stroke:var(--bda-tint);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+		.bda-grid{display:block;width:100%;height:auto;margin-top:4px}
+		.bda-grid path{fill:none;stroke:var(--dsw-alias-border-l2);stroke-width:.75}
+		.bda-grid-head{fill:color-mix(in srgb,var(--bda-tint) 18%,var(--dsw-alias-bg-base))}
+		.bda-grid-pick{fill:none;stroke:var(--bda-tint);stroke-width:1.5}
 		.bda-swatches{display:flex;gap:4px}
 		.bda-swatch{width:16px;height:16px;border-radius:50%;background:var(--bda-tint)}
 		.bda-swatch:nth-child(2){opacity:.7}.bda-swatch:nth-child(3){opacity:.45}.bda-swatch:nth-child(4){opacity:.25}
@@ -1152,7 +1266,8 @@ window.__ModuleLoader__.load({
 		  "claude-data": "#e5484d",
 		  "claude-docs": "#3f8ef0",
 		  "claude-motion": "#1fa971",
-		  "claude-whiteboard": "#d6409f"
+		  "claude-whiteboard": "#d6409f",
+		  "claude-sheets": "#5a9e22"
 		};
 		var tintOf = (skill) => isSkill(skill) ? TINTS[skill] : "#8a8a8a";
 		var svg = (size) => ({ display: "block", width: size, height: size, flex: "none" });
@@ -1199,6 +1314,11 @@ window.__ModuleLoader__.load({
 		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
 		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "2.75", y: "4", width: "14.5", height: "12", rx: "2", ...p }),
 		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "m8.5 7.75 4 2.25-4 2.25v-4.5Z", ...p })
+		        ] });
+		      case "claude-sheets":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "2.75", y: "3.25", width: "14.5", height: "13.5", rx: "1.5", ...p }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M2.75 7.75h14.5M2.75 12.25h14.5M7.5 3.25v13.5", ...p })
 		        ] });
 		      case "claude-whiteboard":
 		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
@@ -1276,6 +1396,15 @@ window.__ModuleLoader__.load({
 		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "45", y: "3", width: "30", height: "15", rx: "3" }),
 		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "89", y: "19", width: "30", height: "15", rx: "3" }),
 		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M31 10.5h14M75 10.5h12a3 3 0 0 1 3 3v5.5" })
+		        ] })
+		      ] });
+		    case "claude-sheets":
+		      return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bda-paper", children: [
+		        name,
+		        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("svg", { className: "bda-grid", viewBox: "0 0 120 48", "aria-hidden": "true", children: [
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { className: "bda-grid-head", x: ".5", y: ".5", width: "119", height: "9.5" }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { className: "bda-grid-pick", x: "40", y: "19.5", width: "40", height: "9.5" }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M.5 .5h119v47H.5ZM.5 10h119M.5 19.5h119M.5 29h119M.5 38.5h119M40 .5v47M80 .5v47" })
 		        ] })
 		      ] });
 		    case "claude-design":
@@ -1613,7 +1742,8 @@ window.__ModuleLoader__.load({
 		    ] })
 		  ] });
 		}
-		function InstallDialog({ skill, plugin, run: run2, updating, canInstall, canOpenPlugins, ready, t, onClose, onInstall, onOpenPlugins, onStart }) {
+		var withReplaced = (name) => name === void 0 ? {} : { replaces: name };
+		function InstallDialog({ skill, plugin, run: run2, updating, canInstall, canOpenPlugins, ready, replaces, t, onClose, onInstall, onOpenPlugins, onStart }) {
 		  const primary = (0, import_react2.useRef)(null);
 		  const phase = run2?.phase ?? "ask";
 		  (0, import_react2.useEffect)(() => primary.current?.focus(), [phase]);
@@ -1621,7 +1751,8 @@ window.__ModuleLoader__.load({
 		  let title = t("install.title", { type });
 		  let body = /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
 		    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { children: t(`about.${skill}`) }),
-		    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { children: t(canInstall ? updating ? "install.busy" : "install.body" : "install.manual", { plugin }) })
+		    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { children: t(canInstall ? updating ? "install.busy" : "install.body" : "install.manual", { plugin }) }),
+		    canInstall && replaces !== void 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { children: t("install.replaces", { old: replaces }) })
 		  ] });
 		  let actions = /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
 		    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { type: "button", className: "bda-btn", onClick: onClose, children: t("dialog.cancel") }),
@@ -1636,7 +1767,10 @@ window.__ModuleLoader__.load({
 		    actions = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { ref: primary, type: "button", className: "bda-btn", onClick: onClose, children: t("dialog.close") });
 		  } else if (phase === "done") {
 		    title = t("install.done", { type });
-		    body = /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { children: t(run2?.restart ? "install.restart" : "install.doneBody") });
+		    body = /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { children: t(run2?.restart ? "install.restart" : "install.doneBody") }),
+		      run2?.kept !== void 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { children: t("install.kept", { old: run2.kept }) })
+		    ] });
 		    actions = /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
 		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { ref: ready ? void 0 : primary, type: "button", className: "bda-btn", onClick: onClose, children: t("dialog.close") }),
 		      ready && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { ref: primary, type: "button", className: "bda-btn", "data-primary": "true", onClick: onStart, children: t("install.start") })
@@ -1783,6 +1917,21 @@ window.__ModuleLoader__.load({
 		      clearTimeout(stop);
 		    };
 		  }, [run2, ranReady, reloadArtifacts]);
+		  const replacing = (0, import_react2.useMemo)(
+		    () => SKILLS.filter((s) => (updateState.updated ?? []).some((u) => u.replaces !== void 0 && u.name === pluginOf(s))),
+		    [updateState.updated, pluginOf]
+		  );
+		  const replacingReady = replacing.every((s) => state.skills.includes(s));
+		  (0, import_react2.useEffect)(() => {
+		    if (replacingReady) return;
+		    reloadArtifacts();
+		    const every = setInterval(reloadArtifacts, 1e3);
+		    const stop = setTimeout(() => clearInterval(every), 15e3);
+		    return () => {
+		      clearInterval(every);
+		      clearTimeout(stop);
+		    };
+		  }, [replacingReady, reloadArtifacts]);
 		  const shown = (0, import_react2.useMemo)(() => {
 		    const q = query.trim().toLowerCase();
 		    const kept = state.artifacts.filter((a) => {
@@ -1985,6 +2134,7 @@ window.__ModuleLoader__.load({
 		        canInstall: canInstall(),
 		        canOpenPlugins: canOpenPlugins(),
 		        ready: usable.includes(installing),
+		        ...withReplaced(updateState.updates.find((u) => u.name === pluginOf(installing))?.replaces?.name),
 		        t,
 		        onClose: () => setInstalling(null),
 		        onInstall: () => install2(installing),
@@ -2079,11 +2229,24 @@ window.__ModuleLoader__.load({
 		  const open = (view) => {
 		    if (store.getSnapshot().opening !== null) return;
 		    if (!ownPluginThere(view)) return;
+		    const away = onAnotherDevice();
+		    const pending = away ? pendingWindow() : null;
+		    if (away && pending === null) {
+		      toast(t("open.blocked"), "error");
+		      return;
+		    }
+		    const show = (url) => pending ? pending.go(url) : window.open(url, "_blank", "noopener,noreferrer");
 		    store.set({ opening: view.root, toast: null });
 		    void (async () => {
 		      try {
 		        const response = await fetch(`${route2(openPath)}?${new URLSearchParams({ root: view.root })}`, { method: "POST" });
 		        const body = await response.json().catch(() => ({}));
+		        if (body.remote === "unsupported") {
+		          pending?.close();
+		          store.set({ opening: null });
+		          toast(t("open.remoteOld", { plugin: view.plugin }), "error");
+		          return;
+		        }
 		        if (!response.ok || typeof body.url !== "string") throw new Error(typeof body.error === "string" ? body.error : `HTTP ${response.status}`);
 		        const url = body.url;
 		        const sessionId = typeof body.sessionId === "string" ? body.sessionId : view.sessionId;
@@ -2095,16 +2258,17 @@ window.__ModuleLoader__.load({
 		        const reachable = workspace !== void 0 && linkState(sessionId, sessions?.list?.getSnapshot(), workspaces?.list?.getSnapshot()) === "available";
 		        if (reachable) {
 		          workspace.openSession(sessionId);
-		          const shown = sidebar !== void 0 && tabs?.get("browser") !== void 0 && await openInSidebar(sidebar, sessionId, url);
-		          if (!shown) window.open(url, "_blank", "noopener,noreferrer");
+		          const shown = pending === null && sidebar !== void 0 && tabs?.get("browser") !== void 0 && await openInSidebar(sidebar, sessionId, url);
+		          if (!shown) show(url);
 		          store.set({ opening: null });
 		        } else {
-		          window.open(url, "_blank", "noopener,noreferrer");
+		          show(url);
 		          store.set({ opening: null });
 		          toast(t("open.noSession"));
 		        }
 		        reload();
 		      } catch (error) {
+		        pending?.close();
 		        store.set({ opening: null });
 		        toast(t("open.failed", { message: error.message }), "error");
 		      }
@@ -2164,6 +2328,7 @@ window.__ModuleLoader__.load({
 		  };
 		  const copyLink = (view) => {
 		    if (!ownPluginThere(view)) return;
+		    if (onAnotherDevice()) return toast(t("toast.copyRemote"));
 		    void (async () => {
 		      try {
 		        const { url } = await call(previewPath, { root: view.root });
@@ -2365,6 +2530,7 @@ window.__ModuleLoader__.load({
 		    simple: str(source.plugin) === SIMPLE_CARD,
 		    title: str(source.title),
 		    url: str(source.url),
+		    root: str(source.root),
 		    threads: threads.map((t) => ({ id: str(t.id), where: str(t.where), text: str(t.text) })).filter((t) => t.id),
 		    requests: requests.map((r) => ({ id: str(r.id), label: str(r.label), text: str(r.text) })).filter((r) => r.id && r.text),
 		    seq: event.seq
@@ -2444,7 +2610,7 @@ window.__ModuleLoader__.load({
 		function ChevronRight() {
 		  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("svg", { width: "12", height: "12", viewBox: "0 0 12 12", fill: "none", "aria-hidden": "true", style: iconStyle, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("path", { d: "M4.5 3 7.5 6l-3 3", stroke: "currentColor", strokeWidth: "1.3", strokeLinecap: "round", strokeLinejoin: "round" }) });
 		}
-		function Card2({ simple, title, thread, url, t, openThread }) {
+		function Card2({ simple, title, thread, url, root, t, openThread }) {
 		  const [open, setOpen] = (0, import_react3.useState)(true);
 		  const heading = t("card.title", { title });
 		  const meta = !simple && (thread.where || url);
@@ -2457,7 +2623,7 @@ window.__ModuleLoader__.load({
 		    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "bdc-body", children: thread.text }),
 		    meta && open && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "bdc-meta", children: [
 		      thread.where && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "bdc-where", children: thread.where }),
-		      url && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("button", { type: "button", className: "bdc-view", onClick: () => openThread(url, thread.id), children: [
+		      url && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("button", { type: "button", className: "bdc-view", onClick: () => openThread(url, thread.id, root), children: [
 		        t("card.view"),
 		        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(ChevronRight, {})
 		      ] })
@@ -2483,13 +2649,25 @@ window.__ModuleLoader__.load({
 		  ] });
 		}
 		function CommentCards({ node, t, openThread }) {
-		  const { simple, title, url, threads, requests } = node.data;
+		  const { simple, title, url, root, threads, requests } = node.data;
 		  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "bdc-row", children: [
-		    threads.map((thread) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Card2, { simple: simple === true, title, thread, url, t, openThread }, thread.id)),
+		    threads.map((thread) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Card2, { simple: simple === true, title, thread, url, root, t, openThread }, thread.id)),
 		    (requests ?? []).map((request) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(RequestCardView, { title, request, t }, request.id))
 		  ] });
 		}
 		var inject = ["slots", "locale", "uiConversation"];
+		async function openRemote(root, threadId) {
+		  const pending = pendingWindow();
+		  if (!pending) return;
+		  try {
+		    const response = await fetch(`${openPath.slice(1)}?${new URLSearchParams({ root })}`, { method: "POST" });
+		    const body = await response.json().catch(() => ({}));
+		    if (!response.ok || typeof body.url !== "string") throw new Error(`HTTP ${response.status}`);
+		    pending.go(threadUrl(body.url, threadId));
+		  } catch {
+		    pending.close();
+		  }
+		}
 		function threadUrl(url, id) {
 		  try {
 		    const at = new URL(url);
@@ -2523,7 +2701,8 @@ window.__ModuleLoader__.load({
 		        key: KIND,
 		        locale: NS3,
 		        inject: (sessionId) => ({
-		          openThread: (url, threadId) => {
+		          openThread: (url, threadId, root) => {
+		            if (root && onAnotherDevice()) return void openRemote(root, threadId);
 		            const target = threadUrl(url, threadId);
 		            const sidebar = ctx.get("sidebarRight");
 		            const tabs = ctx.get("sidebarRightTabs");

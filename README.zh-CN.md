@@ -140,9 +140,11 @@ dsh plugin --profile web add dsh-claude-design
 https://jimliu.github.io/baoyu-design/dsh-plugins/index.json
 ```
 
-**更新。** 发了新版本，侧边栏的「作品」这一行会多一个 **更新** 标签，「作品」页顶部写着改了什么，点 **Update all**（全部更新）就一起更新，不用卸载；只想更新其中一个，点那一行的 **Update**（更新）。2.9.2 和更早的版本不会提示：DeepSeek Harness 0.2.2 起，在插件详情页点 **更新到 x**；更老的应用要在插件页卸载插件，再重新安装，然后退出应用再重新打开。新版本发布后的一天内，按包名装到的还是上一个版本；从「发现」安装能马上装到新版本，在包名后面加上版本号也可以，比如 `dsh-claude-design@2.4.0`（版本号见 [更新日志](CHANGELOG.zh.md)）。
+**更新。** 发了新版本，侧边栏的「作品」这一行会多一个 **更新** 标签，「作品」页顶部写着改了什么，点 **Update all**（全部更新）就一起更新，不用卸载；只想更新其中一个，点那一行的 **Update**（更新）。2.9.2 和更早的版本不会提示：DeepSeek Harness 0.2.2 起，在插件详情页点 **更新到 x**；更老的应用要在插件页卸载插件，再重新安装，然后退出应用再重新打开。新版本发布后的一天内，按包名装到的还是上一个版本；从「发现」安装能马上装到新版本，在包名后面加上版本号也可以，比如 `dsh-claude-design@2.4.0`（版本号见 [更新日志](CHANGELOG.zh.md)）。装过 `dsh-claude-dashboard` 的：它已改名 `dsh-claude-data`，「作品」页会把换到新插件当作一项更新来提示（[详细说明](dsh-plugins/README.zh-CN.md#更新)）。
 
 每个插件都会带上 [`dsh-claude-artifacts`](https://www.npmjs.com/package/dsh-claude-artifacts)，也就是它们共用的部分：「作品」页，以及把评论送到 Agent。要让技能只在某个 Agent 预设里出现，见[只让某个预设用某个技能](dsh-plugins/README.zh-CN.md#只让某个预设用某个技能)。
+
+Harness 跑在一台电脑上、你在另一台设备上用时（比如服务器上跑 `dsh web`，在笔记本或手机上打开），从「作品」页打开你的作品：插件会用那台设备访问得到的地址打开编辑器，你还是它的主人。见[在另一台设备上用](dsh-plugins/README.zh-CN.md#在另一台设备上用)。
 
 工作区里如果有自己的同名技能（在 `.agents/skills/` 或 `.dsh/skills/` 下），会用那一份，不用插件里的。一步一步的安装（包括从文件夹安装）、使用、更新、卸载和常见问题，见 [`dsh-plugins/`](dsh-plugins/README.zh-CN.md)。
 

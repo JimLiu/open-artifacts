@@ -1,0 +1,9 @@
+# dsh-claude-dashboard bundle patch: dsh-claude-dashboard is now dsh-claude-data. This release has no skill;
+# it mounts the rows the releases before the rename did, so its layer replaces theirs. claude-artifacts-dashboard
+# is dsh-claude-artifacts, whose Artifacts page offers the move to dsh-claude-data. claude-dashboard
+# does nothing, and is there for a preset that names dsh-claude-dashboard.
+- insert:
+    - id: claude-artifacts-dashboard
+      name: dsh-claude-artifacts
+    - id: claude-dashboard
+      name: dsh-claude-dashboard

@@ -90,7 +90,7 @@ workspace and ask the agent to open it again; it starts the editor and gives you
 
 On that page you can also:
 
-- **Start something new.** Click a tile at the top (Slides, Design, Dashboard, …) or **+** at the top right. The app starts a new session with the input filled in (`/claude-slides Make me a slide deck about: `, say); finish the sentence and send it, and the agent uses that skill. A plugin you have not installed yet has a dimmed tile marked **Not installed**: click it to see what the plugin does, and **Install** to add it without leaving the page (where the app cannot install from there, the tile tells you to use the Plugins page). Once it is in, its tile works like the others; if the app asks for a restart, quit and reopen it. A plugin you switched off has no tile.
+- **Start something new.** Click a tile at the top (Slides, Design, Data, …) or **+** at the top right. The app starts a new session with the input filled in (`/claude-slides Make me a slide deck about: `, say); finish the sentence and send it, and the agent uses that skill. A plugin you have not installed yet has a dimmed tile marked **Not installed**: click it to see what the plugin does, and **Install** to add it without leaving the page (where the app cannot install from there, the tile tells you to use the Plugins page). Once it is in, its tile works like the others; if the app asks for a restart, quit and reopen it. A plugin you switched off has no tile.
 - **See thumbnails.** The desktop app opens each artifact's editor once to take its picture, and takes it again when you come back after its files changed. `dsh web` cannot take pictures, so its cards show a drawing of the type.
 - **Change the view, search, sort and filter.** The buttons at the top right switch between a grid and a list, search by title, conversation or path, sort by last opened, last edited, date created or name, and filter by type, date opened, sharing or pinned.
 - **Pin, rename, copy the link, delete.** Hover over an artifact and click **…** (while the menu is open, P, R and C work too). Rename changes the title in the editor. The link is the editor's address on this computer, and the editor stays running. Delete moves the folder to `baoyu-design/trash/` in the app's data folder (`~/.dsh` by default); the message that follows has an Undo, and you can delete it for good there. A folder that holds other files too is only taken off the page, and stays where it is.
@@ -107,11 +107,11 @@ To have a skill only in the sessions of one preset:
 
    ```yaml
    - insert:
-       - id: preset-slides-dashboard
+       - id: preset-slides-data
          name: '@deepseek-ai/dsh-agent-preset'
          config:
-           id: slides-dashboard
-           name: Slides and dashboards
+           id: slides-data
+           name: Slides and data
            description: Only the claude-slides and claude-data skills.
            order: 10
            plugins:
@@ -143,6 +143,26 @@ To have a skill only in the sessions of one preset:
 **Artifacts** goes on working: everything you made is still listed and still opens, even when its skill is in no preset,
 as long as its plugin is installed. A tile on that page starts its session in a preset that has the skill, and comments
 still reach the agent.
+
+## Use it from another device
+
+Harness can run on one computer while you use it from another: `dsh web` on a server, say, opened in a browser on your
+laptop or phone over the same network or a tailnet. The editors run on the computer Harness runs on, and the link the agent
+gives you (`http://127.0.0.1:…`) opens only there. From another device, open your work from **Artifacts** instead, or with
+**View thread** on a comment card. The plugin gives that device a link of your own, at the address your browser reaches
+Harness by, and opens it in a new tab. Through it you are the editor's owner, as on that computer: you edit, and Send to
+Agent is there.
+
+- **The other device has to reach the editor at that address.** On the same network or a tailnet it does. If Harness runs
+  in a container, give the container the host's network (`--network host`).
+- **Behind a proxy or a domain of your own**, the address the browser uses may not lead to the editor. Set
+  `BAOYU_DESIGN_REMOTE_HOST` in Harness's environment to the address other devices reach that computer at (an IP or a
+  name, no port), and restart Harness. `BAOYU_DESIGN_REMOTE_HOST=off` turns all this off.
+- **The link is your own key to the editor, over plain http.** Keep it to your own devices; to let others in, use
+  **Share** in the editor. Across a network you don't trust, use a tailnet such as Tailscale. To replace the key, ask the
+  agent to run the skill's `share <folder> --reset owner`. **Copy link** on the Artifacts page copies nothing from another device.
+- **Nothing opens**: allow pop-ups for the site. If the page says the plugin is of an earlier release, update it on the
+  Artifacts page.
 
 ## Update
 
@@ -182,6 +202,17 @@ the app's button fails on the second. See [If something doesn't work](#if-someth
 Discover installs the new version right away. For a day after a release, adding a plugin by name still gets the
 previous version: the app's package manager (pnpm) holds new releases back for 24 hours. To get the new one sooner,
 enter the name with the version, such as `dsh-claude-slides@2.4.0`.
+
+**Claude Dashboard is now Claude Data.** `dsh-claude-dashboard` was renamed `dsh-claude-data` in 2.14.0. The Artifacts page
+offers the move as an update, `claude-dashboard → claude-data`: **Update** installs `dsh-claude-data`, switched on or off as the
+old one was, then uninstalls `dsh-claude-dashboard`. The data tile does the same when you install from there. The dashboards you
+made open in the new one as they are, and stay on the Artifacts page. An Artifacts page from before the rename (it shows a
+Dashboard tile where this one shows Data) offers a newer `dsh-claude-dashboard` instead: that one has no skill, and brings the
+Artifacts page that offers the move, so click **Update** once more when it shows. If a preset of yours names
+`dsh-claude-dashboard` (see [Keep a skill to one preset](#keep-a-skill-to-one-preset)), the old plugin stays, since the preset
+needs it: change that line to `name: dsh-claude-data`, then uninstall `dsh-claude-dashboard` on the Plugins page. If no update
+shows, install `dsh-claude-data` by name, as in [Install](#install), then uninstall `dsh-claude-dashboard` on the Plugins page
+(if it says the plugin is in use, quit and reopen the app, then uninstall it again).
 
 **A plugin added from a folder** doesn't get told about new versions: get the new version into the same folder, with `git pull` in
 the repository or by unzipping the new ZIP over the old one, then quit and reopen the app and start a new session.

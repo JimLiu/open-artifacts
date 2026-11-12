@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Claude Dashboard (now Claude Data)",
+    "description": "Renamed dsh-claude-data. This version has no skill: it brings the Artifacts page that moves you to Claude Data. Open this plugin here or Artifacts in the left sidebar, and click Update on claude-dashboard → claude-data.",
+    "detail": "docs/DETAIL.md"
+  }
+}
