@@ -1,4 +1,4 @@
-// dsh-claude-artifacts 2.14.1: built from baoyu-design.
+// dsh-claude-artifacts 2.15.0: built from baoyu-design.
 window.__ModuleLoader__.load({
 	id: "dsh-claude-artifacts",
 	factory: (require) => {
@@ -769,7 +769,7 @@ window.__ModuleLoader__.load({
 		}
 
 		var import_jsx_runtime2 = require("react/jsx-runtime");
-		var PAGE_VERSION = 6;
+		var PAGE_VERSION = 7;
 		var PLUGINS_PANEL_ID = "plugins";
 		var PANEL_ID = "baoyu-design.artifacts";
 		var NS2 = "baoyu-design-artifacts";
@@ -926,15 +926,19 @@ window.__ModuleLoader__.load({
 		  "tile.failed": "没有装上",
 		  "tile.restart": "重启后可用",
 		  "tile.installed": "已安装",
-		  "tile.hint": "{type}：还没安装，点一下安装",
-		  "about.claude-slides": "做可以编辑的幻灯片，能直接演示，也能导出 PDF、HTML 或 PowerPoint。",
-		  "about.claude-design": "在一张画布上并排做几版设计稿，每一版都能直接改。",
-		  "about.claude-design-system": "做一套设计系统：颜色、字体、组件、素材，加一本品牌手册。",
-		  "about.claude-data": "用你的数据文件做看板：图表、数字和表格，数据变了就跟着更新。",
-		  "about.claude-docs": "写可以编辑、评论和分享的文档。",
-		  "about.claude-motion": "做短动画，导出 MP4 或 GIF。",
-		  "about.claude-whiteboard": "在白板上摆出示意图、流程和想法，可以拖动、画画、留评论。",
-		  "about.claude-sheets": "和 Agent 一起填的表格：公式、多个工作表、图表，可以给单元格留评论。",
+		  "tile.beta": "Beta",
+		  "peek.by": "来自 baoyu-design",
+		  "peek.start": "从提示词开始",
+		  "peek.install": "安装…",
+		  "peek.details": "查看安装情况",
+		  "about.claude-docs": "团队一起读、评论、直接修改的文档，Agent 负责让它保持最新。",
+		  "about.claude-slides": "能直接演示的幻灯片，可以套用设计系统换风格，也能导出成 PowerPoint。",
+		  "about.claude-sheets": "带公式和格式的表格，你和 Agent 一起填。",
+		  "about.claude-design": "界面、流程和图形，作为画板排在同一张画布上，也可以动手改。",
+		  "about.claude-design-system": "颜色、字体、组件和素材，幻灯片和设计都照着它来做。",
+		  "about.claude-data": "用你的数据做的图表、数字和表格，每一项都标明出处。",
+		  "about.claude-whiteboard": "方框、箭头和便利贴，你和 Agent 都能在上面画。",
+		  "about.claude-motion": "一段在页面里直接播放的短动画，可以导出成视频。",
 		  "install.title": "安装「{type}」插件？",
 		  "install.body": "点「安装」会装上 {plugin} 插件，装好后点这个入口就能新建。",
 		  "install.manual": "到「插件」页搜索 {plugin} 并安装，装好后点这个入口就能新建。",
@@ -1040,15 +1044,19 @@ window.__ModuleLoader__.load({
 		  "tile.failed": "Did not install",
 		  "tile.restart": "Restart to use",
 		  "tile.installed": "Installed",
-		  "tile.hint": "{type}: not installed yet. Click to install it.",
-		  "about.claude-slides": "Editable slide decks you can present, or export as PDF, HTML or PowerPoint.",
-		  "about.claude-design": "Design canvases with versions side by side, each one editable.",
-		  "about.claude-design-system": "Design systems: colors, type, components, assets and a brand book.",
-		  "about.claude-data": "Dashboards over your data files: charts, numbers and tables that follow the data.",
-		  "about.claude-docs": "Docs you can edit, comment on and share.",
-		  "about.claude-motion": "Short animated films you can export as MP4 or GIF.",
-		  "about.claude-whiteboard": "Whiteboards of diagrams, flows and ideas you move, draw on and comment on.",
-		  "about.claude-sheets": "Spreadsheets you fill in with the agent: formulas, several sheets, charts and comments on cells.",
+		  "tile.beta": "Beta",
+		  "peek.by": "By baoyu-design",
+		  "peek.start": "Start with a prompt",
+		  "peek.install": "Install…",
+		  "peek.details": "See the install",
+		  "about.claude-docs": "A document your team reads, comments on and edits in place while the agent keeps it current.",
+		  "about.claude-slides": "A deck you can present, restyle with a design system and export to PowerPoint.",
+		  "about.claude-sheets": "A grid with formulas and formatting that you and the agent fill in together.",
+		  "about.claude-design": "Screens, flows and graphics laid out as artboards on one canvas you can edit by hand.",
+		  "about.claude-design-system": "Colors, type, components and assets that your decks and designs are built from.",
+		  "about.claude-data": "Charts, numbers and tables from your data, each marked with its source.",
+		  "about.claude-whiteboard": "Boxes, arrows and sticky notes you and the agent both draw on.",
+		  "about.claude-motion": "A short motion piece that plays in place and exports as video.",
 		  "install.title": "Install the {type} plugin?",
 		  "install.body": "Install adds the {plugin} plugin. Then this tile starts one.",
 		  "install.manual": "Find {plugin} on the Plugins page and install it. Then this tile starts one.",
@@ -1067,7 +1075,7 @@ window.__ModuleLoader__.load({
 		  "install.kept": "{old} is still installed: remove it on the Plugins page.",
 		  "dialog.close": "Close"
 		};
-		var SKILLS = ["claude-docs", "claude-slides", "claude-design", "claude-data", "claude-design-system", "claude-motion", "claude-whiteboard", "claude-sheets"];
+		var SKILLS = ["claude-docs", "claude-slides", "claude-sheets", "claude-design", "claude-design-system", "claude-data", "claude-whiteboard", "claude-motion"];
 		var isSkill = (s) => SKILLS.includes(s);
 		var creatable = (on) => SKILLS.filter((s) => on.includes(s));
 		var promptFor = (skill, t) => `/${skill} ${t(`prompt.${skill}`)}`;
@@ -1118,21 +1126,36 @@ window.__ModuleLoader__.load({
 		.bda-search button{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;margin-right:-4px;padding:0;border:0;border-radius:6px;background:none;color:inherit;cursor:pointer}
 		.bda-search button:hover{background:var(--dsw-alias-interactive-bg-hover)}
 		.bda-section-title{margin:0 0 12px;font-size:13px;font-weight:400;line-height:20px;color:var(--dsw-alias-label-tertiary)}
-		.bda-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:14px;margin:0 0 36px;padding:0;list-style:none}
+		.bda-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px 10px;margin:0 0 36px;padding:0;list-style:none}
 		.bda-tile{display:flex;flex-direction:column;gap:8px;width:100%;padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
-		.bda-tile-art{position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:7/5;border-radius:14px;overflow:hidden;background:color-mix(in srgb,var(--bda-tint) 24%,var(--dsw-alias-bg-base));color:color-mix(in srgb,var(--bda-tint) 78%,var(--dsw-alias-label-primary));transition:background-color .15s}
-		.bda-tile:hover .bda-tile-art{background:color-mix(in srgb,var(--bda-tint) 34%,var(--dsw-alias-bg-base))}
+		.bda-tile-art{position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:10/7;border-radius:14px;overflow:hidden;background:var(--bda-wash);color:var(--bda-ink);transition:transform .2s cubic-bezier(.2,.7,.3,1),background-color .15s}
+		.bda-tile:hover .bda-tile-art,.bda-tile[data-peek=true] .bda-tile-art{transform:scale(1.03)}
 		.bda-tile:focus-visible{outline:none}
 		.bda-tile:focus-visible .bda-tile-art{outline:var(--dsw-focus-ring-width,2px) solid var(--dsw-focus-ring-color,var(--dsw-alias-state-business-primary));outline-offset:2px}
-		.bda-tile-squiggle{position:absolute;inset:0;width:100%;height:100%;opacity:.28}
-		.bda-tile-label{padding-left:2px;font-size:14px;line-height:20px}
-		.bda-tile[data-missing=true] .bda-tile-art{background:color-mix(in srgb,var(--bda-tint) 8%,var(--dsw-alias-bg-base));color:color-mix(in srgb,var(--bda-tint) 40%,var(--dsw-alias-label-caption));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--bda-tint) 22%,var(--dsw-alias-border-l2))}
-		.bda-tile[data-missing=true]:hover .bda-tile-art{background:color-mix(in srgb,var(--bda-tint) 16%,var(--dsw-alias-bg-base))}
-		.bda-tile[data-missing=true] .bda-tile-squiggle{opacity:.14}
+		.bda-tile-art>svg{position:relative}
+		.bda-tile-art>.bda-tile-doodle{position:absolute;inset:0;width:100%;height:100%;opacity:.14;pointer-events:none}
+		.bda-tile-beta{position:absolute;top:6px;left:6px;padding:0 6px;border-radius:999px;background:#fff;box-shadow:0 0 0 .5px var(--dsw-alias-border-l4,rgba(0,0,0,.16));color:var(--dsw-alias-label-secondary);font-size:11px;line-height:16px}
+		.bda-tile-label{display:flex;flex-direction:column;padding-left:2px;font-size:14px;line-height:20px}
+		.bda-tile-state{display:inline-flex;align-items:center;gap:5px;color:var(--dsw-alias-label-tertiary);font-size:12px;line-height:16px}
+		.bda-tile-state[data-state=failed]{color:var(--dsw-alias-state-error-primary)}
+		.bda-tile-state .bda-spinner{width:9px;height:9px;border-width:1.2px}
+		.bda-tile[data-missing=true] .bda-tile-art{background:color-mix(in srgb,var(--bda-wash) 45%,var(--dsw-alias-bg-base));color:color-mix(in srgb,var(--bda-ink) 55%,var(--dsw-alias-bg-base));box-shadow:inset 0 0 0 .5px color-mix(in srgb,var(--bda-ink) 22%,transparent)}
+		.bda-tile[data-missing=true]:hover .bda-tile-art,.bda-tile[data-missing=true][data-peek=true] .bda-tile-art{background:color-mix(in srgb,var(--bda-wash) 65%,var(--dsw-alias-bg-base))}
+		.bda-tile[data-missing=true] .bda-tile-doodle{opacity:.08}
 		.bda-tile[data-missing=true] .bda-tile-label{color:var(--dsw-alias-label-secondary)}
-		.bda-tile-badge{position:absolute;top:8px;right:8px;display:inline-flex;align-items:center;gap:5px;max-width:calc(100% - 16px);padding:0 7px;border-radius:9px;background:var(--dsw-alias-bg-base);box-shadow:0 0 0 .5px var(--dsw-alias-border-l2);color:var(--dsw-alias-label-secondary);font-size:11px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-		.bda-tile-badge[data-state=failed]{color:var(--dsw-alias-state-error-primary)}
-		.bda-tile-badge .bda-spinner{width:9px;height:9px;border-width:1.2px}
+		body[data-ds-dark-theme] .bda-tile-art{background:color-mix(in srgb,var(--bda-ink) 36%,var(--dsw-alias-bg-base));color:var(--bda-wash)}
+		body[data-ds-dark-theme] .bda-tile[data-missing=true] .bda-tile-art{background:color-mix(in srgb,var(--bda-ink) 16%,var(--dsw-alias-bg-base));color:color-mix(in srgb,var(--bda-wash) 55%,var(--dsw-alias-bg-base));box-shadow:inset 0 0 0 .5px color-mix(in srgb,var(--bda-wash) 18%,transparent)}
+		body[data-ds-dark-theme] .bda-tile[data-missing=true]:hover .bda-tile-art,body[data-ds-dark-theme] .bda-tile[data-missing=true][data-peek=true] .bda-tile-art{background:color-mix(in srgb,var(--bda-ink) 24%,var(--dsw-alias-bg-base))}
+		body[data-ds-dark-theme] .bda-tile-art>.bda-tile-doodle{opacity:.12}
+		body[data-ds-dark-theme] .bda-tile-beta{background:var(--dsw-alias-bg-base)}
+		.bda-peek{position:fixed;z-index:900;width:288px;max-width:calc(100vw - 16px);box-sizing:border-box;padding:16px;border:.5px solid var(--dsw-alias-border-l4,rgba(0,0,0,.16));border-radius:16px;background:var(--dsw-alias-bg-base);box-shadow:0 12px 32px -10px rgba(0,0,0,.22);color:var(--dsw-alias-label-primary);animation:bda-peek-in .14s ease-out}
+		.bda-peek-title{font-size:17px;line-height:24px}
+		.bda-peek-by{margin-top:2px;font-size:14px;line-height:20px;color:var(--dsw-alias-label-secondary)}
+		.bda-peek-about{margin:6px 0 0;font-size:14px;line-height:20px;color:var(--dsw-alias-label-secondary)}
+		.bda-peek-act{margin-top:14px;height:32px;padding:0 10px;border:0;border-radius:8px;background:color-mix(in srgb,var(--dsw-alias-label-primary) 6%,var(--dsw-alias-bg-base));color:var(--dsw-alias-label-primary);font:inherit;font-size:14px;cursor:pointer}
+		.bda-peek-act:hover{background:color-mix(in srgb,var(--dsw-alias-label-primary) 10%,var(--dsw-alias-bg-base))}
+		.bda-peek-act:focus-visible{outline:var(--dsw-focus-ring-width,2px) solid var(--dsw-focus-ring-color,var(--dsw-alias-state-business-primary));outline-offset:2px}
+		@keyframes bda-peek-in{from{opacity:0;transform:translateY(-4px)}}
 		.bda-dialog-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 		.bda-dialog-head h2{margin:0}
 		.bda-dialog .bda-glyph{width:40px;height:40px}
@@ -1186,7 +1209,10 @@ window.__ModuleLoader__.load({
 		.bda-spinner{width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;border-right-color:transparent;animation:bda-spin .8s linear infinite}
 		@keyframes bda-spin{to{transform:rotate(360deg)}}
 		.bda-info{display:flex;align-items:center;gap:12px;min-width:0;padding:12px 14px}
-		.bda-glyph{flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px;background:color-mix(in srgb,var(--bda-tint) 16%,var(--dsw-alias-bg-base));color:color-mix(in srgb,var(--bda-tint) 78%,var(--dsw-alias-label-primary))}
+		.bda-glyph{flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px;background:var(--bda-wash);color:var(--bda-ink)}
+		body[data-ds-dark-theme] .bda-glyph{background:color-mix(in srgb,var(--bda-ink) 36%,var(--dsw-alias-bg-base));color:var(--bda-wash)}
+		.bda-menu-glyph{display:flex;color:var(--bda-ink)}
+		body[data-ds-dark-theme] .bda-menu-glyph{color:var(--bda-wash)}
 		.bda-text{display:flex;flex-direction:column;min-width:0;flex:1}
 		.bda-name{font-weight:500;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 		.bda-meta{color:var(--dsw-alias-label-tertiary);font-size:12px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1257,19 +1283,24 @@ window.__ModuleLoader__.load({
 		.bda-skeleton .bda-card{cursor:default}
 		.bda-skeleton .bda-preview{background:var(--dsw-alias-bg-skeleton,var(--dsw-alias-interactive-bg-hover))}
 		.bda-skeleton .bda-line{width:60%;height:10px;margin:18px 14px}
-		@media (prefers-reduced-motion:reduce){.bda-sheet,.bda-paper,.bda-slide,.bda-film,.bda-act,.bda-tile-art,.bda-card{transition:none}.bda-spinner{animation-duration:2s}}
+		@media (prefers-reduced-motion:reduce){.bda-sheet,.bda-paper,.bda-slide,.bda-film,.bda-act,.bda-tile-art,.bda-card{transition:none}.bda-tile:hover .bda-tile-art,.bda-tile[data-peek=true] .bda-tile-art{transform:none}.bda-peek{animation:none}.bda-spinner{animation-duration:2s}}
 		`;
-		var TINTS = {
-		  "claude-slides": "#e8703a",
-		  "claude-design": "#7a5cf0",
-		  "claude-design-system": "#c79a1b",
-		  "claude-data": "#e5484d",
-		  "claude-docs": "#3f8ef0",
-		  "claude-motion": "#1fa971",
-		  "claude-whiteboard": "#d6409f",
-		  "claude-sheets": "#5a9e22"
+		var COLORS = {
+		  "claude-docs": { wash: "#cce3fd", ink: "#1757ac", tint: "#3f8ef0" },
+		  "claude-slides": { wash: "#f7d9ca", ink: "#903710", tint: "#e8703a" },
+		  "claude-sheets": { wash: "#caecc8", ink: "#016c0f", tint: "#3d9e3a" },
+		  "claude-design": { wash: "#e4deff", ink: "#5437b8", tint: "#7a5cf0" },
+		  "claude-design-system": { wash: "#fbe6bd", ink: "#865400", tint: "#c79a1b" },
+		  "claude-data": { wash: "#fbd4d4", ink: "#a42528", tint: "#e5484d" },
+		  "claude-whiteboard": { wash: "#fbd6e5", ink: "#902552", tint: "#d6409f" },
+		  "claude-motion": { wash: "#bfeee5", ink: "#006458", tint: "#14a38b" }
 		};
-		var tintOf = (skill) => isSkill(skill) ? TINTS[skill] : "#8a8a8a";
+		var NO_COLORS = { wash: "#ececec", ink: "#555555", tint: "#8a8a8a" };
+		var typeStyle = (skill) => {
+		  const c = isSkill(skill) ? COLORS[skill] : NO_COLORS;
+		  return { "--bda-tint": c.tint, "--bda-wash": c.wash, "--bda-ink": c.ink };
+		};
+		var BETA = ["claude-sheets", "claude-data", "claude-whiteboard", "claude-motion"];
 		var svg = (size) => ({ display: "block", width: size, height: size, flex: "none" });
 		function ArtifactsIcon({ size = 16 }) {
 		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("svg", { viewBox: "0 0 20 20", fill: "none", "aria-hidden": "true", style: svg(size), children: [
@@ -1281,56 +1312,103 @@ window.__ModuleLoader__.load({
 		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(UpdateMark, { updates, wide: size <= 16, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ArtifactsIcon, { size }) });
 		}
 		function TypeIcon({ skill, size = 18 }) {
-		  const p = { stroke: "currentColor", strokeWidth: 1.5, strokeLinecap: "round", strokeLinejoin: "round" };
+		  const p = { stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round" };
 		  const body = (() => {
 		    switch (skill) {
+		      case "claude-docs":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M6 2.25h5.6c.4 0 .78.16 1.06.44l3.65 3.65c.28.28.44.66.44 1.06v7.85A2.75 2.75 0 0 1 14 18H6a2.75 2.75 0 0 1-2.75-2.75V5A2.75 2.75 0 0 1 6 2.25Z", ...p }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M12 2.4v2.85a2 2 0 0 0 2 2h2.6", ...p })
+		        ] });
 		      case "claude-slides":
-		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_jsx_runtime2.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M2.75 3.5h14.5M4 3.5v8.25a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3.5M7.25 16.75 10 12.75l2.75 4", ...p }) });
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_jsx_runtime2.Fragment, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M1.25 2.75h17.5M2.75 2.75v8.75A2.25 2.25 0 0 0 5 13.75h10a2.25 2.25 0 0 0 2.25-2.25V2.75M10 13.75l-3 4M10 13.75l3 4", ...p }) });
+		      case "claude-sheets":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "2.25", y: "2.25", width: "15.5", height: "15.5", rx: "3", ...p }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M2.25 7.5h15.5M2.25 12.5h15.5M7 2.25v15.5", ...p })
+		        ] });
 		      case "claude-design":
 		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M10 2.75a7.25 7.25 0 1 0 0 14.5c1.1 0 1.75-.8 1.75-1.7 0-.5-.2-.9-.45-1.25-.25-.35-.45-.7-.45-1.15 0-.95.75-1.65 1.7-1.65h1.6a3.1 3.1 0 0 0 3.1-3.1c0-3.1-3.2-5.65-7.25-5.65Z", ...p }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "6.4", cy: "9.4", r: ".9", fill: "currentColor" }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "8.8", cy: "6.3", r: ".9", fill: "currentColor" }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "12.5", cy: "6.8", r: ".9", fill: "currentColor" })
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M10 2.25c-4.75 0-8.5 3.3-8.5 7.6 0 4.5 3.55 8.15 8.2 8.15 3.1 0 5.55-1.25 5.55-3.4 0-1.25-1.15-1.75-1.15-2.8 0-1.2 1.05-1.6 2.25-2.2 1.3-.65 2.15-1.5 2.15-3C18.5 3.95 14.6 2.25 10 2.25Z", ...p }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "8", cy: "6.6", r: "1.35", fill: "currentColor" }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "12.4", cy: "6.9", r: "1.35", fill: "currentColor" }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "5.2", cy: "10.3", r: "1.35", fill: "currentColor" })
 		        ] });
 		      case "claude-design-system":
 		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "6.5", cy: "6.5", r: "3.25", ...p }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "13.5", cy: "6.5", r: "3.25", ...p }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "10", cy: "13", r: "3.25", ...p })
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "2.25", y: "2.25", width: "6.75", height: "6.75", rx: "1.75", ...p }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "14.4", cy: "5.6", r: "3.4", ...p }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "5.6", cy: "14.4", r: "3.4", ...p }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "11", y: "11", width: "6.75", height: "6.75", rx: "1.75", ...p })
 		        ] });
 		      case "claude-data":
 		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "2.75", y: "10", width: "4.5", height: "7.25", rx: "1", ...p }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "7.75", y: "2.75", width: "4.5", height: "14.5", rx: "1", ...p }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "12.75", y: "7", width: "4.5", height: "10.25", rx: "1", ...p })
-		        ] });
-		      case "claude-docs":
-		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M5.5 2.75h6l4 4v9.5a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1V3.75a1 1 0 0 1 1-1Z", ...p }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M11.5 2.75v4h4", ...p })
-		        ] });
-		      case "claude-motion":
-		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "2.75", y: "4", width: "14.5", height: "12", rx: "2", ...p }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "m8.5 7.75 4 2.25-4 2.25v-4.5Z", ...p })
-		        ] });
-		      case "claude-sheets":
-		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "2.75", y: "3.25", width: "14.5", height: "13.5", rx: "1.5", ...p }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M2.75 7.75h14.5M2.75 12.25h14.5M7.5 3.25v13.5", ...p })
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M1.75 16.25V11.5c0-.97.78-1.75 1.75-1.75H7V4c0-.97.78-1.75 1.75-1.75h2c.97 0 1.75.78 1.75 1.75v2.25h3.75c.97 0 1.75.78 1.75 1.75v8.25c0 .97-.78 1.75-1.75 1.75H3.5c-.97 0-1.75-.78-1.75-1.75Z", ...p }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M7 9.75V18M12.5 6.25V18", ...p })
 		        ] });
 		      case "claude-whiteboard":
 		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "2.75", y: "3.25", width: "6", height: "4.5", rx: "1", ...p }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "11.25", y: "11.75", width: "6", height: "4.5", rx: "1", ...p }),
-		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M8.75 5.5h3.5a1.5 1.5 0 0 1 1.5 1.5v4.75M3 15.25c1.25-1.5 2.25.75 3.5-.75", ...p })
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M11.52 8.25A5 5 0 1 0 8.25 11.52", ...p }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "8.25", y: "8.25", width: "10", height: "10", rx: "2.25", ...p })
+		        ] });
+		      case "claude-motion":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M3.75 6.6h2M1.5 10H5M3.75 13.4h2", ...p }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "13.75", cy: "10", r: "4.75", ...p })
 		        ] });
 		      default:
 		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "3", y: "3", width: "14", height: "14", rx: "2", ...p });
 		    }
 		  })();
 		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { viewBox: "0 0 20 20", fill: "none", "aria-hidden": "true", style: svg(size), children: body });
+		}
+		function Doodle({ skill }) {
+		  const id = `bda-chalk-${skill}`;
+		  const line = { fill: "none", stroke: "currentColor", strokeWidth: 7, strokeLinecap: "round", strokeLinejoin: "round" };
+		  const shapes = (() => {
+		    switch (skill) {
+		      case "claude-docs":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M12 28c5 14 10 27 15 38 7-10 14-21 20-31 4 9 8 19 11 28M84 74c9-10 18-20 27-30 4 11 7 23 11 34 6-8 12-15 20-23", ...line });
+		      case "claude-slides":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "-14", y: "45", width: "107", height: "72", rx: "11", ...line }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "4", y: "66", width: "116", height: "52", rx: "11", ...line }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M17 86h55", ...line })
+		        ] });
+		      case "claude-sheets":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M9 -6v94M51 -6v94M90 -6v94M-6 23h122M-6 57h122", ...line });
+		      case "claude-design":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "15", y: "18", width: "106", height: "64", ...line }),
+		          [[15, 18], [121, 18], [15, 82], [121, 82]].map(([x, y]) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: x - 7, y: y - 7, width: "14", height: "14", rx: "2", ...line }, `${x},${y}`))
+		        ] });
+		      case "claude-design-system":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "20", cy: "22", r: "13", ...line }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "98", y: "6", width: "32", height: "26", rx: "6", ...line }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "8", y: "66", width: "34", height: "28", rx: "6", ...line }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "118", cy: "76", r: "15", ...line })
+		        ] });
+		      case "claude-data":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M38 94v20M70 81v33M101 67v47M132 48v66", ...line, strokeWidth: 11 });
+		      case "claude-whiteboard":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "-12", y: "60", width: "46", height: "31", rx: "7", ...line }),
+		          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M36 81c22-3 42-12 62-36 8-10 16-19 25-25M104 25l20-6 2 26", ...line })
+		        ] });
+		      case "claude-motion":
+		        return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M19 44c13-4 26-5 38-4 14 1 23 13 34 15 16 3 33-5 49-4M19 68c13 1 26 3 38 5 16 3 26 13 42 14 15 1 28-6 41-7", ...line });
+		    }
+		  })();
+		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("svg", { className: "bda-tile-doodle", viewBox: "0 0 140 100", preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true", children: [
+		    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("filter", { id, x: "-10%", y: "-10%", width: "120%", height: "120%", children: [
+		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("feTurbulence", { type: "fractalNoise", baseFrequency: "0.9", numOctaves: 2, seed: 3, result: "noise" }),
+		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("feDisplacementMap", { in: "SourceGraphic", in2: "noise", scale: 3, xChannelSelector: "R", yChannelSelector: "G", result: "rough" }),
+		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("feColorMatrix", { in: "noise", type: "matrix", values: "0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 2.4 -0.7", result: "grain" }),
+		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("feComposite", { in: "rough", in2: "grain", operator: "in" })
+		    ] }),
+		    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("g", { filter: `url(#${id})`, children: shapes })
+		  ] });
 		}
 		function Icon({ d, size = 16, fill }) {
 		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { viewBox: "0 0 16 16", fill: fill ? "currentColor" : "none", stroke: fill ? void 0 : "currentColor", strokeWidth: "1.3", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: svg(size), children: typeof d === "string" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d }) : d });
@@ -1678,8 +1756,8 @@ window.__ModuleLoader__.load({
 		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "bda-menu-label", children: t("create.session") })
 		    ] }),
 		    skills.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bda-menu-rule", role: "separator" }),
-		    skills.map((skill) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { type: "button", className: "bda-menu-item", role: "menuitem", "data-skill": skill, onClick: () => create(skill), style: { "--bda-tint": tintOf(skill) }, children: [
-		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { color: "color-mix(in srgb,var(--bda-tint) 78%,var(--dsw-alias-label-primary))" }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(TypeIcon, { skill, size: 16 }) }),
+		    skills.map((skill) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { type: "button", className: "bda-menu-item", role: "menuitem", "data-skill": skill, onClick: () => create(skill), style: typeStyle(skill), children: [
+		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "bda-menu-glyph", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(TypeIcon, { skill, size: 16 }) }),
 		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "bda-menu-label", children: t(`type.${skill}`) })
 		    ] }, skill))
 		  ] });
@@ -1784,7 +1862,7 @@ window.__ModuleLoader__.load({
 		      canInstall && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { ref: primary, type: "button", className: "bda-btn", "data-primary": "true", disabled: updating, onClick: onInstall, children: t("install.retry") })
 		    ] });
 		  }
-		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Dialog, { label: title, onClose, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { "data-testid": "baoyu-design-install", "data-skill": skill, "data-phase": phase, style: { "--bda-tint": tintOf(skill) }, children: [
+		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Dialog, { label: title, onClose, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { "data-testid": "baoyu-design-install", "data-skill": skill, "data-phase": phase, style: typeStyle(skill), children: [
 		    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bda-dialog-head", children: [
 		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "bda-glyph", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(TypeIcon, { skill, size: 22 }) }),
 		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { children: title })
@@ -1815,7 +1893,7 @@ window.__ModuleLoader__.load({
 		}
 		function Card({ view, state, conversation, now, t, thumbnailUrl, onOpen, onPin, menuOpen, onMenu }) {
 		  const opening = state.opening === view.root;
-		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("li", { className: "bda-item", "data-menu": menuOpen, style: { "--bda-tint": tintOf(view.skill) }, children: [
+		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("li", { className: "bda-item", "data-menu": menuOpen, style: typeStyle(view.skill), children: [
 		    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { type: "button", className: "bda-card", disabled: state.opening !== null, "aria-busy": opening, title: hint(view, conversation), onClick: () => onOpen(view), "data-skill": view.skill, children: [
 		      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "bda-preview-wrap", style: { display: "block", position: "relative", width: "100%" }, children: [
 		        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Preview, { view, thumbnailUrl }),
@@ -1840,7 +1918,7 @@ window.__ModuleLoader__.load({
 		}
 		function Row({ view, state, conversation, now, t, onOpen, onPin, menuOpen, onMenu }) {
 		  const opening = state.opening === view.root;
-		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("li", { className: "bda-item", "data-menu": menuOpen, style: { "--bda-tint": tintOf(view.skill) }, children: [
+		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("li", { className: "bda-item", "data-menu": menuOpen, style: typeStyle(view.skill), children: [
 		    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { type: "button", className: "bda-row", disabled: state.opening !== null, "aria-busy": opening, title: hint(view, conversation), onClick: () => onOpen(view), "data-skill": view.skill, children: [
 		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "bda-glyph", children: opening ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "bda-spinner" }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(TypeIcon, { skill: view.skill }) }),
 		      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "bda-name", children: view.title }),
@@ -1866,12 +1944,71 @@ window.__ModuleLoader__.load({
 		  } catch {
 		  }
 		}
+		var PEEK_SHOW_MS = 350;
+		var PEEK_HIDE_MS = 160;
+		var PEEK_ABOUT_ID = "bda-peek-about";
+		function TilePeek({ skill, anchor, status, t, onAct, onEnter, onLeave, onClose }) {
+		  const ref = (0, import_react2.useRef)(null);
+		  const [place, setPlace] = (0, import_react2.useState)({ visibility: "hidden" });
+		  (0, import_react2.useLayoutEffect)(() => {
+		    const box = anchor.getBoundingClientRect();
+		    const width = ref.current?.offsetWidth ?? 0;
+		    const height = ref.current?.offsetHeight ?? 0;
+		    const below = box.bottom + 8;
+		    setPlace({
+		      left: Math.max(8, Math.min(box.left, window.innerWidth - width - 8)),
+		      top: below + height <= window.innerHeight - 8 ? below : Math.max(8, box.top - 8 - height)
+		    });
+		  }, [anchor]);
+		  (0, import_react2.useEffect)(() => {
+		    const gone = () => onClose();
+		    window.addEventListener("scroll", gone, true);
+		    window.addEventListener("resize", gone);
+		    return () => {
+		      window.removeEventListener("scroll", gone, true);
+		      window.removeEventListener("resize", gone);
+		    };
+		  }, [onClose]);
+		  const act = status === null ? "peek.start" : status.state === "missing" || status.state === "failed" ? "peek.install" : "peek.details";
+		  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
+		    "div",
+		    {
+		      ref,
+		      className: "bda-peek",
+		      role: "group",
+		      "aria-label": t(`type.${skill}`),
+		      "data-testid": "baoyu-design-peek",
+		      "data-skill": skill,
+		      style: { ...typeStyle(skill), ...place },
+		      onPointerEnter: onEnter,
+		      onPointerLeave: onLeave,
+		      onKeyDown: (event) => {
+		        if (event.key === "Escape") {
+		          onClose();
+		          anchor.focus();
+		        }
+		      },
+		      children: [
+		        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bda-peek-title", children: t(`type.${skill}`) }),
+		        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bda-peek-by", children: [
+		          t("peek.by"),
+		          status !== null && ` · ${t(status.key)}`
+		        ] }),
+		        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "bda-peek-about", id: PEEK_ABOUT_ID, children: t(`about.${skill}`) }),
+		        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { type: "button", className: "bda-peek-act", onClick: onAct, children: t(act) })
+		      ]
+		    }
+		  );
+		}
 		function ArtifactsPage(props) {
 		  const { t, updates, artifactsStore, sessionsStore, reloadArtifacts, openArtifact, create, canCreate, createOptions, installOptions, pluginOf, install: install2, canInstall, openPlugins, canOpenPlugins, pin, rename, copyLink, remove, undo, thumbnailUrl, watchThumbnails, dismissToast } = props;
 		  const state = (0, import_react2.useSyncExternalStore)(artifactsStore.subscribe, artifactsStore.getSnapshot);
 		  const updateState = useUpdateState();
 		  const run2 = updateState.install ?? null;
 		  const [installing, setInstalling] = (0, import_react2.useState)(null);
+		  const [peek, setPeek] = (0, import_react2.useState)(null);
+		  const peekTimer = (0, import_react2.useRef)(void 0);
+		  const overPeek = (0, import_react2.useRef)(false);
 		  const sessions = (0, import_react2.useSyncExternalStore)(sessionsStore.subscribe, sessionsStore.getSnapshot);
 		  const [query, setQuery] = (0, import_react2.useState)("");
 		  const [searching, setSearching] = (0, import_react2.useState)(false);
@@ -1907,6 +2044,36 @@ window.__ModuleLoader__.load({
 		    [usable, offered, ranFor, canCreate]
 		  );
 		  const ranReady = ranFor !== void 0 && state.skills.includes(ranFor);
+		  const statusOf = (skill) => {
+		    if (usable.includes(skill)) return null;
+		    const own = run2 !== null && skill === ranFor ? run2 : null;
+		    if (own?.phase === "running") return { key: "tile.installing", state: "running" };
+		    if (own?.phase === "failed") return { key: "tile.failed", state: "failed" };
+		    if (own?.phase === "done") return { key: own.restart ? "tile.restart" : "tile.installed", state: "done" };
+		    return { key: "tile.missing", state: "missing" };
+		  };
+		  const closePeek = (0, import_react2.useMemo)(
+		    () => () => {
+		      clearTimeout(peekTimer.current);
+		      overPeek.current = false;
+		      setPeek(null);
+		    },
+		    []
+		  );
+		  (0, import_react2.useEffect)(() => () => clearTimeout(peekTimer.current), []);
+		  const showPeek = (skill, anchor, now2 = false) => {
+		    clearTimeout(peekTimer.current);
+		    peekTimer.current = setTimeout(() => setPeek({ skill, anchor }), now2 || peek !== null ? 0 : PEEK_SHOW_MS);
+		  };
+		  const hidePeek = () => {
+		    clearTimeout(peekTimer.current);
+		    peekTimer.current = setTimeout(() => setPeek(null), PEEK_HIDE_MS);
+		  };
+		  const tileAct = (skill) => {
+		    closePeek();
+		    if (usable.includes(skill)) create(skill);
+		    else setInstalling(skill);
+		  };
 		  (0, import_react2.useEffect)(() => {
 		    if (run2?.phase !== "done" || run2.restart || ranReady) return;
 		    reloadArtifacts();
@@ -2025,35 +2192,63 @@ window.__ModuleLoader__.load({
 		        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "bda-section-title", children: t("create.heading") }),
 		        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("ul", { className: "bda-tiles", children: tiles.map((skill) => {
 		          const ready = usable.includes(skill);
-		          const own = run2 !== null && skill === ranFor ? run2 : null;
-		          const badge = ready ? null : own?.phase === "running" ? { key: "tile.installing", state: "running" } : own?.phase === "failed" ? { key: "tile.failed", state: "failed" } : own?.phase === "done" ? { key: own.restart ? "tile.restart" : "tile.installed", state: "done" } : { key: "tile.missing", state: "missing" };
-		          return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
+		          const status = statusOf(skill);
+		          const peeking = peek?.skill === skill;
+		          return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { onPointerEnter: (event) => event.pointerType !== "touch" && showPeek(skill, event.currentTarget.firstElementChild), onPointerLeave: hidePeek, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
 		            "button",
 		            {
 		              type: "button",
 		              className: "bda-tile",
 		              "data-skill": skill,
-		              ...ready ? {} : { "data-missing": "true", "aria-haspopup": "dialog", title: t("tile.hint", { type: t(`type.${skill}`) }) },
-		              style: { "--bda-tint": tintOf(skill) },
-		              onClick: () => ready ? create(skill) : setInstalling(skill),
+		              ...ready ? {} : { "data-missing": "true", "aria-haspopup": "dialog" },
+		              ...peeking ? { "data-peek": "true", "aria-describedby": PEEK_ABOUT_ID } : {},
+		              style: typeStyle(skill),
+		              onClick: () => tileAct(skill),
+		              onFocus: (event) => {
+		                if (event.currentTarget.matches(":focus-visible")) showPeek(skill, event.currentTarget, true);
+		              },
+		              onBlur: () => {
+		                if (!overPeek.current) hidePeek();
+		              },
+		              onKeyDown: (event) => {
+		                if (event.key === "Escape" && peek !== null) closePeek();
+		              },
 		              children: [
 		                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "bda-tile-art", children: [
-		                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("svg", { className: "bda-tile-squiggle", viewBox: "0 0 140 100", preserveAspectRatio: "xMidYMid slice", fill: "none", stroke: "currentColor", strokeWidth: "1.1", strokeDasharray: "0 3.2", strokeLinecap: "round", "aria-hidden": "true", children: [
-		                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M4 84C20 16 42 98 62 42s38 58 74-28" }),
-		                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M6 88C24 22 44 104 66 46s36 56 72-26" }),
-		                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M2 80C18 12 40 92 58 38s40 58 76-28" })
-		                  ] }),
-		                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(TypeIcon, { skill, size: 40 }),
-		                  badge !== null && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "bda-tile-badge", "data-state": badge.state, children: [
-		                    badge.state === "running" && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "bda-spinner" }),
-		                    t(badge.key)
-		                  ] })
+		                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Doodle, { skill }),
+		                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(TypeIcon, { skill, size: 42 }),
+		                  BETA.includes(skill) && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "bda-tile-beta", children: t("tile.beta") })
 		                ] }),
-		                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "bda-tile-label", children: t(`type.${skill}`) })
+		                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "bda-tile-label", children: [
+		                  t(`type.${skill}`),
+		                  status !== null && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "bda-tile-state", "data-state": status.state, children: [
+		                    status.state === "running" && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "bda-spinner" }),
+		                    t(status.key)
+		                  ] })
+		                ] })
 		              ]
 		            }
 		          ) }, skill);
-		        }) })
+		        }) }),
+		        peek !== null && tiles.includes(peek.skill) && popup === null && installing === null && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+		          TilePeek,
+		          {
+		            skill: peek.skill,
+		            anchor: peek.anchor,
+		            status: statusOf(peek.skill),
+		            t,
+		            onAct: () => tileAct(peek.skill),
+		            onEnter: () => {
+		              overPeek.current = true;
+		              clearTimeout(peekTimer.current);
+		            },
+		            onLeave: () => {
+		              overPeek.current = false;
+		              hidePeek();
+		            },
+		            onClose: closePeek
+		          }
+		        )
 		      ] }),
 		      state.status === "loading" && state.artifacts.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("ul", { className: "bda-grid bda-skeleton", "aria-hidden": "true", children: [0, 1, 2].map((i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { className: "bda-item", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bda-card", children: [
 		        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bda-preview" }),
