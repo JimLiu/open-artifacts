@@ -4,6 +4,11 @@ English | [中文](./CHANGELOG.zh.md)
 
 All notable changes to `baoyu-design` are tracked in this file.
 
+## 2.15.2 - 2026-11-12
+
+### Features
+- **`claude-design`: see a page at another screen width, and save the whole page at that width as a PNG.** Open an artboard full window (the toolbar's **Play**, then the artboard) and pick **Fill**: next to Fill/Fit is a width control. It follows the window, or lays the page out at Phone 390, Tablet 768, 1024, 1280, 1440 or 1920 px (and the artboard's own width when it is none of these), centred, and scaled down to fit when wider than the window, with the scale shown beside the width. Whenever that width is not the artboard's own, the artboard's **Export** offers **PNG 1×, this width** and **PNG 2×, this width**: the whole page laid out at that width, as tall as its content, saved as `<name>-<width>w@<scale>x.png`. `SKILL.md` tells the agent to point users there when they ask for a page at a screen width or a full-page screenshot (requested by @hh0592821, [#42](https://github.com/JimLiu/baoyu-design/issues/42)).
+
 ## 2.15.1 - 2026-11-12
 
 ### Fixes

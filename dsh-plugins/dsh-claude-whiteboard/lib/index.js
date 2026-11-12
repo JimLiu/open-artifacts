@@ -1,4 +1,4 @@
-// dsh-claude-whiteboard 2.15.1: built from baoyu-design.
+// dsh-claude-whiteboard 2.15.2: built from baoyu-design.
 var define_PLUGIN_default = { name: "claude-whiteboard", provider: "dsh-claude-whiteboard", skills: [{ name: "claude-whiteboard", description: "Use this for a local Whiteboard: a shared space for laying out thinking in whatever form it needs (a diagram, a flow, a map of ideas, a plan, a comparison, a drawn explanation, a small working embed) that opens in the bundled board editor, where people move, draw, comment and send comments to the agent. Its content lives in the board's own store, written with this skill's script, never in files you edit by hand. Read it before you create a board or change one. Not for a slide deck, a document, a film or a static HTML page.", scriptAlias: "A", comments: true }] };
 
 import { readFile } from "node:fs/promises";
