@@ -1,6 +1,6 @@
 # ChatGPT 插件
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [返回 baoyu-design](../README.zh-CN.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [返回 open-artifacts](../README.zh-CN.md)
 
 这里的每个文件夹都是一个插件，ChatGPT 桌面版和 Codex 都能用，装的是同一个包。你让 Agent 做幻灯片、设计稿、设计系统、仪表盘、影片或白板，它会把文件写进你的工作区，再给你一个编辑器链接，编辑器就跑在你自己的电脑上。
 
@@ -21,7 +21,7 @@
 **1. 把本仓库添加为 marketplace**，只需要一次：
 
 ```bash
-codex plugin marketplace add JimLiu/baoyu-design --sparse .agents/plugins --sparse chatgpt-plugins
+codex plugin marketplace add JimLiu/open-artifacts --sparse .agents/plugins --sparse chatgpt-plugins
 ```
 
 两个 `--sparse` 让它只下载插件，不下载仓库里别的内容。没有 `codex` 命令的话，Mac 上的 ChatGPT 桌面版自带一个，在 `/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex`。
@@ -32,7 +32,9 @@ codex plugin marketplace add JimLiu/baoyu-design --sparse .agents/plugins --spar
 codex plugin add baoyu-slides@baoyu-design
 ```
 
-**从文件夹安装。** 克隆本仓库，把 marketplace 命令里的来源换成它的路径：`codex plugin marketplace add /path/to/baoyu-design`。
+这个 marketplace 的名字是 `baoyu-design`，也就是本仓库改名为 open-artifacts 之前的名字，所以插件写作 `<名字>@baoyu-design`。以前用旧地址（`JimLiu/baoyu-design`）添加过的不用重新添加，旧地址会跳到这里。
+
+**从文件夹安装。** 克隆本仓库，把 marketplace 命令里的来源换成它的路径：`codex plugin marketplace add /path/to/open-artifacts`。
 
 ## 使用
 

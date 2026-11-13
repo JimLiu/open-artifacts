@@ -6,4 +6,4 @@ Skills: `claude-whiteboard`.
 
 It runs on your computer, in the ChatGPT desktop app or Codex, and needs Node.js 22 or later.
 
-Built from [baoyu-design](https://github.com/JimLiu/baoyu-design); see [how to install it](https://github.com/JimLiu/baoyu-design/blob/main/chatgpt-plugins/README.md). Terms: [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md).
+Built from [open-artifacts](https://github.com/JimLiu/open-artifacts); see [how to install it](https://github.com/JimLiu/open-artifacts/blob/main/chatgpt-plugins/README.md). Terms: [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md).

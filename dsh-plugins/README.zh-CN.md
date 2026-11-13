@@ -1,8 +1,8 @@
 # DeepSeek Harness 插件
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [返回 baoyu-design](../README.zh-CN.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [返回 open-artifacts](../README.zh-CN.md)
 
-这里的每个文件夹都是一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 插件，各带一个 baoyu-design 技能。你让 Agent 做幻灯片、设计稿、设计系统、数据看板、影片或白板，它会把文件写进你的工作区，再给你一个编辑器链接。编辑器就运行在你自己的电脑上，链接在应用的侧栏里打开，和对话并排。
+这里的每个文件夹都是一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 插件，各带一个 open-artifacts 技能。你让 Agent 做幻灯片、设计稿、设计系统、数据看板、影片或白板，它会把文件写进你的工作区，再给你一个编辑器链接。编辑器就运行在你自己的电脑上，链接在应用的侧栏里打开，和对话并排。
 
 | 插件 | npm 包名 | 能做什么 | 评论 |
 |---|---|---|---|
@@ -32,8 +32,10 @@
 2. 在「发现」里点 **Add index source**（添加索引源），把下面这个地址粘贴到 **Index URL**（索引 URL）一栏，点 **Add**（添加）：
 
    ```text
-   https://jimliu.github.io/baoyu-design/dsh-plugins/index.json
+   https://jimliu.github.io/open-artifacts/dsh-plugins/index.json
    ```
+
+   项目还叫 baoyu-design 的时候添加过索引（`https://jimliu.github.io/baoyu-design/dsh-plugins/index.json`）的话，那个地址已经打不开了：把它删掉，换成上面这个。已经装好的插件不受影响，照常更新。
 
 3. 在插件卡片上点 **Install**（安装），确认后在弹出的安装对话框里完成安装。然后像第 3、4 步那样打开插件开关、重启应用。
 
@@ -47,7 +49,7 @@ dsh plugin --profile web add dsh-claude-slides
 
 桌面版自己的 profile 只接受从插件页添加的插件。
 
-**从文件夹安装。** 也可以从本仓库的副本安装：克隆仓库（或者下载 ZIP 解压），第 2 步填插件自己文件夹（里面有 `package.json` 的那个）的完整路径，比如 `/Users/you/baoyu-design/dsh-plugins/dsh-claude-slides`。应用直接使用这个文件夹，不会复制，所以文件夹不要挪走或删掉。应用不会替文件夹里的插件安装依赖，所以还要添加 `dsh-claude-artifacts` 这个文件夹，而且要先于第一个插件添加。
+**从文件夹安装。** 也可以从本仓库的副本安装：克隆仓库（或者下载 ZIP 解压），第 2 步填插件自己文件夹（里面有 `package.json` 的那个）的完整路径，比如 `/Users/you/open-artifacts/dsh-plugins/dsh-claude-slides`。应用直接使用这个文件夹，不会复制，所以文件夹不要挪走或删掉。应用不会替文件夹里的插件安装依赖，所以还要添加 `dsh-claude-artifacts` 这个文件夹，而且要先于第一个插件添加。
 
 ## 使用
 
@@ -115,7 +117,7 @@ dsh plugin --profile web add dsh-claude-slides
 Harness 可以跑在一台电脑上，你在另一台设备上用：比如服务器上跑 `dsh web`，你在笔记本或手机的浏览器里通过同一个局域网或 tailnet 打开它。编辑器跑在运行 Harness 的那台电脑上，Agent 给的链接（`http://127.0.0.1:…`）只在那台电脑上打得开。在另一台设备上，改从 **Artifacts**（「作品」）打开，或者点评论卡片上的 **View thread**。插件会给这台设备一个你本人的链接，地址就是浏览器访问 Harness 用的那个，在新标签页里打开。通过它打开，你就是编辑器的主人，和在那台电脑上一样：能编辑，也有 Send to Agent。
 
 - **另一台设备要能通过这个地址访问到编辑器。** 同一个局域网或 tailnet 里没问题。Harness 跑在容器里的，让容器用宿主机的网络（`--network host`）。
-- **经过代理或用自己的域名访问时**，浏览器用的地址不一定通到编辑器。在 Harness 的环境变量里把 `BAOYU_DESIGN_REMOTE_HOST` 设成其他设备访问那台电脑用的地址（IP 或名字，不带端口），再重启 Harness。设成 `off` 就完全关掉这个功能。
+- **经过代理或用自己的域名访问时**，浏览器用的地址不一定通到编辑器。在 Harness 的环境变量里把 `OPEN_ARTIFACTS_REMOTE_HOST` 设成其他设备访问那台电脑用的地址（IP 或名字，不带端口），再重启 Harness。设成 `off` 就完全关掉这个功能。2.16.0 和更早的版本只认它的旧名 `BAOYU_DESIGN_REMOTE_HOST`，之后的版本两个名字都认。
 - **这个链接是你本人进入编辑器的钥匙，走的是明文 http。** 只在自己的设备上用；要让别人进来，在编辑器里点「分享」。在不信任的网络上，用 Tailscale 这样的 tailnet。要换一把钥匙，让 Agent 运行技能的 `share <文件夹> --reset owner`。在另一台设备上，「作品」页的「复制链接」不会复制它。
 - **什么也没打开**：允许这个网站弹出窗口。页面提示插件版本较旧的，在「作品」页更新它。
 

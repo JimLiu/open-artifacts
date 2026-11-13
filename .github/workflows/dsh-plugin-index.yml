@@ -1,7 +1,7 @@
 name: DSH plugin index
 
 # Publishes the plugin market index of the DeepSeek Harness plugins to GitHub Pages, at
-# https://jimliu.github.io/baoyu-design/dsh-plugins/index.json: the file the app's Discover tab reads to list the
+# https://jimliu.github.io/open-artifacts/dsh-plugins/index.json: the file the app's Discover tab reads to list the
 # plugins, install them and show when an update is out. It lists the versions on npm, so it runs once
 # "Publish DSH plugins" has finished for a version tag, and on demand (Run workflow) to refresh it.
 #

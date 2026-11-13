@@ -869,7 +869,7 @@ var gitignoreLines = (kind) => [STATE_FILE, LOG_FILE, ".sharing.json", ...kind =
 function writeGitignore(root, kind) {
   const file = path2.join(root, GITIGNORE_FILE);
   try {
-    fs3.writeFileSync(file, ["# Written by baoyu-design when the editor first opened this folder: what only this computer's editor server needs.", ...gitignoreLines(kind), ""].join("\n"), { flag: "wx" });
+    fs3.writeFileSync(file, ["# Written by open-artifacts when the editor first opened this folder: what only this computer's editor server needs.", ...gitignoreLines(kind), ""].join("\n"), { flag: "wx" });
   } catch {
   }
 }

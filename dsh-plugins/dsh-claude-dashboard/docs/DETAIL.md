@@ -1,7 +1,7 @@
 # Claude Dashboard is now Claude Data
 
-`dsh-claude-dashboard` was renamed `dsh-claude-data` in baoyu-design 2.14.0. This version of it has no skill. What it
-brings is the current `dsh-claude-artifacts`, the part the baoyu-design plugins share, and that one offers the move.
+`dsh-claude-dashboard` was renamed `dsh-claude-data` in open-artifacts 2.14.0. This version of it has no skill. What it
+brings is the current `dsh-claude-artifacts`, the part the open-artifacts plugins share, and that one offers the move.
 
 ## Moving to Claude Data
 

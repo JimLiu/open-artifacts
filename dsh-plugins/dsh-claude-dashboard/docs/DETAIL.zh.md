@@ -1,6 +1,6 @@
 # Claude 数据看板改名为 Claude 数据
 
-`dsh-claude-dashboard` 在 baoyu-design 2.14.0 改名为 `dsh-claude-data`。这个版本不带技能，它带来的是新版 `dsh-claude-artifacts`（baoyu-design 各插件共用的部分），由它提示换到新插件。
+`dsh-claude-dashboard` 在 open-artifacts 2.14.0 改名为 `dsh-claude-data`。这个版本不带技能，它带来的是新版 `dsh-claude-artifacts`（open-artifacts 各插件共用的部分），由它提示换到新插件。
 
 ## 换到 Claude 数据
 

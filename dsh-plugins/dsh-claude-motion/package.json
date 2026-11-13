@@ -1,7 +1,7 @@
 {
   "name": "dsh-claude-motion",
   "version": "2.16.0",
-  "description": "DeepSeek Harness plugin: the claude-motion skill from baoyu-design. The agent writes short animated films as code, scene by scene, and plays them in a local Motion player that exports MP4 or GIF.",
+  "description": "DeepSeek Harness plugin: the claude-motion skill from open-artifacts. The agent writes short animated films as code, scene by scene, and plays them in a local Motion player that exports MP4 or GIF.",
   "keywords": [
     "dsh",
     "dsh-plugin",
@@ -11,10 +11,10 @@
     "animation",
     "video"
   ],
-  "homepage": "https://github.com/JimLiu/baoyu-design",
+  "homepage": "https://github.com/JimLiu/open-artifacts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JimLiu/baoyu-design.git",
+    "url": "git+https://github.com/JimLiu/open-artifacts.git",
     "directory": "dsh-plugins/dsh-claude-motion"
   },
   "license": "SEE LICENSE IN LICENSE",

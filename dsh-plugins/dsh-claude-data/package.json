@@ -1,7 +1,7 @@
 {
   "name": "dsh-claude-data",
   "version": "2.16.0",
-  "description": "DeepSeek Harness plugin: the claude-data skill from baoyu-design. The agent builds data-backed dashboards as files and opens them in a local dashboard editor.",
+  "description": "DeepSeek Harness plugin: the claude-data skill from open-artifacts. The agent builds data-backed dashboards as files and opens them in a local dashboard editor.",
   "keywords": [
     "dsh",
     "dsh-plugin",
@@ -11,10 +11,10 @@
     "data-visualization",
     "charts"
   ],
-  "homepage": "https://github.com/JimLiu/baoyu-design",
+  "homepage": "https://github.com/JimLiu/open-artifacts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JimLiu/baoyu-design.git",
+    "url": "git+https://github.com/JimLiu/open-artifacts.git",
     "directory": "dsh-plugins/dsh-claude-data"
   },
   "license": "SEE LICENSE IN LICENSE",

@@ -24,8 +24,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const REGISTRY = 'https://registry.npmjs.org/';
-const INDEX_URL = 'https://jimliu.github.io/baoyu-design/dsh-plugins/index.json';
-const TITLE = 'baoyu-design';
+const INDEX_URL = 'https://jimliu.github.io/open-artifacts/dsh-plugins/index.json';
+const TITLE = 'open-artifacts';
 const DESCRIPTION = {
   en: "Claude's Artifact types as DeepSeek Harness plugins: slide decks, design canvases, design systems and dashboards, each opened in an editor that runs on your machine.",
   zh: '把 Claude 的 Artifact 类型做成 DeepSeek Harness 插件：幻灯片、设计画布、设计系统和数据看板，每个都在你电脑上运行的编辑器里打开。',

@@ -29524,7 +29524,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="baoyu-design: HTML for Figma">
+<meta name="generator" content="open-artifacts: HTML for Figma">
 <title>`+TC(o)+`</title>
 `+(f.length?`<style>
 `+iT(f.join(`

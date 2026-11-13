@@ -1,20 +1,20 @@
 # dsh-claude-artifacts
 
-The part the [baoyu-design](https://github.com/JimLiu/baoyu-design) plugins for
+The part the [open-artifacts](https://github.com/JimLiu/open-artifacts) plugins for
 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) share: the **Artifacts** page in the sidebar, comments
 from their editors reaching the agent, and updating the plugins when a new version is out. Each plugin
 (`dsh-claude-slides`, `dsh-claude-design`, …) depends on this package and its bundle patch mounts a row of it, so it comes
 with them and you normally never install it yourself.
 
 It keeps running when a skill's own row is off, which is what lets a skill stay in one agent preset: see
-[Keep a skill to one preset](https://github.com/JimLiu/baoyu-design/blob/main/dsh-plugins/README.md#keep-a-skill-to-one-preset).
+[Keep a skill to one preset](https://github.com/JimLiu/open-artifacts/blob/main/dsh-plugins/README.md#keep-a-skill-to-one-preset).
 
 ## Install it yourself
 
 Only for plugins added from a folder, whose dependencies the app does not install. Add this folder first:
 
 ```sh
-dsh plugin --profile web add link:/path/to/baoyu-design/dsh-plugins/dsh-claude-artifacts
+dsh plugin --profile web add link:/path/to/open-artifacts/dsh-plugins/dsh-claude-artifacts
 ```
 
 ## What is inside
@@ -31,5 +31,5 @@ dsh plugin --profile web add link:/path/to/baoyu-design/dsh-plugins/dsh-claude-a
 
 ## License
 
-`LICENSE` and `NOTICE.md`, as in every baoyu-design plugin. This package's own code and files are MIT; it carries no skill
+`LICENSE` and `NOTICE.md`, as in every open-artifacts plugin. This package's own code and files are MIT; it carries no skill
 and no Anthropic material.

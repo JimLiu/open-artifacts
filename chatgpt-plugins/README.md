@@ -1,6 +1,6 @@
 # ChatGPT plugins
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [Back to baoyu-design](../README.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [Back to open-artifacts](../README.md)
 
 Each folder here is a plugin for the ChatGPT desktop app and Codex, which load the same packages. Ask the agent for a slide deck, a design, a design system, a dashboard, a film or a whiteboard, and it writes the files into your workspace, then gives you a link to an editor that runs on your computer.
 
@@ -21,7 +21,7 @@ Install only the ones you need; each works on its own. The plugins that open an 
 **1. Add this repository as a marketplace**, once:
 
 ```bash
-codex plugin marketplace add JimLiu/baoyu-design --sparse .agents/plugins --sparse chatgpt-plugins
+codex plugin marketplace add JimLiu/open-artifacts --sparse .agents/plugins --sparse chatgpt-plugins
 ```
 
 The two `--sparse` paths fetch only the plugins, not the rest of the repository. No `codex` command? The ChatGPT desktop app on a Mac carries one, at `/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex`.
@@ -32,7 +32,9 @@ The two `--sparse` paths fetch only the plugins, not the rest of the repository.
 codex plugin add baoyu-slides@baoyu-design
 ```
 
-**From a folder.** Clone this repository and give the marketplace command its path instead: `codex plugin marketplace add /path/to/baoyu-design`.
+The marketplace is called `baoyu-design`, the name this repository had before it became open-artifacts, so the plugins are `<name>@baoyu-design`. If you added it under the old address (`JimLiu/baoyu-design`), there is nothing to do: that address leads here.
+
+**From a folder.** Clone this repository and give the marketplace command its path instead: `codex plugin marketplace add /path/to/open-artifacts`.
 
 ## Use
 

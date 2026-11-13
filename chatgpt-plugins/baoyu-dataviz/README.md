@@ -4,4 +4,4 @@ A method for charts and data visualizations in any medium, from HTML and SVG to 
 
 Skills: `dataviz`.
 
-Built from [baoyu-design](https://github.com/JimLiu/baoyu-design); see [how to install it](https://github.com/JimLiu/baoyu-design/blob/main/chatgpt-plugins/README.md). Terms: [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md).
+Built from [open-artifacts](https://github.com/JimLiu/open-artifacts); see [how to install it](https://github.com/JimLiu/open-artifacts/blob/main/chatgpt-plugins/README.md). Terms: [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md).

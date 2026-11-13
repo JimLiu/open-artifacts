@@ -1,4 +1,4 @@
-// dsh-claude-artifacts 2.16.0: built from baoyu-design.
+// dsh-claude-artifacts 2.16.0: built from open-artifacts.
 var define_SKILLS_default = [{ name: "claude-slides", plugin: "dsh-claude-slides", comments: true, requests: true, published: true }, { name: "claude-design", plugin: "dsh-claude-design", comments: true, requests: true, published: true }, { name: "claude-design-system", plugin: "dsh-claude-design-system", comments: true, requests: true, published: true }, { name: "claude-data", plugin: "dsh-claude-data", comments: true, requests: true, published: true }, { name: "claude-docs", plugin: "dsh-claude-docs", comments: true, commentsBy: "mention", requests: true, published: false }, { name: "claude-motion", plugin: "dsh-claude-motion", comments: true, requests: true, published: true }, { name: "claude-whiteboard", plugin: "dsh-claude-whiteboard", comments: true, published: true }, { name: "claude-sheets", plugin: "dsh-claude-sheets", comments: true, requests: true, published: false }];
 
 import { spawn as spawn2 } from "node:child_process";
@@ -261,7 +261,7 @@ function runScript(node, script, args, input) {
   });
 }
 function remoteHostOf(headers, env = process.env) {
-  const set = env.BAOYU_DESIGN_REMOTE_HOST?.trim();
+  const set = (env.OPEN_ARTIFACTS_REMOTE_HOST ?? env.BAOYU_DESIGN_REMOTE_HOST)?.trim();
   if (set === "off") return null;
   const forwarded = headers.get("x-forwarded-host")?.split(",")[0] ?? "";
   const name2 = hostName(forwarded || headers.get("host") || "");
@@ -1072,7 +1072,7 @@ function start(ctx, node) {
   const updates = updateChecker([PLUGIN, ...SKILLS.map((skill) => skill.plugin)], manager, renamed, (plugin) => presetsNaming(ctx.get("agentPresets"), plugin));
   const install = async (plugin) => {
     const skill = SKILLS.find((s) => s.plugin === plugin);
-    if (skill === void 0 || !skill.published) return { error: `${plugin || "that"} is not a plugin baoyu-design publishes`, status: 404 };
+    if (skill === void 0 || !skill.published) return { error: `${plugin || "that"} is not a plugin open-artifacts publishes`, status: 404 };
     const service = manager();
     if ((await installedCheck(service, find))(skill)) return { error: `${plugin} is installed already`, status: 409 };
     if (service === void 0) return { error: "this app has no plugin manager", status: 503 };

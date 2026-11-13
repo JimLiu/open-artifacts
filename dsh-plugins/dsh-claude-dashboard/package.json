@@ -7,10 +7,10 @@
     "dsh-plugin",
     "deepseek-harness"
   ],
-  "homepage": "https://github.com/JimLiu/baoyu-design",
+  "homepage": "https://github.com/JimLiu/open-artifacts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JimLiu/baoyu-design.git",
+    "url": "git+https://github.com/JimLiu/open-artifacts.git",
     "directory": "dsh-plugins/dsh-claude-dashboard"
   },
   "license": "SEE LICENSE IN LICENSE",

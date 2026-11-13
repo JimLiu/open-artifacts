@@ -1,13 +1,13 @@
 # dsh-claude-dashboard
 
 **Renamed [`dsh-claude-data`](https://www.npmjs.com/package/dsh-claude-data)** in
-[baoyu-design](https://github.com/JimLiu/baoyu-design) 2.14.0, when the Dashboard type became Data. Install that one.
+[open-artifacts](https://github.com/JimLiu/open-artifacts) 2.14.0, when the Dashboard type became Data. Install that one.
 
 This package has no skill. Its versions after the rename are there for someone who still has it installed: updating it
 brings the current [`dsh-claude-artifacts`](https://www.npmjs.com/package/dsh-claude-artifacts), whose Artifacts page
 offers the move as an update, `claude-dashboard → claude-data`. **Update** installs `dsh-claude-data`, switched on or off
 as this one is, then uninstalls this one. The dashboards made with it open in the new one as they are. See
-[Update](https://github.com/JimLiu/baoyu-design/blob/main/dsh-plugins/README.md#update) for the rest, such as a preset that
+[Update](https://github.com/JimLiu/open-artifacts/blob/main/dsh-plugins/README.md#update) for the rest, such as a preset that
 names this plugin.
 
 ## What is inside
@@ -18,4 +18,4 @@ names this plugin.
 
 ## License
 
-MIT, in `LICENSE`. `NOTICE.md` sets out what in the baoyu-design plugins is not.
+MIT, in `LICENSE`. `NOTICE.md` sets out what in the open-artifacts plugins is not.

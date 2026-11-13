@@ -1,4 +1,4 @@
-// dsh-claude-artifacts 2.16.0: built from baoyu-design.
+// dsh-claude-artifacts 2.16.0: built from open-artifacts.
 window.__ModuleLoader__.load({
 	id: "dsh-claude-artifacts",
 	factory: (require) => {
@@ -420,10 +420,10 @@ window.__ModuleLoader__.load({
 		  set({ dismissed: "" });
 		}
 		var zh = {
-		  "available": "baoyu-design 插件有新版本 {version}",
+		  "available": "open-artifacts 插件有新版本 {version}",
 		  "current": "{plugin} 当前是 {version}。",
 		  "changelog": "更新日志",
-		  "changelog.url": "https://github.com/JimLiu/baoyu-design/blob/main/CHANGELOG.zh.md",
+		  "changelog.url": "https://github.com/JimLiu/open-artifacts/blob/main/CHANGELOG.zh.md",
 		  "update": "更新",
 		  "update.all": "全部更新",
 		  "update.one": "更新 {plugin} 到 {version}",
@@ -464,10 +464,10 @@ window.__ModuleLoader__.load({
 		  "kept": "{old} 先留着：预设 {presets} 里写着它。把那里改成 dsh-{plugin}，再到插件页卸载 {old}。"
 		};
 		var en = {
-		  "available": "baoyu-design plugins {version} is available",
+		  "available": "open-artifacts plugins {version} is available",
 		  "current": "{plugin} is on {version}.",
 		  "changelog": "Changelog",
-		  "changelog.url": "https://github.com/JimLiu/baoyu-design/blob/main/CHANGELOG.md",
+		  "changelog.url": "https://github.com/JimLiu/open-artifacts/blob/main/CHANGELOG.md",
 		  "update": "Update",
 		  "update.all": "Update all",
 		  "update.one": "Update {plugin} to {version}",
@@ -769,7 +769,7 @@ window.__ModuleLoader__.load({
 		}
 
 		var import_jsx_runtime2 = require("react/jsx-runtime");
-		var PAGE_VERSION = 7;
+		var PAGE_VERSION = 8;
 		var PLUGINS_PANEL_ID = "plugins";
 		var PANEL_ID = "baoyu-design.artifacts";
 		var NS2 = "baoyu-design-artifacts";
@@ -805,7 +805,7 @@ window.__ModuleLoader__.load({
 		    try {
 		      listener();
 		    } catch (error) {
-		      console.error("baoyu-design Artifacts page listener failed:", error);
+		      console.error("open-artifacts Artifacts page listener failed:", error);
 		    }
 		  }
 		}
@@ -911,7 +911,7 @@ window.__ModuleLoader__.load({
 		  "toast.undo": "撤销",
 		  "toast.close": "关闭",
 		  "empty.title": "还没有作品",
-		  "empty.body": "Agent 用 baoyu-design 的技能做出来的东西都会出现在这里。点上面的入口开始做一个。",
+		  "empty.body": "Agent 用 open-artifacts 的技能做出来的东西都会出现在这里。点上面的入口开始做一个。",
 		  "empty.noMatches": "没有符合条件的作品",
 		  "load.error": "读取作品列表失败：{message}",
 		  "load.retry": "重试",
@@ -927,7 +927,7 @@ window.__ModuleLoader__.load({
 		  "tile.restart": "重启后可用",
 		  "tile.installed": "已安装",
 		  "tile.beta": "Beta",
-		  "peek.by": "来自 baoyu-design",
+		  "peek.by": "来自 open-artifacts",
 		  "peek.start": "从提示词开始",
 		  "peek.install": "安装…",
 		  "peek.details": "查看安装情况",
@@ -1029,7 +1029,7 @@ window.__ModuleLoader__.load({
 		  "toast.undo": "Undo",
 		  "toast.close": "Close",
 		  "empty.title": "No artifacts yet",
-		  "empty.body": "What the agent makes with a baoyu-design skill shows up here. Start one with a tile above.",
+		  "empty.body": "What the agent makes with an open-artifacts skill shows up here. Start one with a tile above.",
 		  "empty.noMatches": "No artifacts match",
 		  "load.error": "Could not read the artifacts: {message}",
 		  "load.retry": "Try again",
@@ -1045,7 +1045,7 @@ window.__ModuleLoader__.load({
 		  "tile.restart": "Restart to use",
 		  "tile.installed": "Installed",
 		  "tile.beta": "Beta",
-		  "peek.by": "By baoyu-design",
+		  "peek.by": "By open-artifacts",
 		  "peek.start": "Start with a prompt",
 		  "peek.install": "Install…",
 		  "peek.details": "See the install",
@@ -2583,7 +2583,7 @@ window.__ModuleLoader__.load({
 		          try {
 		            await takeOne(next, signal);
 		          } catch (error) {
-		            if (!signal.aborted) console.warn(`baoyu-design Artifacts page: no thumbnail for ${next.root}:`, error);
+		            if (!signal.aborted) console.warn(`open-artifacts Artifacts page: no thumbnail for ${next.root}:`, error);
 		          }
 		        }
 		      } finally {
@@ -2653,7 +2653,7 @@ window.__ModuleLoader__.load({
 		  try {
 		    if (h.shownAt !== void 0 && Date.now() - h.shownAt < RETURN_WITHIN_MS && activePanel() === null) layout?.selectPanel(PANEL_ID);
 		  } catch (error) {
-		    console.error("baoyu-design Artifacts page: going back to it failed:", error);
+		    console.error("open-artifacts Artifacts page: going back to it failed:", error);
 		  }
 		  delete h.shownAt;
 		  return () => {
@@ -2662,7 +2662,7 @@ window.__ModuleLoader__.load({
 		      try {
 		        dispose();
 		      } catch (error) {
-		        console.error("baoyu-design Artifacts page: unregistering failed:", error);
+		        console.error("open-artifacts Artifacts page: unregistering failed:", error);
 		      }
 		    }
 		  };

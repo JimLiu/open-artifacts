@@ -1,6 +1,6 @@
 # Notices
 
-baoyu-design holds material under three different sets of terms. The MIT License in [LICENSE](LICENSE) covers only the first. The same applies to the ChatGPT plugins in `chatgpt-plugins/`, each of which carries this file, and to the DeepSeek Harness plugins on npm, which ship this file next to their `LICENSE`.
+open-artifacts holds material under three different sets of terms. The MIT License in [LICENSE](LICENSE) covers only the first. The same applies to the ChatGPT plugins in `chatgpt-plugins/`, each of which carries this file, and to the DeepSeek Harness plugins on npm, which ship this file next to their `LICENSE`.
 
 [中文说明](#中文说明)
 
@@ -18,7 +18,7 @@ Copyright (c) 2026 Jim Liu 宝玉, under the MIT License in [LICENSE](LICENSE):
 
 ## 2. Material from Anthropic: not MIT
 
-baoyu-design brings claude.ai's Artifact types and Claude Design to local agents, so much of what it ships comes from Anthropic, PBC. That material stays Anthropic's. Anthropic has published no license for it, apart from the one file in section 2.1, and this project grants none: the MIT License does not apply to it. It is included so the skills work as they do on claude.ai. This project is independent and is not affiliated with or endorsed by Anthropic.
+open-artifacts brings claude.ai's Artifact types and Claude Design to local agents, so much of what it ships comes from Anthropic, PBC. That material stays Anthropic's. Anthropic has published no license for it, apart from the one file in section 2.1, and this project grants none: the MIT License does not apply to it. It is included so the skills work as they do on claude.ai. This project is independent and is not affiliated with or endorsed by Anthropic.
 
 - **Skill instructions.** Each `skills/claude-*/SKILL.md` adapts the SKILL.md of a claude.ai Artifact type. The maintainer's local-agent changes are described in section 1.
 - **Reference docs.** `skills/*/artifact-type/reference/`, and the copies under `scripts/editor/artifact-type/`: the craft, format and layout guides, font lists and other references of the Artifact types.
@@ -40,7 +40,7 @@ The archived `baoyu-design` skill vendors React, ReactDOM, Babel and fflate (MIT
 
 ## Questions and removal
 
-If you hold rights in anything here and want it credited differently, changed or removed, open an issue at <https://github.com/JimLiu/baoyu-design/issues>.
+If you hold rights in anything here and want it credited differently, changed or removed, open an issue at <https://github.com/JimLiu/open-artifacts/issues>.
 
 ## 中文说明
 
@@ -59,4 +59,4 @@ If you hold rights in anything here and want it credited differently, changed or
    `archive/baoyu-design/built-in-skills/frontend-design.md` 取自 Anthropic 以 Apache License 2.0 发布的 frontend-design 技能，许可全文见同目录的 `LICENSE-frontend-design.txt`。
 3. **第三方开源代码，各按原许可。** 编辑器打进去的开源包（React、Base UI、d3、pptxgenjs 等）的许可见各编辑器的 `scripts/editor/third-party-licenses.txt`；归档技能里内置的 React、Babel、fflate、pptxgenjs 见 `archive/baoyu-design/agents/vendor/` 和 `agents/gen-pptx/vendor/pptxgenjs/LICENSE`。
 
-本项目是独立的社区项目，与 Anthropic 无隶属或背书关系。权利人希望调整署名、修改或移除某部分内容，请在 <https://github.com/JimLiu/baoyu-design/issues> 提 issue。
+本项目是独立的社区项目，与 Anthropic 无隶属或背书关系。权利人希望调整署名、修改或移除某部分内容，请在 <https://github.com/JimLiu/open-artifacts/issues> 提 issue。

@@ -7,8 +7,8 @@
     "name": "Jim Liu 宝玉",
     "url": "https://github.com/JimLiu"
   },
-  "homepage": "https://github.com/JimLiu/baoyu-design",
-  "repository": "https://github.com/JimLiu/baoyu-design",
+  "homepage": "https://github.com/JimLiu/open-artifacts",
+  "repository": "https://github.com/JimLiu/open-artifacts",
   "license": "SEE LICENSE IN LICENSE",
   "keywords": [
     "whiteboard",
@@ -30,8 +30,8 @@
           "Read",
           "Write"
         ],
-        "websiteURL": "https://github.com/JimLiu/baoyu-design",
-        "supportURL": "https://github.com/JimLiu/baoyu-design/issues",
+        "websiteURL": "https://github.com/JimLiu/open-artifacts",
+        "supportURL": "https://github.com/JimLiu/open-artifacts/issues",
         "defaultPrompt": [
           "Map out how our release process works",
           "Lay out these three options side by side to compare",

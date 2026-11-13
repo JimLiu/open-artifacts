@@ -1,7 +1,7 @@
 # dsh-claude-whiteboard
 
 A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin that adds the **claude-whiteboard** skill
-from [baoyu-design](https://github.com/JimLiu/baoyu-design): the agent lays out diagrams, flows, maps of ideas, plans and
+from [open-artifacts](https://github.com/JimLiu/open-artifacts): the agent lays out diagrams, flows, maps of ideas, plans and
 comparisons on a whiteboard in your workspace, and opens it in a local board editor, where you move things, draw, type
 and comment.
 
@@ -19,18 +19,18 @@ has its own `claude-whiteboard` skill (in `.agents/skills/` or `.dsh/skills/`) u
 
 ## What is inside
 
-- `skills/claude-whiteboard/`: the skill as baoyu-design publishes it (`SKILL.md`, `artifact-type/reference/`, and the
+- `skills/claude-whiteboard/`: the skill as open-artifacts publishes it (`SKILL.md`, `artifact-type/reference/`, and the
   prebuilt `scripts/`: the board page and `artifact.mjs`, which is also its server).
 - `lib/index.js`: the plugin. It registers the skill with the Harness skill registry and, when the skill loads, tells
   the agent which Node executable runs `scripts/artifact.mjs`: the Host's own Node, the Node runtime the desktop app
   ships, or `node` on PATH. Set `node` in the `claude-whiteboard` row's config to choose another. That is all this row
-  does, so you can turn it off and [keep the skill to one agent preset](https://github.com/JimLiu/baoyu-design/blob/main/dsh-plugins/README.md#keep-a-skill-to-one-preset).
+  does, so you can turn it off and [keep the skill to one agent preset](https://github.com/JimLiu/open-artifacts/blob/main/dsh-plugins/README.md#keep-a-skill-to-one-preset).
 - `cordis.patch.yml`: the bundle layer that mounts two rows: this plugin's, and its row of `dsh-claude-artifacts`.
 
 [`dsh-claude-artifacts`](https://www.npmjs.com/package/dsh-claude-artifacts) installs with this plugin and does the rest,
 whichever way the skill is set up: whenever the agent opens a board it waits for comments, so a comment's **Send to
 Agent** box is there: send one and the agent wakes up, changes the board, and replies in the comment. It shows what is
-sent as a card in the chat, and adds **Artifacts** to the left sidebar, one entry for all the baoyu-design plugins: the
+sent as a card in the chat, and adds **Artifacts** to the left sidebar, one entry for all the open-artifacts plugins: the
 boards and everything else the agent has opened, each a click away from its conversation and editor.
 
 The board server listens on 127.0.0.1 only and reads and writes only the folders of the boards it serves.

@@ -1,4 +1,4 @@
-# baoyu-design
+# open-artifacts
 
 https://github.com/user-attachments/assets/d5b4f39b-a701-49de-87b8-64f3c6ef9c61
 
@@ -16,7 +16,7 @@ https://github.com/user-attachments/assets/db6c5d93-dc28-4170-8356-4dbe5725a57c
 
 本仓库把 claude.ai 的 **Artifact 类型**搬到本地 Agent 上：可编辑的幻灯片、设计画布、设计系统、数据仪表盘、动画影片和白板，每一种都用它自己的编辑器打开，编辑器就运行在你的电脑上。`motion-director` 负责给这些影片当导演，从想清楚要说什么一直到成片。`dataviz` 是一份图表指南：Agent 在画任何图表之前先读它，不管是在这几个技能里还是别处。六个编辑器也做成了 [DeepSeek Harness 插件](#deepseek-harness-插件)，按包名从 npm 安装。
 
-原来的 `baoyu-design` 技能（以自包含 HTML 产出 UI 稿和原型）已归档到 [`archive/baoyu-design/`](archive/baoyu-design/)。
+本项目在 2026 年 11 月之前叫 `baoyu-design`，GitHub 上的旧地址会跳到这里。原来的 `baoyu-design` 技能（以自包含 HTML 产出 UI 稿和原型）已归档到 [`archive/baoyu-design/`](archive/baoyu-design/)。
 
 不依赖网站，不需要额外订阅，也不用上传。活儿由你机器上已有的 Agent 完成，所有产物都留在你自己的仓库里。
 
@@ -137,8 +137,10 @@ dsh plugin --profile web add dsh-claude-design
 **从「发现」安装。** 应用的实验功能「发现」（Discover）可以列出这些插件，点一下就装，有新版本时也会标出来。在插件页点 **Experimental plugins**（实验性插件）旁边的 **More**（更多），打开 **Custom plugin markets**（自定义插件市场）；再到「发现」里点 **Add index source**（添加索引源），加上这个索引：
 
 ```text
-https://jimliu.github.io/baoyu-design/dsh-plugins/index.json
+https://jimliu.github.io/open-artifacts/dsh-plugins/index.json
 ```
+
+项目还叫 baoyu-design 的时候添加过索引（`https://jimliu.github.io/baoyu-design/dsh-plugins/index.json`）的话，那个地址已经打不开了：在「发现」里把它删掉，换成上面这个。已经装好的插件不受影响，照常更新。
 
 **更新。** 发了新版本，侧边栏的「作品」这一行会多一个 **更新** 标签，「作品」页顶部写着改了什么，点 **Update all**（全部更新）就一起更新，不用卸载；只想更新其中一个，点那一行的 **Update**（更新）。2.9.2 和更早的版本不会提示：DeepSeek Harness 0.2.2 起，在插件详情页点 **更新到 x**；更老的应用要在插件页卸载插件，再重新安装，然后退出应用再重新打开。新版本发布后的一天内，按包名装到的还是上一个版本；从「发现」安装能马上装到新版本，在包名后面加上版本号也可以，比如 `dsh-claude-design@2.4.0`（版本号见 [更新日志](CHANGELOG.zh.md)）。装过 `dsh-claude-dashboard` 的：它已改名 `dsh-claude-data`，「作品」页会把换到新插件当作一项更新来提示（[详细说明](dsh-plugins/README.zh-CN.md#更新)）。
 
@@ -155,7 +157,7 @@ Harness 跑在一台电脑上、你在另一台设备上用时（比如服务器
 这些技能也做成了 ChatGPT 桌面版和 Codex 的插件：[Baoyu Slides](chatgpt-plugins/baoyu-slides/)、[Baoyu Canvas](chatgpt-plugins/baoyu-canvas/)、[Baoyu Design System](chatgpt-plugins/baoyu-design-system/)、[Baoyu Data](chatgpt-plugins/baoyu-data/)、[Baoyu Motion](chatgpt-plugins/baoyu-motion/)（带 `motion-director` 和 `dataviz`）、[Baoyu Whiteboard](chatgpt-plugins/baoyu-whiteboard/) 和 [Baoyu Dataviz](chatgpt-plugins/baoyu-dataviz/)。把本仓库添加为 marketplace，再装你要的插件：
 
 ```bash
-codex plugin marketplace add JimLiu/baoyu-design --sparse .agents/plugins --sparse chatgpt-plugins
+codex plugin marketplace add JimLiu/open-artifacts --sparse .agents/plugins --sparse chatgpt-plugins
 ```
 
 ```bash
@@ -192,21 +194,21 @@ codex plugin add baoyu-slides@baoyu-design
 
 ```bash
 # 安装到当前项目（自动检测你的 Agent）
-npx skills add JimLiu/baoyu-design
+npx skills add JimLiu/open-artifacts
 
 # …或全局安装，对所有项目生效
-npx skills add JimLiu/baoyu-design -g
+npx skills add JimLiu/open-artifacts -g
 
 # 指定某个具体的 Agent
-npx skills add JimLiu/baoyu-design --agent claude-code
-npx skills add JimLiu/baoyu-design --agent cursor
-npx skills add JimLiu/baoyu-design --agent codex
+npx skills add JimLiu/open-artifacts --agent claude-code
+npx skills add JimLiu/open-artifacts --agent cursor
+npx skills add JimLiu/open-artifacts --agent codex
 
 # 先列出仓库里有哪些技能
-npx skills add JimLiu/baoyu-design --list
+npx skills add JimLiu/open-artifacts --list
 
 # 只安装其中几个技能
-npx skills add JimLiu/baoyu-design --skill claude-slides --skill claude-data
+npx skills add JimLiu/open-artifacts --skill claude-slides --skill claude-data
 ```
 
 它会把技能装到 Claude Code 的 `.claude/skills/`，以及 Cursor/Codex 风格 Agent 的 `.agents/skills/`（加上 `-g` 则装到 `~/` 级别的用户目录）。
@@ -230,7 +232,7 @@ npx skills update claude-slides -g -y
 
 **备选方式 —— 直接把仓库 URL 发给 Agent。** 不想安装任何东西？把链接贴进对话，让 Agent 自己去拉取技能：
 
-> 阅读 https://github.com/JimLiu/baoyu-design 并按照其中的 `skills/claude-slides/SKILL.md`，根据这份 PRD 做一套 10 页的幻灯片。
+> 阅读 https://github.com/JimLiu/open-artifacts 并按照其中的 `skills/claude-slides/SKILL.md`，根据这份 PRD 做一套 10 页的幻灯片。
 
 Agent 会 clone 或抓取该仓库、加载 `SKILL.md` 然后开干 —— 临时用一次特别合适。
 

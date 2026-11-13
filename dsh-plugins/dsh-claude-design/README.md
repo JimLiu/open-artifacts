@@ -1,7 +1,7 @@
 # dsh-claude-design
 
 A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin that adds the **claude-design** skill from
-[baoyu-design](https://github.com/JimLiu/baoyu-design): the agent writes editable design canvases (artboards side by
+[open-artifacts](https://github.com/JimLiu/open-artifacts): the agent writes editable design canvases (artboards side by
 side) as files in your workspace and opens them in a local canvas editor, where you can retype copy and adjust each
 artboard's tweaks.
 
@@ -23,18 +23,18 @@ such as `dsh-claude-design@2.4.0`.
 
 ## What is inside
 
-- `skills/claude-design/`: the skill as baoyu-design publishes it (`SKILL.md`, `artifact-type/reference/`, and the
+- `skills/claude-design/`: the skill as open-artifacts publishes it (`SKILL.md`, `artifact-type/reference/`, and the
   prebuilt `scripts/`: the editor page, `artifact.mjs`, and its server).
 - `lib/index.js`: the plugin. It registers the skill with the Harness skill registry and, when the skill loads, tells
   the agent which Node executable runs `scripts/artifact.mjs`: the Host's own Node, the Node runtime the desktop app
   ships, or `node` on PATH. Set `node` in the `claude-design` row's config to choose another. That is all this row does,
-  so you can turn it off and [keep the skill to one agent preset](https://github.com/JimLiu/baoyu-design/blob/main/dsh-plugins/README.md#keep-a-skill-to-one-preset).
+  so you can turn it off and [keep the skill to one agent preset](https://github.com/JimLiu/open-artifacts/blob/main/dsh-plugins/README.md#keep-a-skill-to-one-preset).
 - `cordis.patch.yml`: the bundle layer that mounts two rows: this plugin's, and its row of `dsh-claude-artifacts`.
 
 [`dsh-claude-artifacts`](https://www.npmjs.com/package/dsh-claude-artifacts) installs with this plugin and does the rest,
 whichever way the skill is set up: whenever the agent opens the editor it waits for comments, so a comment's **Send to Agent** box is there: send one and
 the agent wakes up, changes the artboard, and replies in the comment. It shows what is sent as a card in the chat, and adds **Artifacts**
-to the left sidebar, one entry for all the baoyu-design plugins: the designs and everything else the agent has opened,
+to the left sidebar, one entry for all the open-artifacts plugins: the designs and everything else the agent has opened,
 each a click away from its conversation and editor.
 
 The editor server listens on 127.0.0.1 only and reads and writes only the canvas's folder.

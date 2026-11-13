@@ -1,9 +1,9 @@
 # DeepSeek Harness plugins
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [Back to baoyu-design](../README.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [Back to open-artifacts](../README.md)
 
 Each folder here is a plugin for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) app. A plugin
-adds one baoyu-design skill: ask the agent for a slide deck, a design, a design system, a dashboard, a film or a whiteboard, and it writes the
+adds one open-artifacts skill: ask the agent for a slide deck, a design, a design system, a dashboard, a film or a whiteboard, and it writes the
 files into your workspace, then gives you a link to an editor that runs on your computer. The link opens in the app's
 sidebar, next to the chat.
 
@@ -42,8 +42,12 @@ new version is out. Discover is an experimental feature of the app and starts sw
 2. In **Discover**, click **Add index source**, paste this address in **Index URL**, and click **Add**:
 
    ```text
-   https://jimliu.github.io/baoyu-design/dsh-plugins/index.json
+   https://jimliu.github.io/open-artifacts/dsh-plugins/index.json
    ```
+
+   If you added the index while this project was called baoyu-design
+   (`https://jimliu.github.io/baoyu-design/dsh-plugins/index.json`), that address no longer answers: remove it and add
+   this one. The plugins you installed are not affected and update as before.
 
 3. Click **Install** on a plugin's card, confirm, and finish in the install dialog that opens. Then turn the plugin on
    and restart the app, as in steps 3 and 4.
@@ -60,7 +64,7 @@ The desktop app's own profile only accepts plugins added from its Plugins page.
 
 **From a folder.** You can also install from a copy of this repository: clone it (or download the ZIP and unzip it),
 and in step 2 enter the full path of the plugin's own folder, the one with `package.json` in it, such as
-`/Users/you/baoyu-design/dsh-plugins/dsh-claude-slides`. The app uses that folder where it is, so don't move or delete
+`/Users/you/open-artifacts/dsh-plugins/dsh-claude-slides`. The app uses that folder where it is, so don't move or delete
 it. The app installs no dependencies for a folder, so add the `dsh-claude-artifacts` folder too, before the first plugin.
 
 ## Use
@@ -156,8 +160,9 @@ Agent is there.
 - **The other device has to reach the editor at that address.** On the same network or a tailnet it does. If Harness runs
   in a container, give the container the host's network (`--network host`).
 - **Behind a proxy or a domain of your own**, the address the browser uses may not lead to the editor. Set
-  `BAOYU_DESIGN_REMOTE_HOST` in Harness's environment to the address other devices reach that computer at (an IP or a
-  name, no port), and restart Harness. `BAOYU_DESIGN_REMOTE_HOST=off` turns all this off.
+  `OPEN_ARTIFACTS_REMOTE_HOST` in Harness's environment to the address other devices reach that computer at (an IP or a
+  name, no port), and restart Harness. `OPEN_ARTIFACTS_REMOTE_HOST=off` turns all this off. Versions 2.16.0 and earlier
+  read it under its earlier name, `BAOYU_DESIGN_REMOTE_HOST`, which later versions still accept.
 - **The link is your own key to the editor, over plain http.** Keep it to your own devices; to let others in, use
   **Share** in the editor. Across a network you don't trust, use a tailnet such as Tailscale. To replace the key, ask the
   agent to run the skill's `share <folder> --reset owner`. **Copy link** on the Artifacts page copies nothing from another device.

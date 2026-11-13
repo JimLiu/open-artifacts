@@ -2,7 +2,7 @@
 
 English | [中文](./CHANGELOG.zh.md)
 
-All notable changes to `baoyu-design` are tracked in this file.
+All notable changes to `open-artifacts` (called `baoyu-design` until 2.16.0) are tracked in this file.
 
 ## 2.16.0 - 2026-11-13
 

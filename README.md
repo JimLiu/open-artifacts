@@ -1,4 +1,4 @@
-# baoyu-design
+# open-artifacts
 
 https://github.com/user-attachments/assets/d5b4f39b-a701-49de-87b8-64f3c6ef9c61
 
@@ -17,7 +17,7 @@ https://github.com/user-attachments/assets/db6c5d93-dc28-4170-8356-4dbe5725a57c
 
 This repo brings claude.ai's **Artifact types** to local agents: editable slide decks, design canvases, design systems, data dashboards, motion films and whiteboards, each opened in its own editor that runs on your machine. `motion-director` directs those films, from the point of the film to the finished cut. `dataviz` is the chart guide the agent reads before it draws any chart, in these skills or anywhere else. The six editors also ship as [DeepSeek Harness plugins](#deepseek-harness-plugins), installed from npm by name.
 
-The original `baoyu-design` skill (self‑contained HTML mockups and prototypes) has been archived to [`archive/baoyu-design/`](archive/baoyu-design/).
+This project was called `baoyu-design` until November 2026, and its old address on GitHub leads here. The original `baoyu-design` skill (self‑contained HTML mockups and prototypes) has been archived to [`archive/baoyu-design/`](archive/baoyu-design/).
 
 No website, no separate subscription, no upload step. The agent already on your machine does the work, and every artifact stays in your repo.
 
@@ -138,8 +138,10 @@ dsh plugin --profile web add dsh-claude-design
 **From the Discover tab.** The app's experimental Discover tab can list the plugins, install them with a click and show when an update is out. On the Plugins page, click **More** beside **Experimental plugins** and switch on **Custom plugin markets**; then in **Discover**, click **Add index source** and add this index:
 
 ```text
-https://jimliu.github.io/baoyu-design/dsh-plugins/index.json
+https://jimliu.github.io/open-artifacts/dsh-plugins/index.json
 ```
+
+If you added the index while this project was called baoyu-design (`https://jimliu.github.io/baoyu-design/dsh-plugins/index.json`), that address no longer answers: remove it in **Discover** and add this one. The plugins you installed are not affected and update as before.
 
 **Updating.** When a new version is out, the **Artifacts** row in the sidebar gets an **Update** label, and the top of the Artifacts page says what changed: **Update all** updates the plugins together, with nothing to uninstall, and each plugin has its own **Update** if you want just one. Versions 2.9.2 and earlier don't offer it: from DeepSeek Harness 0.2.2, click **Update to x** on the plugin's page. On older apps, uninstall the plugin on the Plugins page, install it again, then quit and reopen the app. For a day after a release, adding by name still gets the previous version; Discover gets the new one right away, and so does entering the name with the version, such as `dsh-claude-design@2.4.0` (the versions are in the [changelog](CHANGELOG.md)). Had `dsh-claude-dashboard`? It is now `dsh-claude-data`, and the Artifacts page offers the move as an update ([details](dsh-plugins/README.md#update)).
 
@@ -156,7 +158,7 @@ A workspace that has its own copy of a skill (in `.agents/skills/` or `.dsh/skil
 The same skills also come as plugins for the ChatGPT desktop app and Codex: [Baoyu Slides](chatgpt-plugins/baoyu-slides/), [Baoyu Canvas](chatgpt-plugins/baoyu-canvas/), [Baoyu Design System](chatgpt-plugins/baoyu-design-system/), [Baoyu Data](chatgpt-plugins/baoyu-data/), [Baoyu Motion](chatgpt-plugins/baoyu-motion/) (with `motion-director` and `dataviz`), [Baoyu Whiteboard](chatgpt-plugins/baoyu-whiteboard/) and [Baoyu Dataviz](chatgpt-plugins/baoyu-dataviz/). Add this repository as a marketplace, then install the ones you want:
 
 ```bash
-codex plugin marketplace add JimLiu/baoyu-design --sparse .agents/plugins --sparse chatgpt-plugins
+codex plugin marketplace add JimLiu/open-artifacts --sparse .agents/plugins --sparse chatgpt-plugins
 ```
 
 ```bash
@@ -193,21 +195,21 @@ Using the DeepSeek Harness app? You don't need this section: [install the plugin
 
 ```bash
 # Install into the current project (auto‑detects your agent)
-npx skills add JimLiu/baoyu-design
+npx skills add JimLiu/open-artifacts
 
 # …or install globally, for every project
-npx skills add JimLiu/baoyu-design -g
+npx skills add JimLiu/open-artifacts -g
 
 # Target a specific agent explicitly
-npx skills add JimLiu/baoyu-design --agent claude-code
-npx skills add JimLiu/baoyu-design --agent cursor
-npx skills add JimLiu/baoyu-design --agent codex
+npx skills add JimLiu/open-artifacts --agent claude-code
+npx skills add JimLiu/open-artifacts --agent cursor
+npx skills add JimLiu/open-artifacts --agent codex
 
 # Just list what's in the repo first
-npx skills add JimLiu/baoyu-design --list
+npx skills add JimLiu/open-artifacts --list
 
 # Install only some of the skills
-npx skills add JimLiu/baoyu-design --skill claude-slides --skill claude-data
+npx skills add JimLiu/open-artifacts --skill claude-slides --skill claude-data
 ```
 
 It installs to `.claude/skills/` for Claude Code and `.agents/skills/` for Cursor/Codex-style agents (add `-g` for the `~/`‑level user install).
@@ -231,7 +233,7 @@ You can also run `npx skills update` to update all installed skills. After updat
 
 **Alternative — hand the repo URL to your agent.** Don't want to install anything? Paste the URL into chat and let the agent fetch the skill itself:
 
-> Read https://github.com/JimLiu/baoyu-design and follow its `skills/claude-slides/SKILL.md` to make a 10‑slide deck from this PRD.
+> Read https://github.com/JimLiu/open-artifacts and follow its `skills/claude-slides/SKILL.md` to make a 10‑slide deck from this PRD.
 
 The agent clones or fetches the repo, loads `SKILL.md`, and proceeds — perfect for a one‑off.
 

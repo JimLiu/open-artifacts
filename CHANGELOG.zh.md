@@ -2,7 +2,7 @@
 
 [English](./CHANGELOG.md) | 中文
 
-本文档记录 `baoyu-design` 的重要变更。
+本文档记录 `open-artifacts`（2.16.0 及之前叫 `baoyu-design`）的重要变更。
 
 ## 2.16.0 - 2026-11-13
 

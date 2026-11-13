@@ -1,7 +1,7 @@
 {
   "name": "dsh-claude-whiteboard",
   "version": "2.16.0",
-  "description": "DeepSeek Harness plugin: the claude-whiteboard skill from baoyu-design. The agent lays out diagrams, flows, maps of ideas and plans on a whiteboard and opens it in a local board editor where you move, draw and comment.",
+  "description": "DeepSeek Harness plugin: the claude-whiteboard skill from open-artifacts. The agent lays out diagrams, flows, maps of ideas and plans on a whiteboard and opens it in a local board editor where you move, draw and comment.",
   "keywords": [
     "dsh",
     "dsh-plugin",
@@ -11,10 +11,10 @@
     "diagram",
     "brainstorm"
   ],
-  "homepage": "https://github.com/JimLiu/baoyu-design",
+  "homepage": "https://github.com/JimLiu/open-artifacts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JimLiu/baoyu-design.git",
+    "url": "git+https://github.com/JimLiu/open-artifacts.git",
     "directory": "dsh-plugins/dsh-claude-whiteboard"
   },
   "license": "SEE LICENSE IN LICENSE",
