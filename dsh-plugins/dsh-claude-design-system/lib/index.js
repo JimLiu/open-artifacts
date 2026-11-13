@@ -1,5 +1,5 @@
 // dsh-claude-design-system 2.15.2: built from baoyu-design.
-var define_PLUGIN_default = { name: "claude-design-system", provider: "dsh-claude-design-system", skills: [{ name: "claude-design-system", description: "Create and revise design systems in the Design System artifact format (project/design-system.json, tokens.json, a README brand book, component previews, fonts and asset groups) as local files, then open them in a local design-system page where the user can browse and edit tokens, type, components and assets. Use when the user asks for a design system or brand kit in this format, built from a code repository, a design tool or scratch, names claude-design-system or the Design System type, or wants to revise a folder that holds project/design-system.json. claude-slides and claude-design install these systems. Not for a free-form HTML style guide, UI kit or token page.", comments: true }] };
+var define_PLUGIN_default = { name: "claude-design-system", provider: "dsh-claude-design-system", skills: [{ name: "claude-design-system", description: "Create and revise design systems in the Design System artifact format (project/design-system.json, tokens.json, a README brand book, component previews, fonts and asset groups) as local files, then open them in a local design-system page where the user can browse and edit tokens, type, components and assets. Use when the user asks for a design system or brand kit in this format, built from a code repository, a design tool or scratch, names claude-design-system or the Design System type, or wants to revise a folder that holds project/design-system.json. claude-slides and claude-design install these systems. Not for a free-form HTML style guide, UI kit or token page.", comments: true, requests: true }] };
 
 import { readFile } from "node:fs/promises";
 import { dirname as dirname2, join as join2, posix, sep, win32 } from "node:path";
@@ -116,8 +116,9 @@ function runtimeSection(skill, skillDir, node, platform = process.platform, watc
       ...skill.requests ? [
         "",
         "The page's buttons reach you the same way: a request one of them sends arrives as such a message, under",
-        "`requests` (the button in `label`, what it asks in `text`), as `comments <root> --wait` printed it for that",
-        "page. It is a request from the page wherever this skill speaks of one: handle it as this skill says for those."
+        "`requests` (what it asks in `text`, what the page calls it in `label`), as `comments <root> --wait` printed it",
+        "for that page. It is a request from the page wherever this skill speaks of one: handle it as this skill says for",
+        "those."
       ] : []
     );
   }

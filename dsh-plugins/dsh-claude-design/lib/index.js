@@ -1,5 +1,5 @@
 // dsh-claude-design 2.15.2: built from baoyu-design.
-var define_PLUGIN_default = { name: "claude-design", provider: "dsh-claude-design", skills: [{ name: "claude-design", description: "Make and revise designs in the Design (canvas) artifact format (project/canvas.json plus one .dc.html Design Component file per artboard) as local files, then open them in a local canvas editor where the user can view the artboards side by side, retype copy and adjust tweaks. Use when the user asks for an editable canvas of artboards in this format, names claude-design or the Design (canvas) type, or wants to revise a folder that holds project/canvas.json. Not for a one-off HTML prototype or a design exploration outside this format.", comments: true }] };
+var define_PLUGIN_default = { name: "claude-design", provider: "dsh-claude-design", skills: [{ name: "claude-design", description: "Make and revise designs in the Design (canvas) artifact format (project/canvas.json plus one .dc.html Design Component file per artboard) as local files, then open them in a local canvas editor where the user can view the artboards side by side, retype copy and adjust tweaks. Use when the user asks for an editable canvas of artboards in this format, names claude-design or the Design (canvas) type, or wants to revise a folder that holds project/canvas.json. Not for a one-off HTML prototype or a design exploration outside this format.", comments: true, requests: true }] };
 
 import { readFile } from "node:fs/promises";
 import { dirname as dirname2, join as join2, posix, sep, win32 } from "node:path";
@@ -116,8 +116,9 @@ function runtimeSection(skill, skillDir, node, platform = process.platform, watc
       ...skill.requests ? [
         "",
         "The page's buttons reach you the same way: a request one of them sends arrives as such a message, under",
-        "`requests` (the button in `label`, what it asks in `text`), as `comments <root> --wait` printed it for that",
-        "page. It is a request from the page wherever this skill speaks of one: handle it as this skill says for those."
+        "`requests` (what it asks in `text`, what the page calls it in `label`), as `comments <root> --wait` printed it",
+        "for that page. It is a request from the page wherever this skill speaks of one: handle it as this skill says for",
+        "those."
       ] : []
     );
   }

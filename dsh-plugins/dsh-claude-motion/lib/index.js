@@ -116,8 +116,9 @@ function runtimeSection(skill, skillDir, node, platform = process.platform, watc
       ...skill.requests ? [
         "",
         "The page's buttons reach you the same way: a request one of them sends arrives as such a message, under",
-        "`requests` (the button in `label`, what it asks in `text`), as `comments <root> --wait` printed it for that",
-        "page. It is a request from the page wherever this skill speaks of one: handle it as this skill says for those."
+        "`requests` (what it asks in `text`, what the page calls it in `label`), as `comments <root> --wait` printed it",
+        "for that page. It is a request from the page wherever this skill speaks of one: handle it as this skill says for",
+        "those."
       ] : []
     );
   }

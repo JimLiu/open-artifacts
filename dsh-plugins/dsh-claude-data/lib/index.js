@@ -1,5 +1,5 @@
 // dsh-claude-data 2.15.2: built from baoyu-design.
-var define_PLUGIN_default = { name: "claude-data", provider: "dsh-claude-data", skills: [{ name: "claude-data", description: "Use this for a local, data-backed dashboard, metrics page, KPI tracker, scorecard, data visualization or recurring report that opens in the bundled live editor: a page or scroll story of charts, numbers and tables over datasets (a CSV/TSV/JSON or text file the user has, or data you gather and attach), with a Sources panel that shows where every number comes from. Read it when creating, filling, refreshing or revising one. You write the datasets, then the page as plain HTML, into the dashboard's own store with this skill's script. Not for a static HTML mockup or a picture of a dashboard.", scriptAlias: "A", comments: true }] };
+var define_PLUGIN_default = { name: "claude-data", provider: "dsh-claude-data", skills: [{ name: "claude-data", description: "Use this for a local, data-backed dashboard, metrics page, KPI tracker, scorecard, data visualization or recurring report that opens in the bundled live editor: a page or scroll story of charts, numbers and tables over datasets (a CSV/TSV/JSON or text file the user has, or data you gather and attach), with a Sources panel that shows where every number comes from. Read it when creating, filling, refreshing or revising one. You write the datasets, then the page as plain HTML, into the dashboard's own store with this skill's script. Not for a static HTML mockup or a picture of a dashboard.", scriptAlias: "A", comments: true, requests: true }] };
 
 import { readFile } from "node:fs/promises";
 import { dirname as dirname2, join as join2, posix, sep, win32 } from "node:path";
@@ -116,8 +116,9 @@ function runtimeSection(skill, skillDir, node, platform = process.platform, watc
       ...skill.requests ? [
         "",
         "The page's buttons reach you the same way: a request one of them sends arrives as such a message, under",
-        "`requests` (the button in `label`, what it asks in `text`), as `comments <root> --wait` printed it for that",
-        "page. It is a request from the page wherever this skill speaks of one: handle it as this skill says for those."
+        "`requests` (what it asks in `text`, what the page calls it in `label`), as `comments <root> --wait` printed it",
+        "for that page. It is a request from the page wherever this skill speaks of one: handle it as this skill says for",
+        "those."
       ] : []
     );
   }

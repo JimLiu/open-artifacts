@@ -1,5 +1,5 @@
 // dsh-claude-slides 2.15.2: built from baoyu-design.
-var define_PLUGIN_default = { name: "claude-slides", provider: "dsh-claude-slides", skills: [{ name: "claude-slides", description: "Make and revise slide decks in the Slides artifact format (project/deck.json plus one HTML file per slide) as local files, then open them in a local slide editor where the user can present, retype, drag, and export PDF, HTML or PowerPoint. Use when the user asks for an editable slide deck or presentation in this format, names claude-slides or the Slides type, or wants to revise a folder that holds project/deck.json. Not for a one-off single-file HTML deck or prototype.", comments: true }] };
+var define_PLUGIN_default = { name: "claude-slides", provider: "dsh-claude-slides", skills: [{ name: "claude-slides", description: "Make and revise slide decks in the Slides artifact format (project/deck.json plus one HTML file per slide) as local files, then open them in a local slide editor where the user can present, retype, drag, and export PDF, HTML or PowerPoint. Use when the user asks for an editable slide deck or presentation in this format, names claude-slides or the Slides type, or wants to revise a folder that holds project/deck.json. Not for a one-off single-file HTML deck or prototype.", comments: true, requests: true }] };
 
 import { readFile } from "node:fs/promises";
 import { dirname as dirname2, join as join2, posix, sep, win32 } from "node:path";
@@ -116,8 +116,9 @@ function runtimeSection(skill, skillDir, node, platform = process.platform, watc
       ...skill.requests ? [
         "",
         "The page's buttons reach you the same way: a request one of them sends arrives as such a message, under",
-        "`requests` (the button in `label`, what it asks in `text`), as `comments <root> --wait` printed it for that",
-        "page. It is a request from the page wherever this skill speaks of one: handle it as this skill says for those."
+        "`requests` (what it asks in `text`, what the page calls it in `label`), as `comments <root> --wait` printed it",
+        "for that page. It is a request from the page wherever this skill speaks of one: handle it as this skill says for",
+        "those."
       ] : []
     );
   }
