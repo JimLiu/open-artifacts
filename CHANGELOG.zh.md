@@ -4,6 +4,27 @@
 
 本文档记录 `baoyu-design` 的重要变更。
 
+## 2.16.0 - 2026-11-13
+
+### 新功能
+- **页面上向 Agent 提需求的按钮，现在能送到 Agent 那里。** Agent 用 `comments <root> --wait` 等着的时候，这类按钮会像 **Send to Agent** 发评论那样把请求发给 Agent，页面上提示已经发给 Agent。`--wait` 把它打印在 `requests` 下：`text` 是要做什么，`label` 和 `selection` 说明是关于什么的（`--agent-hook` 的命令收到的是 `{"request": …}`）。`claude-slides` 里是编辑器显示不出来的幻灯片上的 **Ask the agent to fix**。`claude-design` 里也是这个按钮，出现在读不了 `project/canvas.json` 的画布上，或者出错的画板上。`claude-design-system` 里是空设计系统上的 **Sync from GitHub**、**Build from connectors**、**Create design system**，对比度警告上的 **Fix with the agent**，**Finish setting up**，以及被拒绝的上传上的 **Ask the agent about this file**。`claude-data` 里是选中页面某一部分后的 **Ask the agent**，不能共享的查询上的 **Ask the agent to fix**（或 to limit），问数据源为什么失败，修复出错的页面，**Make editable**，以及改设计系统。没有 Agent 在等的时候，幻灯片、画布和设计系统的按钮照旧把请求复制下来，好贴进对话；仪表盘则提示 Agent 没在听。
+- **空的演示稿、画布、影片、仪表盘或白板，会显示 Agent 正在处理。** Agent 接手评论或请求、还在处理时，页面会显示出来，和 claude.ai 上一样。
+- **`claude-motion`：文字样式控件。** 侧栏 **Tweaks** 里，一行字有 Weight（粗体、斜体）、Size、Spacing（行距、字距）和 Color，多行的字还有 Align。改了影片上马上变，记在 `modules/retouched.json` 里，`stills` 出的帧里也是改过的样子。每一行的 **Reset** 撤回那一项，**Reset all changes** 撤回所有手动的改动。
+- **`claude-whiteboard`：视频、PNG 导出、光标聊天和跟随。** 把视频（mp4、mov 或 webm，最大 20 MB）拖到白板上：它会被上传，在自己的封面图上播放。Agent 可以挪动、缩放它，但不会加视频，`upload` 仍然只收图片。白板主人的 **Share** 面板里，**Export** 标签多了一项 **PNG**，排在整个文件夹之前，导出整块白板。拿到分享链接的人都能用光标聊天，也能跟随彼此的视角，包括 **Follow me**。同一块白板上开着的几个页面，现在会互相转发白板的房间事件，所以有人正在上传时，别人的页面上也看得到。只有在光标聊天里问白板自带的助手仍然关着：它要用 claude.ai 的模型。
+- **`claude-slides`：幻灯片上的视频。** 用链接加的视频在它自己网站的播放器里播放：点一下打开 YouTube 的无 cookie 播放器，Vimeo、Loom 和 Drive 的播放器也放行了。`upload` 能为幻灯片上传视频片段（mp4 或 webm，最大 20 MB），幻灯片在封面图上用 `data-video` 指向它。
+
+### 修复
+- `claude-motion`：只要手动改过一处（场景长度、改过的台词、颜色），再打开侧栏的 **Tweaks**，整个页面就变成 "This artifact couldn't be displayed"。原因是标签页底部的 **Reset all changes** 按钮读了一个从没设置过的东西。现在按钮能正常显示和使用。
+- `claude-slides`：实时嵌入（`<x-embed>`）里的脚本在编辑器里不运行，因为编辑器页面的脚本策略拦住了它。现在能运行，嵌入仍然在沙箱里，也照样不能联网。
+- `claude-whiteboard`：分享链接上有评论权限的人被当成了只能查看的人。**Follow me** 提示只读权限不能让别人跟随，别人也跟随不了他们。现在他们和其他人一样能评论、能跟随。
+- `claude-whiteboard`：已经离开的访客贴的表情贴纸，页面刷新后显示 "Someone's sticker"。现在会保留访客的名字，除非重置了他们的链接或者移除了他们。
+- `claude-data`：进入评论模式后，Edit、Design、Sources 仍然可用。现在和 claude.ai 上一样，评论时它们都关掉，Sources 面板也会收起。
+- `claude-design-system`：Files 面板里的 **Download** 提示无法下载。现在能把文件存下来。
+- `claude-design`：从 claude.ai 复制的画板，名字里有空格（或本地服务器写不了的字符）时，粘贴后存不下来。现在会换成服务器写得了的名字保存，原来的名字留作标题；另一个引用它的粘贴画板也会跟着用新名字。右键菜单的 **Paste** 现在能读你复制的图片。浏览器不让读的时候，就粘贴编辑器自己的复制内容。
+
+### 文档
+- `claude-slides`、`claude-design`、`claude-design-system`、`claude-data` 的 `SKILL.md` 列出了会向 Agent 发请求的按钮，并说明请求怎么送到。`claude-whiteboard` 的写明了白板上的视频是用户放的，以及哪些功能仍然不能用。
+
 ## 2.15.2 - 2026-11-12
 
 ### 新功能

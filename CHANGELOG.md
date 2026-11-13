@@ -4,6 +4,27 @@ English | [中文](./CHANGELOG.zh.md)
 
 All notable changes to `baoyu-design` are tracked in this file.
 
+## 2.16.0 - 2026-11-13
+
+### Features
+- **Buttons on the page that ask the agent for something now reach it.** While the agent listens with `comments <root> --wait`, such a button sends its request to the agent the way **Send to Agent** sends a comment, and the page says it was sent to the agent. `--wait` prints it under `requests`: its `text` is what is asked, and `label` and `selection` say what it is about (an `--agent-hook` command gets `{"request": …}`). In `claude-slides` it is **Ask the agent to fix** on a slide the editor can't show. In `claude-design` it is the same button on a canvas whose `project/canvas.json` can't be read, or on artboards with errors. In `claude-design-system` they are **Sync from GitHub**, **Build from connectors** and **Create design system** on an empty system, **Fix with the agent** on a contrast warning, **Finish setting up**, and **Ask the agent about this file** on an upload it refused. In `claude-data` they are **Ask the agent** on a part of the page you selected, **Ask the agent to fix** (or to limit) on queries that can't be shared, asking why sources failed, fixing a page that failed, **Make editable**, and a design-system change. With no agent listening, the slides, canvas and design-system buttons still copy their request for the chat, and the dashboard says the agent isn't listening.
+- **An empty deck, canvas, film, dashboard or board shows when the agent is at work on it**, while the agent is on a comment or request it took, as on claude.ai.
+- **`claude-motion`: text style controls.** In **Tweaks** in the side panel, a line of text has Weight (bold, italic), Size, Spacing (line and letter spacing) and Color, plus Align for text on several lines. A change shows on the film at once, is kept in `modules/retouched.json` and is in the frames `stills` makes. A row's **Reset** takes back that change, and **Reset all changes** takes back every change made by hand.
+- **`claude-whiteboard`: videos, a PNG export, cursor chat and following.** Drop a video (mp4, mov or webm, up to 20 MB) on the board: it is uploaded and plays over its still. The agent may move or resize it but adds none, and `upload` still takes images only. The owner's **Share** panel has a **PNG** export of the board in its **Export** tab, before the whole folder. Everyone on a share link has cursor chat and can follow one another's view, **Follow me** included. Pages open on the same board now pass the board's room events to each other, so an upload in progress shows in the other people's pages too. Only asking the board's own assistant from cursor chat stays off: it needs claude.ai's model.
+- **`claude-slides`: video on a slide.** A video added by link plays in its provider's player: YouTube's no-cookie player opens on a click, and Vimeo, Loom and Drive players are let in too. `upload` takes a clip for a slide (mp4 or webm, up to 20 MB), which the slide names with `data-video` on its still.
+
+### Fixes
+- `claude-motion`: after any change made by hand (a scene's length, a retyped line, a color), opening **Tweaks** in the side panel turned the whole page into "This artifact couldn't be displayed". The **Reset all changes** button at the foot of the tab read something that was never set. The button now shows and works.
+- `claude-slides`: the script in a live embed (`<x-embed>`) didn't run in the editor, because the editor page's script policy blocked it. It runs now. The embed is still sandboxed and still has no network.
+- `claude-whiteboard`: a commenter on a share link was taken for a viewer. **Follow me** told them view-only access can't ask others to follow, and nobody could follow them. A commenter now comments and follows like everyone else.
+- `claude-whiteboard`: a face sticker by a guest who had left read "Someone's sticker" once the page was reloaded. It now keeps the guest's name, unless their link was reset or they were removed.
+- `claude-data`: comment mode left Edit, Design and Sources on. Now, as on claude.ai, they are off while you comment, and the Sources panel closes.
+- `claude-design-system`: **Download** in the Files panel said downloads weren't available. It now saves the file.
+- `claude-design`: an artboard copied from claude.ai whose name has spaces (or other characters the local server can't write) wasn't saved when pasted. It is now saved under a name the server can write, with the old name as its title, and another pasted artboard that imports it follows the new name. The context menu's **Paste** now reads images you copied. When the browser won't let it read, it pastes the editor's own copy.
+
+### Documentation
+- The `SKILL.md` files of `claude-slides`, `claude-design`, `claude-design-system` and `claude-data` list the buttons that send the agent a request and say how one arrives. `claude-whiteboard`'s says that videos on the board are people's, and what still doesn't run.
+
 ## 2.15.2 - 2026-11-12
 
 ### Features
